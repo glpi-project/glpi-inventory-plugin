@@ -32,6 +32,10 @@
  */
 
 include("../../../inc/includes.php");
+
+/** @var DBmysql $DB */
+global $DB;
+
 Session::checkLoginUser();
 
 if (Session::getCurrentInterface() !== 'helpdesk') {
@@ -48,14 +52,25 @@ Html::helpHeader(
 $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
 if (isset($_POST['prepareinstall'])) {
-    $computers_id = false;
+    //Only the (computer, package) pairs offered to the current user may be deployed
+    $deployments = $pfDeployPackage->filterAllowedDeployments($_POST, (int) $_SESSION['glpiID']);
 
-    foreach ($_POST as $key => $data) {
-        if (strstr($key, 'deploypackages_')) {
-            $computers_id = str_replace('deploypackages_', '', $key);
-            foreach ($data as $packages_id) {
-                $pfDeployPackage->deployToComputer($computers_id, $packages_id, $_SESSION['glpiID']);
-            }
+    foreach ($deployments as $target_computers_id => $packages_ids) {
+        foreach ($packages_ids as $packages_id) {
+            $pfDeployPackage->deployToComputer($target_computers_id, $packages_id, $_SESSION['glpiID']);
+        }
+    }
+
+    //Every computer having received a package must have its agent woken up
+    $deployed_computers_ids = array_keys($deployments);
+
+    $agent_rows = [];
+    if ($deployed_computers_ids !== []) {
+        foreach ($DB->request([
+            'FROM'   => Agent::getTable(),
+            'WHERE'  => ['itemtype' => 'Computer', 'items_id' => $deployed_computers_ids],
+        ]) as $agent_row) {
+            $agent_rows[] = $agent_row;
         }
     }
 
@@ -63,17 +78,20 @@ if (isset($_POST['prepareinstall'])) {
     //If it's a local wakeup, local call to the agent RPC service
     switch ($_POST['wakeup_type']) {
         case 'local':
-            $port = Agent::DEFAULT_PORT;
-            if ($computers_id) {
-                $agent = new Agent();
-                $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
-                $port = (int) $agent->fields['port'];
+            $ports = [];
+            foreach ($agent_rows as $agent_row) {
+                $port = (int) $agent_row['port'];
+                $ports[$port > 0 ? $port : Agent::DEFAULT_PORT] = true;
             }
-            if ($port == 0) {
-                $port = Agent::DEFAULT_PORT;
+            if ($ports === []) {
+                $ports[Agent::DEFAULT_PORT] = true;
+            }
+            $wakeup_calls = '';
+            foreach (array_keys($ports) as $port) {
+                $wakeup_calls .= "$.get('http://127.0.0.1:{$port}/now');\n";
             }
             echo Html::scriptBlock("
-                $.get('http://127.0.0.1:{$port}/now');
+                {$wakeup_calls}
                 setTimeout(function(){
                     window.location='{$_SERVER['HTTP_REFERER']}';
                 }, 500);
@@ -81,10 +99,10 @@ if (isset($_POST['prepareinstall'])) {
             exit;
             break;
         case 'remote':
-            if ($computers_id) {
+            foreach ($agent_rows as $agent_row) {
                 //Remote call to wakeup the agent, from the server
                 $agent = new Agent();
-                $agent->getFromDBByCrit(['itemtype' => 'Computer', 'items_id' => $computers_id]);
+                $agent->getFromResultSet($agent_row);
                 PluginGlpiinventoryAgentWakeup::wakeUp($agent);
             }
             break;

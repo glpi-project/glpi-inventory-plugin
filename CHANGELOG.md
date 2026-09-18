@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+- Fix self-service package deployment to only accept the packages and computers offered to the current user
+- Fix self-service package deployment to wake up every agent that received a package
+
 ## [1.5.8] - 2026-06-24
 
 - Fix escaping
