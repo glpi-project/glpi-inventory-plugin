@@ -1716,6 +1716,52 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
 
     /**
+     * Keep only the (computer, package) pairs of a submitted self-deploy form
+     * that are part of the offering computed for the user
+     *
+     * @param array<string,mixed> $posted submitted form values
+     * @param int $users_id id of the user
+     *
+     * @return array<int,array<int>> package ids indexed by computer id
+     */
+    public function filterAllowedDeployments(array $posted, int $users_id): array
+    {
+        $allowed_packages = $this->getPackageForMe($users_id);
+        $computer         = new Computer();
+        $deployments      = [];
+
+        foreach ($posted as $key => $data) {
+            if (!str_starts_with($key, 'deploypackages_') || !is_array($data)) {
+                continue;
+            }
+
+            $computers_id = (int) str_replace('deploypackages_', '', $key);
+            if (!isset($allowed_packages[$computers_id])) {
+                continue;
+            }
+
+            //Defence in depth: getPackageForMe() already restricts to the active entities
+            if (
+                !$computer->getFromDB($computers_id)
+                || !Session::haveAccessToEntity($computer->fields['entities_id'])
+            ) {
+                continue;
+            }
+
+            foreach ($data as $packages_id) {
+                $packages_id = (int) $packages_id;
+                if (isset($allowed_packages[$computers_id][$packages_id])) {
+                    //Keyed by package id so a repeated id in the form is deployed only once
+                    $deployments[$computers_id][$packages_id] = $packages_id;
+                }
+            }
+        }
+
+        return array_map('array_values', $deployments);
+    }
+
+
+    /**
      * Get deploy packages available to install on user computer(s) and for
      * packages requested the state of deploy
      *
