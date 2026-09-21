@@ -211,7 +211,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
         echo "<tr>";
         echo "<th colspan='3'>";
         echo $pfCollect_Registry->fields['hive'] .
-           $pfCollect_Registry->fields['path'];
+echo htmlspecialchars($pfCollect_Registry->fields['hive'] ?? '' .
+$pfCollect_Registry->fields['path'] ?? '');
         echo "</th>";
         echo "</tr>";
 
