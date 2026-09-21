@@ -9105,7 +9105,7 @@ function encryptCredentials(Migration $migration): Migration
     global $DB;
 
     $key = new GLPIKey();
-    $credentials = new PluginGlpiinventoryCredential()->find([
+    $credentials = (new PluginGlpiinventoryCredential())->find([
         'password' => ['<>', ""],
     ]);
 
