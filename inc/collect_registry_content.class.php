@@ -233,7 +233,7 @@ $pfCollect_Registry->fields['path'] ?? '');
             echo $computer->getLink();
             echo '</td>';
             echo '<td>';
-            echo $data['key'];
+            echo htmlspecialchars($data['key'] ?? '');
             echo '</td>';
             echo '<td>';
             echo $data['value'];
