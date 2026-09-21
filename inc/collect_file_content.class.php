@@ -129,7 +129,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
 
         echo "<tr>";
         echo "<th colspan='3'>";
-        echo $pfCollect_File->fields['name'];
+        echo htmlspecialchars($pfCollect_File->fields['name'] ?? '');
         echo "</th>";
         echo "</tr>";
 
