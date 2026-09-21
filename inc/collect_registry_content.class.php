@@ -236,7 +236,7 @@ $pfCollect_Registry->fields['path'] ?? '');
             echo htmlspecialchars($data['key'] ?? '');
             echo '</td>';
             echo '<td>';
-            echo $data['value'];
+            echo htmlspecialchars($data['value'] ?? '');
             echo '</td>';
             echo "</tr>";
         }
