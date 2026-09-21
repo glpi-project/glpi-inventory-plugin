@@ -165,7 +165,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
 
         echo "<tr>";
         echo "<th colspan='3'>";
-        echo $pfCollect_Wmi->fields['class'];
+        echo htmlspecialchars($pfCollect_Wmi->fields['class'] ?? '');
         echo "</th>";
         echo "</tr>";
 
