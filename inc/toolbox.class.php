@@ -120,11 +120,11 @@ class PluginGlpiinventoryToolbox
                 if ($credentials->fields['authentication'] != '0') {
                     $node['AUTHENTICATION']['AUTHPROTOCOL'] = $credentials->getAuthProtocol();
                 }
-                $node['AUTHENTICATION']['AUTHPASSPHRASE'] = (new GLPIKey())->decrypt($credentials->fields['auth_passphrase']);
+                $node['AUTHENTICATION']['AUTHPASSPHRASE'] = new GLPIKey()->decrypt($credentials->fields['auth_passphrase']);
                 if ($credentials->fields['encryption'] != '0') {
                     $node['AUTHENTICATION']['PRIVPROTOCOL'] = $credentials->getEncryption();
                 }
-                $node['AUTHENTICATION']['PRIVPASSPHRASE'] = (new GLPIKey())->decrypt($credentials->fields['priv_passphrase']);
+                $node['AUTHENTICATION']['PRIVPASSPHRASE'] = new GLPIKey()->decrypt($credentials->fields['priv_passphrase']);
             } else {
                 $node['AUTHENTICATION']['COMMUNITY'] = $credentials->fields['community'];
             }

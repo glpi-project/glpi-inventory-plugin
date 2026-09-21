@@ -170,10 +170,10 @@ function pluginGlpiinventoryUpdateNative($current_version, $migrationname = 'Mig
             unset($cs['id']);
             //crypt passwords
             if (!empty($cs['auth_passphrase'])) {
-                $cs['auth_passphrase'] = (new GLPIKey())->encrypt($cs['auth_passphrase']);
+                $cs['auth_passphrase'] = new GLPIKey()->encrypt($cs['auth_passphrase']);
             }
             if (!empty($cs['priv_passphrase'])) {
-                $cs['priv_passphrase'] = (new GLPIKey())->encrypt($cs['priv_passphrase']);
+                $cs['priv_passphrase'] = new GLPIKey()->encrypt($cs['priv_passphrase']);
             }
             $search_crit = [
                 'name'              => $cs['name'],
