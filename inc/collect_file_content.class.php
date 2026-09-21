@@ -150,7 +150,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
             echo $computer->getLink();
             echo '</td>';
             echo '<td>';
-            echo $data['pathfile'];
+            echo htmlspecialchars($data['pathfile'] ?? '');
             echo '</td>';
             echo '<td>';
             echo Toolbox::getSize($data['size']);
