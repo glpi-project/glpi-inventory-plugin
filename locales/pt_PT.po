@@ -7,15 +7,16 @@
 # Cédric Anne, 2021
 # Gonçalo Dumas, 2024
 # Pedro B., 2024
+# Pedro Rocha <jpnr79@gmail.com>, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 02:20+0000\n"
+"POT-Creation-Date: 2026-09-21 02:16+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: Pedro B., 2024\n"
+"Last-Translator: Pedro Rocha <jpnr79@gmail.com>, 2026\n"
 "Language-Team: Portuguese (Portugal) (https://app.transifex.com/teclib/teams/28042/pt_PT/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,7 +41,7 @@ msgstr "Módulo"
 
 #: templates/forms/agentmodule.html.twig
 msgid "Activation"
-msgstr ""
+msgstr "Ativação"
 
 #: templates/forms/agentmodule.html.twig
 msgid "Activation (by default)"
@@ -110,11 +111,11 @@ msgstr "Endereços de servidores mirrors"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Weekly view of the configured time slots"
-msgstr ""
+msgstr "Vista semanal dos horários configurados"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Add a time slot entry"
-msgstr ""
+msgstr "Adicionar uma entrada de horário"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Start time"
@@ -126,7 +127,7 @@ msgstr "Hora de término"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Configured time slot entries"
-msgstr ""
+msgstr "Entradas de horário configuradas"
 
 #: templates/forms/deployuserinteractiontemplate.html.twig
 msgid "Interaction format"
@@ -196,7 +197,7 @@ msgstr "Desabilitado"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Operator"
-msgstr ""
+msgstr "Operador"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Filename"
@@ -212,11 +213,11 @@ msgstr "Sensível a maiúsculas"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Comparison type"
-msgstr ""
+msgstr "Tipo de comparação"
 
 #: templates/forms/collect/add_file.html.twig
 msgid "Filter name"
-msgstr ""
+msgstr "Nome do filtro"
 
 #: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:376
 #: inc/deploycheck.class.php:389 inc/deploycheck.class.php:396
@@ -232,7 +233,7 @@ msgstr "Pasta"
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:104
 msgid "Mode"
-msgstr ""
+msgstr "Modo"
 
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:101
@@ -255,7 +256,7 @@ msgstr "Chave"
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:105
 msgid "Depth"
-msgstr ""
+msgstr "Profundidade"
 
 #: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:60
 #: inc/collect_wmi_content.class.php:118
@@ -283,7 +284,7 @@ msgstr "Funcionalidades"
 
 #: front/deployfile.clean.php:59
 msgid "Delete unused files"
-msgstr ""
+msgstr "Eliminar ficheiros não utilizados"
 
 #: front/deployuserinteractiontemplate.php:36 inc/profile.class.php:289
 #: inc/deployuserinteractiontemplate.class.php:135 inc/menu.class.php:391
@@ -693,7 +694,7 @@ msgstr "Número por segundo"
 
 #: inc/stateinventory.class.php:121
 msgid "Threads / Timeout configuration"
-msgstr ""
+msgstr "Configuração de threads / timeout"
 
 #: inc/stateinventory.class.php:122
 msgid "To inventory"
@@ -747,19 +748,19 @@ msgstr[2] "Entradas encontradas"
 
 #: inc/collect_registry.class.php:91
 msgid "Default"
-msgstr ""
+msgstr "Predefinido"
 
 #: inc/collect_registry.class.php:92
 msgid "Check path existence"
-msgstr ""
+msgstr "Verificar existência do caminho"
 
 #: inc/collect_registry.class.php:93
 msgid "Check if a key is defined"
-msgstr ""
+msgstr "Verificar se uma chave está definida"
 
 #: inc/collect_registry.class.php:94
 msgid "All values"
-msgstr ""
+msgstr "Todos os valores"
 
 #: inc/deploymirror.class.php:67 inc/profile.class.php:294
 #: inc/menu.class.php:384
@@ -923,11 +924,11 @@ msgstr "A tarefa não pode ser atualizada se estiver ativa"
 
 #: inc/task.class.php:696
 msgid "Inventory task scheduler"
-msgstr ""
+msgstr "Agendador de tarefas de inventário"
 
 #: inc/task.class.php:699
 msgid "Clean on demand deployment tasks"
-msgstr ""
+msgstr "Limpar tarefas de implementação a pedido"
 
 #: inc/task.class.php:1514
 msgid "Task has been disabled"
@@ -971,11 +972,11 @@ msgstr "Intervalo de tempo"
 
 #: inc/timeslotentry.class.php:213
 msgid "End day must be after start day"
-msgstr ""
+msgstr "O dia de fim deve ser após o dia de início"
 
 #: inc/timeslotentry.class.php:223
 msgid "End time must be after start time"
-msgstr ""
+msgstr "A hora de fim deve ser após a hora de início"
 
 #: inc/taskjobstate.class.php:124
 msgid "Tasks / Groups"
@@ -1021,11 +1022,11 @@ msgstr "Número máximo de tentativas alcançado: forçar implantação"
 
 #: inc/taskjobstate.class.php:562
 msgid "Clean taskjob (retention time)"
-msgstr ""
+msgstr "Limpar taskjob (tempo de retenção)"
 
 #: inc/collectcommon.class.php:74
 msgid "Collect configuration"
-msgstr ""
+msgstr "Recolher configuração"
 
 #: inc/deploypackage.class.php:156 inc/menu.class.php:148
 msgid "Import"
@@ -1313,58 +1314,58 @@ msgstr "Conteúdo do Registro do Windows"
 #: inc/collect_registry_content.class.php:279
 #, php-format
 msgid "%s path found"
-msgstr ""
+msgstr "%s caminho encontrado"
 
 #: inc/collect_registry_content.class.php:280
 #, php-format
 msgid "%s path not found"
-msgstr ""
+msgstr "%s caminho não encontrado"
 
 #: inc/collect_registry_content.class.php:290
 #, php-format
 msgid "%s value exists"
-msgstr ""
+msgstr "%s valor existe"
 
 #: inc/collect_registry_content.class.php:291
 #, php-format
 msgid "%s value does not exist"
-msgstr ""
+msgstr "%s valor não existe"
 
 #: inc/collect_registry_content.class.php:299
 #, php-format
 msgid "%s: Found a value"
-msgstr ""
+msgstr "%s: Encontrado um valor"
 
 #: inc/collect_registry_content.class.php:304
 #, php-format
 msgid "%s: Found %d values"
-msgstr ""
+msgstr "%s: Encontrados %d valores"
 
 #: inc/collect_registry_content.class.php:311
 #, php-format
 msgid "%s: Found a result"
-msgstr ""
+msgstr "%s: Encontrado um resultado"
 
 #: inc/collect_registry_content.class.php:359
 msgid "Exist"
-msgstr ""
+msgstr "Existe"
 
 #: inc/collect_registry_content.class.php:360
 msgid "Does not exist"
-msgstr ""
+msgstr "Não existe"
 
 #: inc/collect_registry_content.class.php:371
 msgid "Defined"
-msgstr ""
+msgstr "Definido"
 
 #: inc/collect_registry_content.class.php:372
 msgid "Not defined"
-msgstr ""
+msgstr "Não definido"
 
 #: inc/collect_registry_content.class.php:406
 #: inc/collect_registry_content.class.php:408
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #: inc/collect_registry_content.class.php:411
 #: inc/collect_registry_content.class.php:504
@@ -1875,7 +1876,7 @@ msgstr "Comportamentos"
 
 #: inc/agentwakeup.class.php:56
 msgid "Wake agents up"
-msgstr ""
+msgstr "Acordar agentes"
 
 #: inc/menu.class.php:154
 msgid "Clean unused files"
