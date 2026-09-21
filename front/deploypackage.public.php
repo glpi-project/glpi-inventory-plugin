@@ -68,7 +68,7 @@ if (isset($_POST['prepareinstall'])) {
     if ($deployed_computers_ids !== []) {
         foreach ($DB->request([
             'FROM'   => Agent::getTable(),
-            'WHERE'  => ['itemtype' => Computer:class, 'items_id' => $deployed_computers_ids],
+            'WHERE'  => ['itemtype' => Computer::class, 'items_id' => $deployed_computers_ids],
         ]) as $agent_row) {
             $agent_rows[] = $agent_row;
         }
