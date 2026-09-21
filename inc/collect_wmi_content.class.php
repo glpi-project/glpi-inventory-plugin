@@ -186,7 +186,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             echo $computer->getLink();
             echo '</td>';
             echo '<td>';
-            echo $data['property'];
+            echo htmlspecialchars($data['property'] ?? '');
             echo '</td>';
             echo '<td>';
             echo htmlspecialchars($data['value'] ?? '');
