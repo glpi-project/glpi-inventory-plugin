@@ -546,7 +546,7 @@ function plugin_glpiinventory_addLeftJoin(
 
                 case 'glpi_plugin_glpiinventory_taskjobs.plugin_glpiinventory_taskjobs_id':
                 case 'glpi_plugin_glpiinventory_taskjobstates.' .
-                'plugin_glpiinventory_taskjobstates_id':
+                    'plugin_glpiinventory_taskjobstates_id':
                     if ($taskjob == '0') {
                         return ' LEFT JOIN `glpi_plugin_glpiinventory_taskjobstates` ON
                      (`plugin_glpiinventory_taskjobstates_id` = ' .
