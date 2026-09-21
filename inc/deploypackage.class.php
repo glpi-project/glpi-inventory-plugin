@@ -1517,7 +1517,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                                 echo "<tr class='run log'>";
                                 echo "<td>" . $log['log.f_date'] . "</td>";
                                 echo "<td>" . $joblogs_labels[$log['log.state']] . "</td>";
-                                echo "<td>" . $log['log.comment'] . "</td>";
+                                echo "<td>" . htmlescape($log['log.comment']) . "</td>";
                                 echo "</tr>";
                             }
                             echo "</table>"; // .runs
@@ -1593,11 +1593,11 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
                                  $.each(data.logs, function( index, log ) {
                                     $('#runs_$taskjob_id').append(
-                                       '<tr>'+
-                                       '<td>'+log['log.f_date']+'</td>'+
-                                       '<td>'+logstatuses_names[log['log.state']]+'</td>'+
-                                       '<td>'+log['log.comment']+'</td>'+
-                                       '<tr>'
+                                       $('<tr>').append(
+                                          $('<td>').text(log['log.f_date']),
+                                          $('<td>').text(logstatuses_names[log['log.state']]),
+                                          $('<td>').text(log['log.comment'])
+                                       )
                                     )
                                  });
 

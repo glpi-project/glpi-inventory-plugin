@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Fix self-service package deployment to only accept the packages and computers offered to the current user
 - Fix self-service package deployment to wake up every agent that received a package
+- Fix display of job logs and collected registry, WMI and file content to render agent-reported text as plain text
 
 ## [1.6.10] - 2026-08-17
 

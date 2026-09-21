@@ -395,7 +395,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                 $colspan = ($mode === PluginGlpiinventoryCollect_Registry::MODE_PATH_EXISTS) ? 2 : 3;
                 echo "<tr class='tab_bg_1'>";
                 echo '<th colspan="' . $colspan . '">';
-                echo $pfCollect_Registry->fields['name'];
+                echo htmlescape($pfCollect_Registry->fields['name']);
                 echo '</th>';
                 echo '</tr>';
 
@@ -417,8 +417,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
 
             echo "<tr class='tab_bg_1'>";
             echo '<td>';
-            echo $pfCollect_Registry->fields['hive']
-              . $pfCollect_Registry->fields['path'];
+            echo htmlescape($pfCollect_Registry->fields['hive']
+              . $pfCollect_Registry->fields['path']);
             echo '</td>';
 
             switch ($mode) {
@@ -427,13 +427,13 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                     break;
 
                 case PluginGlpiinventoryCollect_Registry::MODE_KEY_DEFINED:
-                    echo '<td>' . $data['key'] . '</td>';
+                    echo '<td>' . htmlescape($data['key']) . '</td>';
                     echo '<td>' . self::getDefinedLabel($data['value']) . '</td>';
                     break;
 
                 default:
-                    echo '<td>' . $data['key'] . '</td>';
-                    echo '<td>' . $data['value'] . '</td>';
+                    echo '<td>' . htmlescape($data['key']) . '</td>';
+                    echo '<td>' . htmlescape($data['value']) . '</td>';
                     break;
             }
             echo "</tr>";
