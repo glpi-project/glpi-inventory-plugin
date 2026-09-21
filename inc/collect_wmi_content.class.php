@@ -189,7 +189,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             echo $data['property'];
             echo '</td>';
             echo '<td>';
-            echo $data['value'];
+            echo htmlspecialchars($data['value'] ?? '');
             echo '</td>';
             echo "</tr>";
         }
