@@ -173,6 +173,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         $tab[] = [
             'id'            => '2',
             'table'         => 'glpi_plugin_glpiinventory_tasks',
+            'itemtype'      => PluginGlpiinventoryTask::class,
             'field'         => 'name',
             'name'          => _n('Task', 'Tasks', 2),
             'datatype'      => 'itemlink',
@@ -182,6 +183,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         $tab[] = [
             'id'            => '3',
             'table'         => 'glpi_plugin_glpiinventory_taskjobs',
+            'itemtype'      => PluginGlpiinventoryTaskjob::class,
             'field'         => 'name',
             'name'          => __('Job', 'glpiinventory'),
             'datatype'      => 'itemlink',
@@ -224,6 +226,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         $tab[] = [
             'id'           => '8',
             'table'        => "glpi_agents",
+            'itemtype'     => Agent::class,
             'field'        => 'name',
             'name'         => Agent::getTypeName(1),
             'datatype'     => 'itemlink',

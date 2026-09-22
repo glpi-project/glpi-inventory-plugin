@@ -135,6 +135,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
         $tab[] = [
             'id'       => '1',
             'table'    => $this->getTable(),
+            'itemtype' => static::class,
             'field'    => 'name',
             'name'     => __('Name'),
             'datatype' => 'itemlink',
@@ -151,6 +152,7 @@ class PluginGlpiinventoryCredentialIp extends CommonDropdown
         $tab[] = [
             'id'            => '3',
             'table'         => $this->getTable(),
+            'itemtype'      => static::class,
             'field'         => 'name',
             'name'          => __('Authentication for remote devices (VMware)', 'glpiinventory'),
             'datatype'      => 'itemlink',
