@@ -130,7 +130,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
             $computer->getFromDB($row['computers_id']);
             $entry = [
                 'computer' => $computer->getLink(),
-                'pathfile' => $row['pathfile'],
+                'pathfile' => htmlspecialchars($row['pathfile'] ?? ''),
                 'size'     => $row['size'],
             ];
             $entries[] = $entry;
@@ -138,7 +138,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
 
         echo '<div class="card">
             <div class="card-body">
-                <h3 class="card-title">' . $collect_file->fields['name'] . '</h3>';
+                <h3 class="card-title">' . htmlspecialchars($collect_file->fields['name'] ?? '') . '</h3>';
         TemplateRenderer::getInstance()->display('components/datatable.html.twig', [
             'is_tab' => true,
             'nofilter' => true,
