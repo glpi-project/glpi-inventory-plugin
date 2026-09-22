@@ -175,7 +175,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
 
         echo '<div class="card">
             <div class="card-body">
-                <h3 class="card-title">' . $collect_wmi->fields['name'] . ' - ' . $collect_wmi->fields['class'] . '</h3>';
+                <h3 class="card-title">' . htmlspecialchars($collect_wmi->fields['name'] ?? '') . ' - ' . htmlspecialchars($collect_wmi->fields['class'] ?? '') . '</h3>';
         TemplateRenderer::getInstance()->display('components/datatable.html.twig', [
             'is_tab' => true,
             'nofilter' => true,
