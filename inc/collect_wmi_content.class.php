@@ -132,16 +132,16 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             echo "<tr class='tab_bg_1'>";
             echo '<td>';
             $pfCollect_Wmi->getFromDB($data['plugin_glpiinventory_collects_wmis_id']);
-            echo $pfCollect_Wmi->fields['moniker'];
+            echo htmlspecialchars($pfCollect_Wmi->fields['moniker'] ?? '');
             echo '</td>';
             echo '<td>';
-            echo $pfCollect_Wmi->fields['class'];
+            echo htmlspecialchars($pfCollect_Wmi->fields['class'] ?? '');
             echo '</td>';
             echo '<td>';
-            echo $data['property'];
+            echo htmlspecialchars($data['property'] ?? '');
             echo '</td>';
             echo '<td>';
-            echo $data['value'];
+            echo htmlspecialchars($data['value'] ?? '');
             echo '</td>';
             echo "</tr>";
         }
@@ -165,7 +165,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
 
         echo "<tr>";
         echo "<th colspan='3'>";
-        echo $pfCollect_Wmi->fields['class'];
+        echo htmlspecialchars($pfCollect_Wmi->fields['class'] ?? '');
         echo "</th>";
         echo "</tr>";
 
@@ -186,10 +186,10 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             echo $computer->getLink();
             echo '</td>';
             echo '<td>';
-            echo $data['property'];
+            echo htmlspecialchars($data['property'] ?? '');
             echo '</td>';
             echo '<td>';
-            echo $data['value'];
+            echo htmlspecialchars($data['value'] ?? '');
             echo '</td>';
             echo "</tr>";
         }

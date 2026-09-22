@@ -164,7 +164,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             if ($previous_key != $data['plugin_glpiinventory_collects_registries_id']) {
                 echo "<tr class='tab_bg_1'>";
                 echo '<th colspan="3">';
-                echo $pfCollect_Registry->fields['name'];
+                echo htmlspecialchars($pfCollect_Registry->fields['name'] ?? '');
                 echo '</th>';
                 echo '</tr>';
 
@@ -179,14 +179,14 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
 
             echo "<tr class='tab_bg_1'>";
             echo '<td>';
-            echo $pfCollect_Registry->fields['hive'] .
-              $pfCollect_Registry->fields['path'];
+            echo htmlspecialchars(($pfCollect_Registry->fields['hive'] ?? '')
+              . ($pfCollect_Registry->fields['path'] ?? ''));
             echo '</td>';
             echo '<td>';
-            echo $data['key'];
+            echo htmlspecialchars($data['key'] ?? '');
             echo '</td>';
             echo '<td>';
-            echo $data['value'];
+            echo htmlspecialchars($data['value'] ?? '');
             echo '</td>';
             echo "</tr>";
         }
@@ -210,8 +210,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
 
         echo "<tr>";
         echo "<th colspan='3'>";
-        echo $pfCollect_Registry->fields['hive'] .
-           $pfCollect_Registry->fields['path'];
+        echo htmlspecialchars(($pfCollect_Registry->fields['hive'] ?? '') . ($pfCollect_Registry->fields['path'] ?? ''));
         echo "</th>";
         echo "</tr>";
 
@@ -232,10 +231,10 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             echo $computer->getLink();
             echo '</td>';
             echo '<td>';
-            echo $data['key'];
+            echo htmlspecialchars($data['key'] ?? '');
             echo '</td>';
             echo '<td>';
-            echo $data['value'];
+            echo htmlspecialchars($data['value'] ?? '');
             echo '</td>';
             echo "</tr>";
         }
