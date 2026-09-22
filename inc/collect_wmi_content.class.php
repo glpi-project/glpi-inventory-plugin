@@ -128,16 +128,16 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             echo "<tr class='tab_bg_1'>";
             echo '<td>';
             $pfCollect_Wmi->getFromDB($data['plugin_glpiinventory_collects_wmis_id']);
-            echo htmlescape($pfCollect_Wmi->fields['moniker']);
+            echo htmlescape($pfCollect_Wmi->fields['moniker'] ?? '');
             echo '</td>';
             echo '<td>';
-            echo htmlescape($pfCollect_Wmi->fields['class']);
+            echo htmlescape($pfCollect_Wmi->fields['class'] ?? '');
             echo '</td>';
             echo '<td>';
-            echo htmlescape($data['property']);
+            echo htmlescape($data['property'] ?? '');
             echo '</td>';
             echo '<td>';
-            echo htmlescape($data['value']);
+            echo htmlescape($data['value'] ?? '');
             echo '</td>';
             echo "</tr>";
         }
