@@ -88,7 +88,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
             if ($previous_key != $data['plugin_glpiinventory_collects_files_id']) {
                 echo "<tr class='tab_bg_1'>";
                 echo '<th colspan="3">';
-                echo htmlspecialchars($pfCollect_File->fields['name'] . ": " . $pfCollect_File->fields['dir']);
+                echo htmlspecialchars(($pfCollect_File->fields['name'] ?? '') . ": " . ($pfCollect_File->fields['dir'] ?? ''));
                 echo '</th>';
                 echo '</tr>';
 
@@ -102,7 +102,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
 
             echo "<tr class='tab_bg_1'>";
             echo '<td>';
-            echo htmlspecialchars($data['pathfile']);
+            echo htmlspecialchars($data['pathfile'] ?? '');
             echo '</td>';
             echo '<td>';
             echo Toolbox::getSize($data['size']);
