@@ -101,6 +101,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $tab[] = [
             'id'        => '1',
             'table'     => $this->getTable(),
+            'itemtype'  => static::class,
             'field'     => 'name',
             'name'      => __('Name'),
             'datatype'  => 'itemlink',
@@ -117,6 +118,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $tab[] = [
             'id'            => '4',
             'table'         => 'glpi_plugin_glpiinventory_tasks',
+            'itemtype'      => PluginGlpiinventoryTask::class,
             'field'         => 'name',
             'linkfield'     => 'plugin_glpiinventory_tasks_id',
             'name'          => __('Task'),

@@ -453,6 +453,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         $tab[] = [
             'id'            => '1',
             'table'         => $this->getTable(),
+            'itemtype'      => static::class,
             'field'         => 'name',
             'name'          => __('Name'),
             'datatype'      => 'itemlink',
