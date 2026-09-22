@@ -1517,7 +1517,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                                 echo "<tr class='run log'>";
                                 echo "<td>" . $log['log.f_date'] . "</td>";
                                 echo "<td>" . $joblogs_labels[$log['log.state']] . "</td>";
-                                echo "<td>" . htmlescape($log['log.comment']) . "</td>";
+                                echo "<td>" . htmlescape($log['log.comment'] ?? '') . "</td>";
                                 echo "</tr>";
                             }
                             echo "</table>"; // .runs
