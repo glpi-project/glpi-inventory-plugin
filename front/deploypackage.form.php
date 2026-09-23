@@ -35,6 +35,10 @@ include("../../../inc/includes.php");
 Session::checkLoginUser();
 
 $package = new PluginGlpiinventoryDeployPackage();
+if (isset($_POST['update_json']) || isset($_POST['add_item']) || isset($_POST['save_item']) || isset($_POST['remove_item'])) {
+    Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, UPDATE);
+}
+
 if (isset($_POST['update_json'])) {
     $json_clean = stripcslashes($_POST['json']);
 
