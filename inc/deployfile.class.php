@@ -51,7 +51,6 @@ use function Safe\json_encode;
 use function Safe\mime_content_type;
 use function Safe\mkdir;
 use function Safe\opendir;
-use function Safe\preg_match;
 use function Safe\realpath;
 use function Safe\rmdir;
 use function Safe\scandir;
@@ -701,12 +700,17 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     public function uploadFileFromServer(array $params): bool
     {
 
-        if (preg_match('/\.\./', $params['filename'])) {
+        try {
+            $file_path   = realpath((string) ($params['filename'] ?? ''));
+            $upload_root = realpath(PLUGIN_GLPI_INVENTORY_UPLOAD_DIR);
+        } catch (FilesystemException $e) {
+            return false;
+        }
+        if (!str_starts_with($file_path, $upload_root . '/') || !is_file($file_path)) {
             return false;
         }
 
         if (isset($params["id"])) {
-            $file_path = $params['filename'];
             $filename = basename($file_path);
             try {
                 $finfo = finfo_open(FILEINFO_MIME);

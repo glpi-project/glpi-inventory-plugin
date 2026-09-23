@@ -35,6 +35,10 @@ use function Safe\json_decode;
 Session::checkLoginUser();
 
 $package = new PluginGlpiinventoryDeployPackage();
+if (isset($_POST['update_json']) || isset($_POST['add_item']) || isset($_POST['save_item']) || isset($_POST['remove_item'])) {
+    Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, UPDATE);
+}
+
 if (isset($_POST['update_json'])) {
     $json = json_decode($_POST['json'], true);
     $ret = PluginGlpiinventoryDeployPackage::updateOrderJson($_POST['packages_id'], $json);
