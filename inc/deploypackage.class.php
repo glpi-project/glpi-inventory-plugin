@@ -324,7 +324,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             foreach ($this->running_tasks as $task) {
                 $taskurl
                  = PluginGlpiinventoryTask::getFormURLWithID($task['task']['id'], true);
-                $error_message .= "<a href='$taskurl'>" . $task['task']['name'] . "</a>, ";
+                $error_message .= "<a href='" . htmlescape($taskurl) . "'>" . htmlescape($task['task']['name']) . "</a>, ";
             }
             $error_message .= "</div>";
         }
@@ -351,7 +351,67 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             'associatedFiles' => [],
         ]);
 
+        if (!self::isValidInput($input)) {
+            return false;
+        }
+
         return parent::prepareInputForAdd($input);
+    }
+
+
+    /**
+     * Prepare data before update in database
+     *
+     * @param array<string,mixed> $input
+     *
+     * @return false|array<string,mixed>
+     */
+    public function prepareInputForUpdate($input)
+    {
+        //package actions are only editable while no task runs them
+        if (isset($input['json']) && count($this->running_tasks) > 0) {
+            Session::addMessageAfterRedirect(
+                __('Package content cannot be modified while a task is running with it', 'glpiinventory'),
+                false,
+                ERROR
+            );
+            return false;
+        }
+
+        if (!self::isValidInput($input)) {
+            return false;
+        }
+
+        return parent::prepareInputForUpdate($input);
+    }
+
+
+    /**
+     * Check the package JSON and uuid of an input
+     *
+     * @param array<string,mixed> $input
+     * @return bool
+     */
+    private static function isValidInput(array $input): bool
+    {
+        if (isset($input['uuid']) && $input['uuid'] !== '' && !self::isValidUuid($input['uuid'])) {
+            Session::addMessageAfterRedirect(__('Invalid package uuid', 'glpiinventory'), false, ERROR);
+            return false;
+        }
+
+        if (isset($input['json'])) {
+            try {
+                $json = json_decode((string) $input['json'], true);
+            } catch (JsonException $e) {
+                $json = null;
+            }
+            if (!is_array($json) || !self::hasValidFileHashes($json)) {
+                Session::addMessageAfterRedirect(__('Invalid package content', 'glpiinventory'), false, ERROR);
+                return false;
+            }
+        }
+
+        return true;
     }
 
 
@@ -539,7 +599,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
         echo "<td>" . __('Comments') . "&nbsp;:</td>";
         echo "<td>";
-        echo "<textarea cols='40' class='form-control' name='comment' >" . $this->fields["comment"] . "</textarea>";
+        echo "<textarea cols='40' class='form-control' name='comment' >" . htmlescape($this->fields["comment"]) . "</textarea>";
         echo "</td>";
         echo "</tr>";
 
@@ -783,7 +843,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
     public function exportPackage($packages_id): void
     {
         $this->getFromDB($packages_id);
-        if (empty($this->fields['uuid'])) {
+        if (!self::isValidUuid($this->fields['uuid'])) {
             $input = [
                 'id'   => $this->fields['id'],
                 'uuid' => Rule::getUuid(),
@@ -809,7 +869,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         // Add files
         foreach ($a_files as $files_id => $data) {
             $a_pkgfiles = current($pfDeployFile->find(['sha512' => $files_id], [], 1));
-            if (count($a_pkgfiles) > 0) {
+            if (is_array($a_pkgfiles)) {
                 unset($a_pkgfiles['id']);
                 $a_xml['files'][] = $a_pkgfiles;
             }
@@ -830,13 +890,21 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                 $zip->addEmptyDir('files/repository');
                 $pfDeployFile = new PluginGlpiinventoryDeployFile();
                 foreach ($a_files as $hash => $data) {
-                    $sha512 = trim(file_get_contents(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $hash));
+                    if (!PluginGlpiinventoryDeployFile::isSha512($hash)) {
+                        continue;
+                    }
                     $zip->addFile(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $hash, "files/manifests/" . $hash);
                     $a_xml['manifests'][] = $hash;
-                    $file = $pfDeployFile->getDirBySha512($sha512)
-                       . "/" . $sha512;
-                    $zip->addFile(GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/repository/" . $file, "files/repository/" . $file);
-                    $a_xml['repository'][] = $file;
+                    $parts = explode("\n", trim(file_get_contents(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $hash)));
+                    foreach ($parts as $sha512) {
+                        $sha512 = trim($sha512);
+                        if (!PluginGlpiinventoryDeployFile::isSha512($sha512)) {
+                            continue;
+                        }
+                        $file = $pfDeployFile->getDirBySha512($sha512) . "/" . $sha512;
+                        $zip->addFile(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $file, "files/repository/" . $file);
+                        $a_xml['repository'][] = $file;
+                    }
                 }
                 $json_string = json_encode($a_xml);
                 $zip->addFromString('information.json', $json_string);
@@ -897,10 +965,18 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
 
             $package_input = self::filterImportedInput($a_info['package'] ?? null, self::IMPORT_PACKAGE_FIELDS);
             self::checkImportedJson($package_input['json'] ?? null);
+            if (isset($package_input['uuid']) && !self::isValidUuid($package_input['uuid'])) {
+                throw new BadRequestHttpException('Invalid package definition in archive');
+            }
             $file_inputs = array_map(
                 fn($input): array => self::filterImportedInput($input, self::IMPORT_FILE_FIELDS),
                 is_array($a_info['files'] ?? null) ? $a_info['files'] : []
             );
+            foreach ($file_inputs as $input) {
+                if (!PluginGlpiinventoryDeployFile::isSha512($input['sha512'] ?? null)) {
+                    throw new BadRequestHttpException('Invalid file entry in package archive');
+                }
+            }
 
             // Find package with this uuid
             $a_packages = $this->find(['uuid' => $package_input['uuid'] ?? '']);
@@ -1025,9 +1101,44 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             throw new BadRequestHttpException('Invalid package definition in archive', $e);
         }
 
-        if (!is_array($decoded) || !is_array($decoded['jobs'] ?? null)) {
+        if (!is_array($decoded) || !is_array($decoded['jobs'] ?? null) || !self::hasValidFileHashes($decoded)) {
             throw new BadRequestHttpException('Invalid package definition in archive');
         }
+    }
+
+
+    /**
+     * Check every file referenced by a package JSON is identified by a sha512 hash
+     *
+     * @param array<mixed> $json decoded package JSON
+     * @return bool
+     */
+    public static function hasValidFileHashes(array $json): bool
+    {
+        $associated_files = $json['associatedFiles'] ?? [];
+        $job_files        = $json['jobs']['associatedFiles'] ?? [];
+        if (!is_array($associated_files) || !is_array($job_files)) {
+            return false;
+        }
+
+        foreach ([...array_keys($associated_files), ...$job_files] as $hash) {
+            if (!PluginGlpiinventoryDeployFile::isSha512($hash)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    /**
+     * Check a package uuid can safely be used in a file name
+     *
+     * @param mixed $uuid
+     * @return bool
+     */
+    public static function isValidUuid($uuid): bool
+    {
+        return is_string($uuid) && preg_match('/^[A-Za-z0-9][A-Za-z0-9.-]*$/', $uuid) === 1;
     }
 
 
@@ -1072,10 +1183,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             Html::showMassiveActionCheckBox(self::class, $file);
             echo "</td>";
             echo "<td>";
-            echo $split[2];
+            echo htmlescape($split[2] ?? '');
             echo "</td>";
             echo "<td>";
-            echo $split[0] . "." . $split[1];
+            echo htmlescape($split[0] . "." . ($split[1] ?? ''));
             echo "</td>";
             echo "<td>";
             $a_packages = current($this->find(['uuid' => $split[0] . "." . $split[1]], [], 1));
@@ -1607,7 +1718,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             echo "<tr>";
             echo "<th><i class='ti ti-devices-pc align-bottom'></i> "
             . Computer::getTypeName(1) . " <i>"
-            . $computer->fields['name'] . "</i></th>";
+            . htmlescape($computer->fields['name']) . "</i></th>";
             echo "</tr>";
 
             if (count($data)) {
@@ -1631,10 +1742,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                             echo "<a class='toggle_run'
                               href='#'
                               id='toggle_run_$taskjob_id'>";
-                            echo $package_info['name'];
+                            echo htmlescape($package_info['name']);
                             echo "</a>";
                         } else {
-                            echo $package_info['name'];
+                            echo htmlescape($package_info['name']);
                         }
                         echo "</td>";
                         echo "<td style='width: 200px'>";
@@ -1683,7 +1794,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                                 echo "<tr class='run log'>";
                                 echo "<td>" . $log['log.f_date'] . "</td>";
                                 echo "<td>" . $joblogs_labels[$log['log.state']] . "</td>";
-                                echo "<td>" . htmlescape($log['log.comment'] ?? '') . "</td>";
+                                echo "<td>" . ($log['log.comment'] ?? '') . "</td>";
                                 echo "</tr>";
                             }
                             echo "</table>"; // .runs
@@ -1762,7 +1873,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                                        $('<tr>').append(
                                           $('<td>').text(log['log.f_date']),
                                           $('<td>').text(logstatuses_names[log['log.state']]),
-                                          $('<td>').text(log['log.comment'])
+                                          $('<td>').html(log['log.comment'])
                                        )
                                     )
                                  });

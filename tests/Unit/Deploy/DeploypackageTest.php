@@ -99,6 +99,34 @@ class DeploypackageTest extends DbTestCase
     }
 
 
+    public function testUpdateRejectsJsonWhileTaskRunsPackage(): void
+    {
+        $this->login('glpi', 'glpi');
+        $package = $this->createPackage('package_running_task');
+        $original_json = $package->fields['json'];
+        $task = $this->createItem(PluginGlpiinventoryTask::class, [
+            'name'        => 'task_running_package',
+            'entities_id' => 0,
+            'is_active'   => 1,
+        ]);
+        $this->createItem(PluginGlpiinventoryTaskjob::class, [
+            'name'                          => 'job_running_package',
+            'plugin_glpiinventory_tasks_id' => $task->getID(),
+            'entities_id'                   => 0,
+            'method'                        => 'deployinstall',
+            'targets'                       => '[{"PluginGlpiinventoryDeployPackage":"' . $package->getID() . '"}]',
+        ], ['targets']);
+
+        $this->assertFalse($package->update([
+            'id'   => $package->getID(),
+            'json' => '{"jobs":{"checks":[],"associatedFiles":[],"actions":[{"cmd":{"exec":"whoami"}}],"userinteractions":[]},"associatedFiles":[]}',
+        ]));
+        $this->hasSessionMessages(ERROR, ['Package content cannot be modified while a task is running with it']);
+        $this->assertTrue($package->getFromDB($package->getID()));
+        $this->assertSame($original_json, $package->fields['json']);
+    }
+
+
     public function testAlterJsonRejectsUserWithoutUpdateRight(): void
     {
         $this->login('glpi', 'glpi');
@@ -241,6 +269,126 @@ class DeploypackageTest extends DbTestCase
     }
 
 
+    public function testUpdateRejectsJsonReferencingInvalidFileHash(): void
+    {
+        $this->login('glpi', 'glpi');
+        $package = $this->createPackage('package_update_json_hash');
+
+        $this->assertFalse($package->update([
+            'id'   => $package->getID(),
+            'json' => '{"jobs":{"checks":[],"associatedFiles":["../../../config/config_db.php"],"actions":[],"userinteractions":[]},"associatedFiles":{"../../../config/config_db.php":{"name":"x"}}}',
+        ]));
+        $this->hasSessionMessages(ERROR, ['Invalid package content']);
+    }
+
+
+    public function testUpdateRejectsInvalidUuid(): void
+    {
+        $this->login('glpi', 'glpi');
+        $package = $this->createPackage('package_update_uuid');
+
+        $this->assertFalse($package->update(['id' => $package->getID(), 'uuid' => '../../evil']));
+        $this->hasSessionMessages(ERROR, ['Invalid package uuid']);
+    }
+
+
+    public function testRemoveFileInRepoIgnoresPathsOutsideRepository(): void
+    {
+        $this->login('glpi', 'glpi');
+        $victim = GLPI_TMP_DIR . '/glpiinventory_victim.txt';
+        file_put_contents($victim, 'keep me');
+        $manifest = str_repeat('c', 128);
+        file_put_contents(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $manifest, $victim . "\n");
+
+        $deploy_file = new PluginGlpiinventoryDeployFile();
+        $this->assertFalse($deploy_file->removeFileInRepo('../../../_tmp/' . basename($victim)));
+        $this->assertTrue($deploy_file->removeFileInRepo($manifest));
+
+        $this->assertFileExists($victim);
+        $this->assertFileDoesNotExist(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $manifest);
+        unlink($victim);
+    }
+
+
+    public function testExportPackageSkipsInvalidHashes(): void
+    {
+        $this->login('glpi', 'glpi');
+        [$manifest, $part] = $this->createManifestWithTraversalLine();
+        $package = $this->createPackageWithFiles('package_export_hashes', $manifest);
+        $export_dir = GLPI_PLUGIN_DOC_DIR . '/glpiinventory/files/export/';
+        if (!is_dir($export_dir)) {
+            mkdir($export_dir, 0o777, true);
+        }
+        $archive = $export_dir . $package->fields['uuid'] . '.packageexporthashes.zip';
+
+        try {
+            $package->exportPackage($package->getID());
+
+            $zip = new ZipArchive();
+            $this->assertTrue($zip->open($archive));
+            $information = json_decode($zip->getFromName('information.json'), true);
+            $entries = [];
+            for ($i = 0; $i < $zip->numFiles; $i++) {
+                $entries[] = $zip->getNameIndex($i);
+            }
+            $zip->close();
+
+            $this->assertSame([$manifest], $information['manifests']);
+            $this->assertSame([(new PluginGlpiinventoryDeployFile())->getDirBySha512($part) . '/' . $part], $information['repository']);
+            $this->assertEmpty(array_filter($entries, fn(string $entry): bool => str_contains($entry, '..')));
+        } finally {
+            $this->removeManifestWithTraversalLine($manifest, $part);
+            if (file_exists($archive)) {
+                unlink($archive);
+            }
+        }
+    }
+
+
+    public function testDeployOrderSkipsInvalidHashes(): void
+    {
+        $this->login('glpi', 'glpi');
+        [$manifest, $part] = $this->createManifestWithTraversalLine();
+        $package = $this->createPackageWithFiles('package_order_hashes', $manifest);
+        $taskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $taskjobstate->fields = [
+            'date_start' => null,
+            'items_id'   => $package->getID(),
+            'itemtype'   => PluginGlpiinventoryDeployPackage::class,
+            'uniqid'     => 'order_hashes',
+            'agents_id'  => null,
+        ];
+
+        try {
+            $order = (new PluginGlpiinventoryDeployCommon())->run($taskjobstate);
+
+            $this->assertSame([$part], $order['associatedFiles'][$manifest]['multiparts']);
+            $this->assertSame([], $order['associatedFiles']['../evil']['multiparts']);
+        } finally {
+            $this->removeManifestWithTraversalLine($manifest, $part);
+        }
+    }
+
+
+    public function testImportPackageRejectsInvalidFileHash(): void
+    {
+        $this->login('glpi', 'glpi');
+        $archive = $this->createImportArchive([
+            'package'    => ['name' => 'evil_file', 'uuid' => 'evil.file', 'json' => '{"jobs":{}}'],
+            'files'      => [['name' => 'evil', 'sha512' => '../../evil', 'shortsha512' => '../../']],
+            'manifests'  => [],
+            'repository' => [],
+        ]);
+
+        try {
+            $this->expectException(BadRequestHttpException::class);
+            (new PluginGlpiinventoryDeployPackage())->importPackage(basename($archive));
+        } finally {
+            unlink($archive);
+        }
+    }
+
+
     public function testMassiveActionsRejectUserWithReadRightOnly(): void
     {
         $this->login('glpi', 'glpi');
@@ -356,6 +504,50 @@ class DeploypackageTest extends DbTestCase
         $this->assertNotFalse($package->add(['name' => $name, 'entities_id' => 0]));
 
         return $package;
+    }
+
+
+    private function createPackageWithFiles(string $name, string $manifest): PluginGlpiinventoryDeployPackage
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+
+        $package = $this->createPackage($name);
+        $DB->update(PluginGlpiinventoryDeployPackage::getTable(), [
+            'uuid' => Rule::getUuid(),
+            'json' => json_encode([
+                'jobs'            => ['checks' => [], 'associatedFiles' => [$manifest], 'actions' => []],
+                'associatedFiles' => [$manifest => ['name' => 'file'], '../evil' => ['name' => 'evil']],
+            ]),
+        ], ['id' => $package->getID()]);
+        $this->assertTrue($package->getFromDB($package->getID()));
+
+        return $package;
+    }
+
+
+    /**
+     * @return array{string, string} manifest hash and its only valid part hash
+     */
+    private function createManifestWithTraversalLine(): array
+    {
+        $manifest = str_repeat('d', 128);
+        $part = str_repeat('e', 128);
+        $part_dir = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . (new PluginGlpiinventoryDeployFile())->getDirBySha512($part);
+        if (!is_dir($part_dir)) {
+            mkdir($part_dir, 0o777, true);
+        }
+        file_put_contents($part_dir . '/' . $part, 'part');
+        file_put_contents(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $manifest, "../../../_tmp/evil\n" . $part . "\n");
+
+        return [$manifest, $part];
+    }
+
+
+    private function removeManifestWithTraversalLine(string $manifest, string $part): void
+    {
+        unlink(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $manifest);
+        unlink(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . (new PluginGlpiinventoryDeployFile())->getDirBySha512($part) . '/' . $part);
     }
 
 

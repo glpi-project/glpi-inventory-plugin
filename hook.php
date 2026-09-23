@@ -602,12 +602,10 @@ function plugin_glpiinventory_addWhere(string $link, string $nott, string $type,
             if ($table == 'glpi_plugin_glpiinventory_tasks') {
                 if ($field == 'id') {
                     //check if this range is numeric
-                    $ids = explode(',', $val);
-                    foreach ($ids as $k => $i) {
-                        if (!is_numeric($i)) {
-                            unset($ids[$k]);
-                        }
-                    }
+                    $ids = array_map(
+                        'intval',
+                        array_filter(explode(',', $val), 'is_numeric')
+                    );
 
                     if (count($ids) >= 1) {
                         return $link . " `$table`.`id` IN (" . implode(',', $ids) . ")";
@@ -619,9 +617,12 @@ function plugin_glpiinventory_addWhere(string $link, string $nott, string $type,
                     $names = json_decode($val);
                     if (is_array($names)) {
                         $names = array_map(
-                            fn($a) => "\"" . $a . "\"",
-                            $names
+                            fn($a) => DBmysql::quoteValue((string) $a),
+                            array_filter($names, 'is_scalar')
                         );
+                        if ($names === []) {
+                            return "";
+                        }
                         return $link . " `$table`.`name` IN (" . implode(',', $names) . ")";
                     } else {
                         return "";
@@ -632,7 +633,7 @@ function plugin_glpiinventory_addWhere(string $link, string $nott, string $type,
 
         case PluginGlpiinventoryTaskjoblog::class:
             if ($field == 'uniqid') {
-                return $link . " (`" . $table . "`.`uniqid`='" . $val . "') ";
+                return $link . " (`" . $table . "`.`uniqid`=" . DBmysql::quoteValue($val) . ") ";
             }
             break;
 

@@ -250,8 +250,6 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
      */
     public function addTaskjoblog($taskjobstates_id, $items_id, $itemtype, $state, $comment): void
     {
-        /** @var DBmysql $DB */
-        global $DB;
         $this->getEmpty();
         unset($this->fields['id']);
         $this->fields['plugin_glpiinventory_taskjobstates_id'] = $taskjobstates_id;
@@ -259,7 +257,7 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
         $this->fields['items_id']  = $items_id;
         $this->fields['itemtype']  = $itemtype;
         $this->fields['state']     = $state;
-        $this->fields['comment']   = $DB->escape($comment);
+        $this->fields['comment']   = $comment;
 
         $this->addToDB();
     }
@@ -322,6 +320,8 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
      */
     public static function convertComment($comment)
     {
+        //comments may come from agents, links are added after escaping
+        $comment = htmlescape($comment);
         $matches = [];
         // Search for replace [[itemtype::items_id]] by link
         preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $comment, $matches);
