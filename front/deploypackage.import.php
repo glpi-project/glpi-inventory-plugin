@@ -47,7 +47,11 @@ Html::header(
 
 $package = new PluginGlpiinventoryDeployPackage();
 if (isset($_POST['importfile'])) {
-    $package->importPackage($_POST['importfile']);
+    try {
+        $package->importPackage($_POST['importfile']);
+    } catch (RuntimeException $e) {
+        Session::addMessageAfterRedirect($e->getMessage(), false, ERROR);
+    }
     Html::back();
 }
 
