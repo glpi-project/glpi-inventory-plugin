@@ -692,12 +692,13 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     public function uploadFileFromServer($params)
     {
 
-        if (preg_match('/\.\./', $params['filename'])) {
-            die;
+        $file_path   = realpath((string) ($params['filename'] ?? ''));
+        $upload_root = realpath(PLUGIN_GLPI_INVENTORY_UPLOAD_DIR);
+        if ($file_path === false || $upload_root === false || !str_starts_with($file_path, $upload_root . '/') || !is_file($file_path)) {
+            return false;
         }
 
         if (isset($params["id"])) {
-            $file_path = $params['filename'];
             $filename = basename($file_path);
             $mime_type = '';
             if (

@@ -42,6 +42,10 @@ use Glpi\Toolbox\Sanitizer;
  */
 class PluginGlpiinventoryDeployPackage extends CommonDBTM
 {
+    //Columns an imported archive may set
+    private const IMPORT_PACKAGE_FIELDS = ['name', 'comment', 'uuid', 'json'];
+    private const IMPORT_FILE_FIELDS    = ['name', 'mimetype', 'filesize', 'comment', 'sha512', 'shortsha512'];
+
     /**
      * Initialize the tasks running with this package (updated with overrided getFromDB method)
      *
@@ -132,7 +136,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             return false;
         }
 
-        return parent::canUpdateItem();
+        return static::canUpdate() && parent::canUpdateItem();
     }
 
 
@@ -217,32 +221,54 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
                     if ($item->can($key, UPDATE)) {
                         $item->exportPackage($key);
                         $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                    } else {
+                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_NORIGHT);
+                        $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
                     }
                 }
                 break;
 
             case 'transfert':
                 $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
+                $entities_id     = (int) ($ma->POST['entities_id'] ?? -1);
                 foreach ($ids as $key) {
-                    if ($pfDeployPackage->getFromDB($key)) {
-                        $input                = [];
-                        $input['id']          = $key;
-                        $input['entities_id'] = $ma->POST['entities_id'];
-                        $pfDeployPackage->update($input);
+                    if (!$pfDeployPackage->can($key, UPDATE) || !Session::haveAccessToEntity($entities_id)) {
+                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_NORIGHT);
+                        $ma->addMessage($pfDeployPackage->getErrorMessage(ERROR_RIGHT));
+                        continue;
                     }
+                    $input                = [];
+                    $input['id']          = $key;
+                    $input['entities_id'] = $entities_id;
+                    $pfDeployPackage->update($input);
                 }
                 break;
 
             case 'import':
                 foreach ($ids as $key) {
-                    $item->importPackage($key);
-                    $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                    if (!self::canCreate()) {
+                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_NORIGHT);
+                        $ma->addMessage($item->getErrorMessage(ERROR_RIGHT));
+                        continue;
+                    }
+                    try {
+                        $item->importPackage((string) $key);
+                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_OK);
+                    } catch (RuntimeException $e) {
+                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_KO);
+                        $ma->addMessage($e->getMessage());
+                    }
                 }
                 break;
 
             case 'duplicate':
                 $pfPackage = new self();
                 foreach ($ids as $key) {
+                    if (!self::canCreate() || !$pfPackage->can($key, READ)) {
+                        $ma->itemDone($item->getType(), $key, MassiveAction::ACTION_NORIGHT);
+                        $ma->addMessage($pfPackage->getErrorMessage(ERROR_RIGHT));
+                        continue;
+                    }
                     if ($pfPackage->getFromDB($key)) {
                         if ($pfPackage->duplicate($pfPackage->getID())) {
                             //set action massive ok for this item
@@ -815,43 +841,165 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $zip           = new ZipArchive();
         $pfDeployFile  = new PluginGlpiinventoryDeployFile();
 
-        $filename = GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/import/" . $zipfile;
+        $import_dir = GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/import/";
+        $zipfile    = basename((string) $zipfile);
 
-        $extract_folder = GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/import/" . $zipfile . ".extract";
+        if (!in_array($import_dir . $zipfile, glob($import_dir . "*.zip") ?: [], true)) {
+            throw new RuntimeException('Unknown package archive');
+        }
 
-        if ($zip->open($filename, ZipArchive::CREATE) == true) {
+        $filename = $import_dir . $zipfile;
+
+        $extract_folder = $import_dir . $zipfile . ".extract";
+
+        if ($zip->open($filename) !== true) {
+            throw new RuntimeException('Unable to open package archive');
+        }
+
+        try {
             $zip->extractTo($extract_folder);
             $zip->close();
-        }
-        $json_string = file_get_contents($extract_folder . "/information.json");
 
-        $a_info = json_decode($json_string, true);
-
-        // Find package with this uuid
-        $a_packages = $this->find(['uuid' => $a_info['package']['uuid']]);
-        if (count($a_packages) == 0) {
-            // Create it
-            $_SESSION['tmp_clone_package'] = true;
-            $this->add($a_info['package']);
-            foreach ($a_info['files'] as $input) {
-                $pfDeployFile->add($input);
+            if (!is_file($extract_folder . "/information.json")) {
+                throw new RuntimeException('Invalid package archive content');
             }
-        }
-        // Copy files
-        foreach ($a_info['manifests'] as $manifest) {
-            rename($extract_folder . "/files/manifests/" . $manifest, PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $manifest);
-        }
-        foreach ($a_info['repository'] as $repository) {
-            $split = explode('/', $repository);
-            array_pop($split);
-            $folder = '';
-            foreach ($split as $dir) {
-                $folder .= '/' . $dir;
-                if (!file_exists(GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/repository" . $folder)) {
-                    mkdir(GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/repository" . $folder);
+            $a_info = json_decode((string) file_get_contents($extract_folder . "/information.json"), true);
+            if (!is_array($a_info)) {
+                throw new RuntimeException('Invalid package archive content');
+            }
+
+            $manifests  = self::checkImportedPaths($a_info['manifests'] ?? [], '/^[a-f0-9]{128}$/');
+            // layout produced by PluginGlpiinventoryDeployFile::getDirBySha512()
+            $repository = self::checkImportedPaths($a_info['repository'] ?? [], '#^([a-f0-9])/\1[a-f0-9]/[a-f0-9]{128}$#');
+            self::checkImportedFiles($extract_folder . "/files/manifests/", $manifests);
+            self::checkImportedParts($extract_folder . "/files/repository/", $repository);
+
+            $package_input = self::filterImportedInput($a_info['package'] ?? null, self::IMPORT_PACKAGE_FIELDS);
+            self::checkImportedJson($package_input['json'] ?? null);
+            $file_inputs = array_map(
+                fn($input): array => self::filterImportedInput($input, self::IMPORT_FILE_FIELDS),
+                is_array($a_info['files'] ?? null) ? $a_info['files'] : []
+            );
+
+            // Find package with this uuid
+            $a_packages = $this->find(['uuid' => $package_input['uuid'] ?? '']);
+            if (count($a_packages) == 0) {
+                // Create it
+                $_SESSION['tmp_clone_package'] = true;
+                $this->add(Toolbox::addslashes_deep($package_input));
+                foreach ($file_inputs as $input) {
+                    $pfDeployFile->add(Toolbox::addslashes_deep($input));
                 }
             }
-            rename($extract_folder . "/files/repository/" . $repository, GLPI_PLUGIN_DOC_DIR . "/glpiinventory/files/repository/" . $repository);
+            // Copy files
+            // existing files may be shared with other packages and must be kept as is
+            foreach ($manifests as $manifest) {
+                if (!file_exists(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $manifest)) {
+                    rename($extract_folder . "/files/manifests/" . $manifest, PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $manifest);
+                }
+            }
+            foreach ($repository as $path) {
+                if (file_exists(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $path)) {
+                    continue;
+                }
+                $folder = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . dirname($path);
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+                rename($extract_folder . "/files/repository/" . $path, PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $path);
+            }
+        } finally {
+            unset($_SESSION['tmp_clone_package']);
+            Toolbox::deleteDir($extract_folder);
+        }
+    }
+
+
+    /**
+     * @param mixed $input record read from the archive
+     * @param array<string> $fields accepted columns
+     * @return array<string,mixed>
+     */
+    private static function filterImportedInput($input, array $fields): array
+    {
+        if (!is_array($input)) {
+            throw new RuntimeException('Invalid record in package archive');
+        }
+
+        $filtered = array_intersect_key($input, array_flip($fields));
+        foreach ($filtered as $value) {
+            if ($value !== null && !is_scalar($value)) {
+                throw new RuntimeException('Invalid record in package archive');
+            }
+        }
+
+        // archive must not decide where imported data lands
+        $filtered['entities_id']  = Session::getActiveEntity();
+        $filtered['is_recursive'] = 0;
+
+        return $filtered;
+    }
+
+
+    /**
+     * @param mixed $paths paths read from the archive
+     * @return array<string>
+     */
+    private static function checkImportedPaths($paths, string $pattern): array
+    {
+        if (!is_array($paths)) {
+            throw new RuntimeException('Invalid file list in package archive');
+        }
+
+        foreach ($paths as $path) {
+            if (!is_string($path) || !preg_match($pattern, $path)) {
+                throw new RuntimeException('Invalid file entry in package archive');
+            }
+        }
+
+        return array_values($paths);
+    }
+
+
+    /**
+     * @param array<string> $paths paths relative to $dir
+     */
+    private static function checkImportedFiles(string $dir, array $paths): void
+    {
+        foreach ($paths as $path) {
+            if (!is_file($dir . $path)) {
+                throw new RuntimeException('Missing file in package archive');
+            }
+        }
+    }
+
+
+    /**
+     * @param array<string> $paths paths relative to $dir, each named after its sha512
+     */
+    private static function checkImportedParts(string $dir, array $paths): void
+    {
+        self::checkImportedFiles($dir, $paths);
+        foreach ($paths as $path) {
+            if (hash_file('sha512', $dir . $path) !== basename($path)) {
+                throw new RuntimeException('Invalid file part in package archive');
+            }
+        }
+    }
+
+
+    /**
+     * @param mixed $json package JSON read from the archive
+     */
+    private static function checkImportedJson($json): void
+    {
+        if ($json === null) {
+            return;
+        }
+
+        $decoded = json_decode((string) $json, true);
+        if (!is_array($decoded) || !is_array($decoded['jobs'] ?? null)) {
+            throw new RuntimeException('Invalid package definition in archive');
         }
     }
 
