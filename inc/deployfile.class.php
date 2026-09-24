@@ -761,10 +761,22 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
 
     /**
-    * Create a configuration request data
+    * Check a value is a sha512 hash, as used to name manifests and file parts
     *
-    * @since 9.2
+    * @param mixed $value
+    * @return bool
     */
+    public static function isSha512($value): bool
+    {
+        return is_string($value) && preg_match('/^[a-f0-9]{128}$/', $value) === 1;
+    }
+
+
+    /**
+     * Create a configuration request data
+     *
+     * @since 9.2
+     */
     public function getItemConfig(PluginGlpiinventoryDeployPackage $package, $request_data)
     {
         $element = $package->getSubElement($this->json_name, $request_data['index']);
@@ -916,6 +928,10 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      */
     public function removeFileInRepo($sha512)
     {
+        if (!self::isSha512($sha512)) {
+            return false;
+        }
+
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
 
         // try to find file in other packages
@@ -939,11 +955,15 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
 
         //parse all files part
         foreach ($multiparts as $part_sha512) {
+            $part_sha512 = trim($part_sha512);
+            if (!self::isSha512($part_sha512)) {
+                continue;
+            }
             $firstdir = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . substr($part_sha512, 0, 1) . "/";
             $fulldir  = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($part_sha512) . '/';
 
             //delete file parts
-            unlink(trim($fulldir . $part_sha512));
+            unlink($fulldir . $part_sha512);
 
             //delete folders if empty
             if (is_dir($fulldir)) {
@@ -985,7 +1005,11 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         $error = $handle === false;
         if ($handle) {
             while (($buffer = fgets($handle)) !== false) {
-                $path[] = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($buffer) . "/" . trim($buffer, "\n");
+                $part_sha512 = trim($buffer);
+                if (!self::isSha512($part_sha512)) {
+                    continue;
+                }
+                $path[] = PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $this->getDirBySha512($part_sha512) . "/" . $part_sha512;
             }
             if (!feof($handle)) {
                 $error = true;
@@ -1012,7 +1036,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
      */
     public function checkPresenceManifest($sha512)
     {
-        if (!file_exists(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512)) {
+        if (!self::isSha512($sha512) || !file_exists(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $sha512)) {
             return false;
         }
         return true;
@@ -1041,9 +1065,10 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         if ($handle) {
             while (($buffer = fgets($handle)) !== false) {
                 $fileparts_cnt++;
-                $path = $this->getDirBySha512($buffer) . "/" . trim($buffer, "\n");
+                $part_sha512 = trim($buffer);
+                $path = $this->getDirBySha512($part_sha512) . "/" . $part_sha512;
                 //Check if the filepart exists
-                if (!file_exists(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $path)) {
+                if (!self::isSha512($part_sha512) || !file_exists(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $path)) {
                     $fileparts_ok = false;
                     break;
                 }
@@ -1131,12 +1156,12 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             if ($cnt == 0) {
                 $this->delete($data);
                 $manifest_filename = PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $data['sha512'];
-                if (file_exists($manifest_filename)) {
+                if (self::isSha512($data['sha512']) && file_exists($manifest_filename)) {
                     $handle = @fopen($manifest_filename, "r");
                     if ($handle) {
                         while (!feof($handle)) {
                             $buffer = trim(fgets($handle));
-                            if ($buffer != '') {
+                            if (self::isSha512($buffer)) {
                                 $part_path = $this->getDirBySha512($buffer) . "/" . $buffer;
                                 unlink(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . $part_path);
                             }

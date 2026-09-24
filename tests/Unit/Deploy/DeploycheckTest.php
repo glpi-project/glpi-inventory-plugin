@@ -549,13 +549,13 @@ class DeploycheckTest extends TestCase
     */
     public function testSave_item()
     {
-        $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\\Software\\FusionInventory-Agent\\debug","value":false,"return":"skip"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
+        $json = '{"jobs":{"checks":[{"name":"Value exists","type":"winvalueExists","path":"HKLM\\\\Software\\\\FusionInventory-Agent\\\\debug","value":false,"return":"skip"}],"associatedFiles":[],"actions":[]},"associatedFiles":[]}';
 
         $check           = new PluginGlpiinventoryDeployCheck();
         $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
         $input = ['name'        => 'test1',
             'entities_id' => 0,
-            'json'        => $json,
+            'json'        => Toolbox::addslashes_deep($json),
         ];
         $packages_id = $pfDeployPackage->add($input);
 

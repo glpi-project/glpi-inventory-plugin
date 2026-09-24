@@ -644,6 +644,7 @@ function plugin_glpiinventory_addDefaultWhere($type)
  */
 function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
 {
+    global $DB;
 
     $searchopt = &Search::getOptions($type);
     $table = $searchopt[$id]["table"];
@@ -661,12 +662,10 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
             if ($table == 'glpi_plugin_glpiinventory_tasks') {
                 if ($field == 'id') {
                     //check if this range is numeric
-                    $ids = explode(',', $val);
-                    foreach ($ids as $k => $i) {
-                        if (!is_numeric($i)) {
-                            unset($ids[$k]);
-                        }
-                    }
+                    $ids = array_map(
+                        'intval',
+                        array_filter(explode(',', $val), 'is_numeric')
+                    );
 
                     if (count($ids) >= 1) {
                         return $link . " `$table`.`id` IN (" . implode(',', $ids) . ")";
@@ -679,11 +678,12 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
                     $names = json_decode($val);
                     if ($names !== null && is_array($names)) {
                         $names = array_map(
-                            function ($a) {
-                                return "\"" . $a . "\"";
-                            },
-                            $names
+                            fn($a) => DBmysql::quoteValue($DB->escape((string) $a)),
+                            array_filter($names, 'is_scalar')
                         );
+                        if ($names === []) {
+                            return "";
+                        }
                         return $link . " `$table`.`name` IN (" . implode(',', $names) . ")";
                     } else {
                         return "";
@@ -694,7 +694,7 @@ function plugin_glpiinventory_addWhere($link, $nott, $type, $id, $val)
 
         case 'PluginGlpiinventoryTaskjoblog':
             if ($field == 'uniqid') {
-                return $link . " (`" . $table . "`.`uniqid`='" . $val . "') ";
+                return $link . " (`" . $table . "`.`uniqid`=" . DBmysql::quoteValue($val) . ") ";
             }
             break;
 
