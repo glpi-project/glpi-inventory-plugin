@@ -645,7 +645,11 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                                         foreach ($agent as $exec_id => $exec) {
                                             echo $exec['last_log_date'] . SEP;
                                             echo $exec['state'] . SEP;
-                                            echo $exec['last_log'] . NL;
+                                            $last_log = $exec['last_log'] ?? '';
+                                            if (!$params['debug_csv']) {
+                                                $last_log = html_entity_decode(strip_tags(str_replace('<br/>', ',', $last_log)), ENT_QUOTES);
+                                            }
+                                            echo $last_log . NL;
 
                                             if (!$last($agent, $exec_id)) {
                                                 echo SEP . SEP . SEP . SEP . SEP . SEP;

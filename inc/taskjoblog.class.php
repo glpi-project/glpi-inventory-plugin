@@ -328,6 +328,8 @@ class PluginGlpiinventoryTaskjoblog extends CommonDBTM
      */
     public static function convertComment($comment)
     {
+        //comments may come from agents, links are added after escaping
+        $comment = htmlspecialchars($comment);
         $matches = [];
         // Search for replace [[itemtype::items_id]] by link
         preg_match_all("/\[\[(.*)\:\:(.*)\]\]/", $comment, $matches);

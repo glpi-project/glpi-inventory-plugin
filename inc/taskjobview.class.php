@@ -814,7 +814,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         $mytaskjob = new PluginGlpiinventoryTaskjob();
         if (isset($postvars['definition_add'])) {
             // * Add a definition
-            $mytaskjob->getFromDB($postvars['id']);
+            $mytaskjob->check($postvars['id'], UPDATE);
             $a_listdef = importArrayFromDB($mytaskjob->fields['definition']);
             $add = 1;
             foreach ($a_listdef as $dataDB) {
@@ -841,7 +841,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             Html::back();
         } elseif (isset($postvars['action_add'])) {
             // * Add an action
-            $mytaskjob->getFromDB($postvars['id']);
+            $mytaskjob->check($postvars['id'], UPDATE);
             $a_listact = importArrayFromDB($mytaskjob->fields['action']);
             $add = 1;
             foreach ($a_listact as $dataDB) {
@@ -868,7 +868,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             Html::back();
         } elseif (isset($postvars['definition_delete'])) {
             // * Delete definition
-            $mytaskjob->getFromDB($postvars['id']);
+            $mytaskjob->check($postvars['id'], UPDATE);
             $a_listdef = importArrayFromDB($mytaskjob->fields['definition']);
 
             foreach ($postvars['definition_to_delete'] as $itemdelete) {
@@ -886,7 +886,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             Html::back();
         } elseif (isset($postvars['action_delete'])) {
             // * Delete action
-            $mytaskjob->getFromDB($postvars['id']);
+            $mytaskjob->check($postvars['id'], UPDATE);
             $a_listact = importArrayFromDB($mytaskjob->fields['action']);
 
             foreach ($postvars['action_to_delete'] as $itemdelete) {
@@ -909,6 +909,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $pfTaskjob = new PluginGlpiinventoryTaskjob();
             $_SESSION["plugin_glpiinventory_forcerun"] = [];
             foreach ($postvars['taskjobstoforcerun'] as $taskjobs_id) {
+                $pfTaskjob->check($taskjobs_id, UPDATE);
                 $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
                 $pfTask->forceRunning();
             }
@@ -921,13 +922,17 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                 }
                 // Get entity of task
                 $pfTask = new PluginGlpiinventoryTask();
-                $pfTask->getFromDB($postvars['plugin_glpiinventory_tasks_id']);
+                $pfTask->check($postvars['plugin_glpiinventory_tasks_id'], UPDATE);
                 $entities_list = getSonsOf('glpi_entities', $pfTask->fields['entities_id']);
                 if (!in_array($postvars['entities_id'], $entities_list)) {
                     $postvars['entities_id'] = $pfTask->fields['entities_id'];
                 }
                 $jobs_id = $this->add($postvars);
             } else {
+                $this->check($postvars['id'], UPDATE);
+                if (isset($postvars['plugin_glpiinventory_tasks_id'])) {
+                    (new PluginGlpiinventoryTask())->check($postvars['plugin_glpiinventory_tasks_id'], UPDATE);
+                }
                 if (isset($postvars['method_id'])) {
                     $postvars['method']  = $postvars['method_id'];
                 }
@@ -974,9 +979,16 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
         } elseif (isset($postvars["delete"])) {
             // * delete taskjob
             Session::checkRight('plugin_glpiinventory_task', PURGE);
+            $this->check($postvars['id'], PURGE);
 
             $this->delete($postvars);
         } elseif (isset($postvars['itemaddaction'])) {
+            Session::checkRight('plugin_glpiinventory_task', CREATE);
+            $target = getItemForItemtype($postvars['itemtype'] ?? '');
+            if (!$target) {
+                Html::displayErrorAndDie(__('Invalid item type'));
+            }
+            $target->check((int) ($postvars['items_id'] ?? 0), READ);
             $array                     = explode("||", $postvars['methodaction']);
             $module                    = $array[0];
             $method                    = $array[1];
@@ -1010,10 +1022,14 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $mytask->update($mytask->fields);
             // force running this job (?)
         } elseif (isset($postvars['forceend'])) {
+            Session::checkRight(PluginGlpiinventoryTask::$rightname, UPDATE);
             $mytaskjobstate = new PluginGlpiinventoryTaskjobstate();
             $pfTaskjob = new PluginGlpiinventoryTaskjob();
-            $mytaskjobstate->getFromDB($postvars['taskjobstates_id']);
+            if (!$mytaskjobstate->getFromDB($postvars['taskjobstates_id'])) {
+                Html::displayNotFoundError();
+            }
             $jobstate = $mytaskjobstate->fields;
+            $pfTaskjob->check($jobstate['plugin_glpiinventory_taskjobs_id'], UPDATE);
             $a_taskjobstates = $mytaskjobstate->find(['uniqid' => $mytaskjobstate->fields['uniqid']]);
             foreach ($a_taskjobstates as $data) {
                 if ($data['state'] != PluginGlpiinventoryTaskjobstate::FINISHED) {
@@ -1030,7 +1046,9 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $pfTaskjob->getFromDB($jobstate['plugin_glpiinventory_taskjobs_id']);
             $pfTaskjob->reinitializeTaskjobs($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
         } elseif (isset($postvars['delete_taskjobs'])) {
+            Session::checkRight(PluginGlpiinventoryTask::$rightname, PURGE);
             foreach ($postvars['taskjobs'] as $taskjob_id) {
+                $this->check($taskjob_id, PURGE);
                 $input = ['id' => $taskjob_id];
                 $this->delete($input, true);
             }
