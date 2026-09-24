@@ -30,6 +30,8 @@
  * ---------------------------------------------------------------------
  */
 
+use Glpi\Exception\Http\AccessDeniedHttpException;
+
 use function Safe\json_decode;
 
 Session::checkLoginUser();
@@ -58,19 +60,22 @@ $data = $_POST;
 
 //general form
 if (isset($data["add"])) {
-    Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, CREATE);
+    $package->check(-1, CREATE, $data);
     $newID = $package->add($data);
     Html::redirect(Toolbox::getItemTypeFormURL(PluginGlpiinventoryDeployPackage::class) . "?id=" . $newID);
 } elseif (isset($data["update"])) {
-    Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, UPDATE);
+    $package->check($data['id'], UPDATE);
+    if (isset($data['entities_id']) && !Session::haveAccessToEntity((int) $data['entities_id'])) {
+        throw new AccessDeniedHttpException();
+    }
     $package->update($data);
     Html::back();
 } elseif (isset($data["purge"])) {
-    Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, PURGE);
+    $package->check($data['id'], PURGE);
     $package->delete($data, true);
     $package->redirectToList();
 } elseif (isset($_POST["addvisibility"])) {
-    Session::checkRight(PluginGlpiinventoryDeployPackage::$rightname, UPDATE);
+    $package->check($_POST["plugin_glpiinventory_deploypackages_id"] ?? -1, UPDATE);
     if (
         isset($_POST["_type"]) && !empty($_POST["_type"])
            && isset($_POST["plugin_glpiinventory_deploypackages_id"])

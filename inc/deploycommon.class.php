@@ -109,11 +109,13 @@ class PluginGlpiinventoryDeployCommon extends PluginGlpiinventoryCommunication
             $order_files[$hash]['mirrors'] = $mirrors;
             $manifest = PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $hash;
             $order_files[$hash]['multiparts'] = [];
-            if (file_exists($manifest)) {
+            if (PluginGlpiinventoryDeployFile::isSha512($hash) && file_exists($manifest)) {
                 try {
                     $handle = fopen($manifest, "r");
                     while (($buffer = fgets($handle)) !== false) {
-                        $order_files[$hash]['multiparts'][] = trim($buffer);
+                        if (PluginGlpiinventoryDeployFile::isSha512(trim($buffer))) {
+                            $order_files[$hash]['multiparts'][] = trim($buffer);
+                        }
                     }
                     fclose($handle);
                 } catch (FilesystemException $e) {

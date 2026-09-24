@@ -12,6 +12,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix display of job logs and collected registry, WMI and file content to render agent-reported text as plain text
 - Check user rights on package content edition, transfer, duplication and import
 - Restrict package import and server file selection to their expected directories
+- Check item and entity rights on package and task job forms
+- Validate file hashes and uuid of deploy packages
+- Fix quoting of task names in task job search
+- Fix display of job log messages, computer and package names in deploy views
+- Fix last job message exported as HTML in task spreadsheet export
 
 ## [1.6.10] - 2026-08-17
 

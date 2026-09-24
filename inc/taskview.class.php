@@ -691,7 +691,7 @@ class PluginGlpiinventoryTaskView extends PluginGlpiinventoryCommonView
                                     $exec['last_log_date'] ?? '',
                                     $exec['state'] ?? '',
                                     PluginGlpiinventoryTaskjoblog::getStateName($exec['last_log_state'] ?? -1),
-                                    $exec['last_log'] ?? '',
+                                    html_entity_decode(strip_tags(str_replace('<br/>', ',', $exec['last_log'] ?? '')), ENT_QUOTES),
                                 ], null, 'A' . $row++);
                             }
                         }

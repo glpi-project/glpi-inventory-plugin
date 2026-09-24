@@ -5925,17 +5925,16 @@ function do_deploypackage_migration(Migration $migration): void
     if (
         $DB->tableExists($order_table) && $DB->fieldExists($order_table, 'type', false)
     ) {
-        require_once(PLUGIN_GLPI_INVENTORY_DIR . "/inc/deploypackage.class.php");
-        $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
+        $package_table = 'glpi_plugin_glpiinventory_deploypackages';
 
+        //legacy orders are copied as is, they predate the package content validation
         $installs = getAllDataFromTable($order_table, ['type' => '0']);
         foreach ($installs as $install) {
-            $pfDeployPackage->getFromDB($install['plugin_glpiinventory_deploypackages_id']);
-            $input = [
-                'id'   => $pfDeployPackage->fields['id'],
-                'json' => $install['json'],
-            ];
-            $pfDeployPackage->update($input);
+            $DB->update(
+                $package_table,
+                ['json' => $install['json']],
+                ['id'   => $install['plugin_glpiinventory_deploypackages_id']]
+            );
         }
 
         $uninstalls = getAllDataFromTable($order_table, ['type' => '1']);
@@ -5948,12 +5947,18 @@ function do_deploypackage_migration(Migration $migration): void
                 ]) > 0
             ) {
                 // have install and uninstall, so duplicate package
-                $pfDeployPackage->getFromDB($uninstall['plugin_glpiinventory_deploypackages_id']);
-                $input = $pfDeployPackage->fields;
+                $input = $DB->request([
+                    'FROM'  => $package_table,
+                    'WHERE' => ['id' => $uninstall['plugin_glpiinventory_deploypackages_id']],
+                ])->current();
+                if ($input === null) {
+                    continue;
+                }
                 unset($input['id']);
                 $input['json'] = $uninstall['json'];
                 $input['name'] .= " (uninstall)";
-                $deploypackage_id = $pfDeployPackage->add($input);
+                $DB->insert($package_table, $input);
+                $deploypackage_id = $DB->insertId();
                 $DB->update(
                     $order_table,
                     [

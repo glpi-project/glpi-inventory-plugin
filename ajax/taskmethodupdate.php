@@ -36,9 +36,11 @@ if (plugin_glpiinventory_script_endswith("taskmethodupdate.php")) {
 }
 
 Session::checkCentralAccess();
+Session::checkRight(PluginGlpiinventoryTask::$rightname, UPDATE);
 
 if (filter_input(INPUT_POST, "method") != '') {
     $pfTaskjob = new PluginGlpiinventoryTaskjob();
+    $pfTaskjob->check((int) filter_input(INPUT_POST, "taskjobs_id"), UPDATE);
     $pfTaskjob->updateMethod(
         filter_input(INPUT_POST, "method"),
         (int) filter_input(INPUT_POST, "taskjobs_id")

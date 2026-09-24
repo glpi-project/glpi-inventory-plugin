@@ -130,6 +130,27 @@ class TaskCsvExportTest extends DbTestCase
         $this->assertSame($multiline_message, $rows[2][9]);
     }
 
+    public function testConvertedMessageIsExportedAsPlainText(): void
+    {
+        $computer = $this->createItem(Computer::class, ['name' => 'export_link_computer', 'entities_id' => 0]);
+        $converted = PluginGlpiinventoryTaskjoblog::convertComment(
+            "agent's <message> [[Computer::" . $computer->getID() . ']]'
+        );
+
+        $rows = $this->getRows($this->dataWith([$this->exec('success', $converted)]));
+
+        $this->assertSame("agent's <message> export_link_computer", $rows[1][9]);
+    }
+
+    public function testConvertedMultiPartMessageKeepsSeparator(): void
+    {
+        $converted = PluginGlpiinventoryTaskjoblog::convertComment('first part,[second part]');
+
+        $rows = $this->getRows($this->dataWith([$this->exec('success', $converted)]));
+
+        $this->assertSame('first part,[second part]', $rows[1][9]);
+    }
+
     // The $includeoldjobs parameter must cap the number of jobs per task
     public function testJobCountLimit(): void
     {
