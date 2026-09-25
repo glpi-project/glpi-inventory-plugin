@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Check user rights on package content edition, transfer, duplication and import
 - Restrict package import and server file selection to their expected directories
 - Check item and entity rights on package and task job forms
+- Check package read right and entity when displaying package element forms
 - Validate file hashes and uuid of deploy packages
 - Fix quoting of task names in task job search
 - Fix display of job log messages, computer and package names in deploy views
