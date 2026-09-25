@@ -99,6 +99,55 @@ class DeploypackageTest extends DbTestCase
     }
 
 
+    public function testCanUpdateContentRejectsPackageOutsideActiveEntities(): void
+    {
+        $this->login('glpi', 'glpi');
+        $other_entity = $this->createItem(Entity::class, ['name' => 'package_content_foreign_entity', 'entities_id' => 0]);
+        $package = $this->createItem(PluginGlpiinventoryDeployPackage::class, [
+            'name'        => 'package_content_foreign',
+            'entities_id' => $other_entity->getID(),
+        ]);
+        $this->setEntity(0, false);
+
+        $this->assertTrue($package->getFromDB($package->getID()));
+        $this->assertFalse($package->canUpdateContent());
+    }
+
+
+    public function testCanReadRequiresPackageRight(): void
+    {
+        $this->login('glpi', 'glpi');
+        $package = $this->createPackage('package_read_right');
+
+        $this->assertTrue($package->can($package->getID(), READ));
+
+        $_SESSION['glpiactiveprofile'][PluginGlpiinventoryDeployPackage::$rightname] = 0;
+        $this->assertFalse($package->can($package->getID(), READ));
+    }
+
+
+    public function testCanReadRejectsPackageOutsideActiveEntities(): void
+    {
+        $this->login('glpi', 'glpi');
+        $other_entity = $this->createItem(Entity::class, ['name' => 'package_foreign_entity', 'entities_id' => 0]);
+        $package = $this->createItem(PluginGlpiinventoryDeployPackage::class, [
+            'name'        => 'package_foreign',
+            'entities_id' => $other_entity->getID(),
+        ]);
+        $this->setEntity(0, false);
+
+        $this->assertFalse($package->can($package->getID(), READ));
+    }
+
+
+    public function testCanReadRejectsUnknownPackage(): void
+    {
+        $this->login('glpi', 'glpi');
+
+        $this->assertFalse((new PluginGlpiinventoryDeployPackage())->can(999999, READ));
+    }
+
+
     public function testUpdateRejectsJsonWhileTaskRunsPackage(): void
     {
         $this->login('glpi', 'glpi');
