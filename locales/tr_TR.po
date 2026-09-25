@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-17 02:20+0000\n"
+"POT-Creation-Date: 2026-09-25 02:25+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Kaya Zeren <kayazeren@gmail.com>, 2026\n"
 "Language-Team: Turkish (Turkey) (https://app.transifex.com/teclib/teams/28042/tr_TR/)\n"
@@ -21,91 +21,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: tr_TR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-
-#: templates/forms/iprange.html.twig inc/iprange.class.php:137
-#: inc/iprange.class.php:229
-msgid "Start of IP range"
-msgstr "IP aralığının başlangıcı"
-
-#: templates/forms/iprange.html.twig inc/iprange.class.php:144
-#: inc/iprange.class.php:232
-msgid "End of IP range"
-msgstr "IP aralığının sonu"
-
-#: templates/forms/agentmodule.html.twig hook.php:55 hook.php:62 hook.php:69
-#: hook.php:76 hook.php:83 hook.php:90
-msgid "Module"
-msgstr "Modül"
-
-#: templates/forms/agentmodule.html.twig
-msgid "Activation"
-msgstr "Etkinleştirme"
-
-#: templates/forms/agentmodule.html.twig
-msgid "Activation (by default)"
-msgstr "Etkinleştirme (varsayılan)"
-
-#: templates/forms/agentmodule.html.twig
-msgid "Exceptions"
-msgstr "Katılmayacaklar"
-
-#: templates/forms/config/main.html.twig
-msgid "SSL-only for agent"
-msgstr "Aracı yalnızca SSL kullansın"
-
-#: templates/forms/config/main.html.twig
-msgid "Agent port"
-msgstr "Aracı bağlantı noktası"
-
-#: templates/forms/config/main.html.twig
-msgid "Delete tasks logs after"
-msgstr "Şundan sonra görev günlükleri silinsin"
-
-#: templates/forms/config/main.html.twig
-msgid "Re-prepare successful jobs"
-msgstr "Başarılı işler yeniden hazırlansın"
-
-#: templates/forms/config/main.html.twig
-msgid "Maximum number of agents to wake up in a task"
-msgstr "Bir görevin uyandıracağı en fazla aracı sayısı"
-
-#: templates/forms/config/main.html.twig
-msgid "Extra-debug"
-msgstr "Ek hata ayıklama"
-
-#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:183
-msgid "Threads number"
-msgstr "İşlem sayısı"
-
-#: templates/forms/config/netinv.html.twig hook.php:83
-#: inc/staticmisc.class.php:75
-msgid "Network discovery"
-msgstr "Ağ keşfi"
-
-#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:81
-#: inc/agentmodule.class.php:122
-msgid "Network inventory (SNMP)"
-msgstr "Ağ envanteri (SNMP)"
-
-#: templates/forms/config/netinv.html.twig
-msgid "SNMP timeout"
-msgstr "SNMP zaman aşımı"
-
-#: templates/forms/config/deploy.html.twig
-msgid "Use this GLPI server as a mirror server"
-msgstr "Bu GLPI sunucusu yansı olarak kullanılsın"
-
-#: templates/forms/config/deploy.html.twig
-msgid "Match mirrors to agents"
-msgstr "Yansıları aracılarla eşleştirme"
-
-#: templates/forms/config/deploy.html.twig
-msgid "Delete successful on demand tasks after (in days)"
-msgstr "Tamamlanmış istek görevleri silinsin (gün sonra)"
-
-#: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:252
-msgid "Mirror server address"
-msgstr "Yansı sunucu adresi"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Weekly view of the configured time slots"
@@ -127,29 +42,42 @@ msgstr "Bitiş zamanı"
 msgid "Configured time slot entries"
 msgstr "Yapılandırılmış zaman aralığı kayıtları"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Interaction format"
-msgstr "Etkileşim biçimi"
+#: templates/forms/collect/add_wmi.html.twig
+#: inc/collect_wmi_content.class.php:118 inc/collect_wmi.class.php:60
+msgid "Class"
+msgstr "Sınıf"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Interaction type"
-msgstr "Etkileşim türü"
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
+msgid "Properties"
+msgstr "Özellikler"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Alert icon"
-msgstr "Uyarı simgesi"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:104
+msgid "Mode"
+msgstr "Kip"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Retry job after"
-msgstr "İşin yeniden denenme zamanı"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:101
+msgid "Hive"
+msgstr "Kovan"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Maximum number of retry allowed"
-msgstr "İzin verilecek en fazla yeniden deneme sayısı"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:102
+#: inc/collect_registry_content.class.php:403
+msgid "Path"
+msgstr "Yol"
 
-#: templates/forms/deployuserinteractiontemplate.html.twig
-msgid "Alert display timeout"
-msgstr "Uyarı görüntülenme zaman aşımı"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:103
+#: inc/collect_registry_content.class.php:405
+#: inc/collect_registry_content.class.php:487
+msgid "Key"
+msgstr "Anahtar"
+
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:105
+msgid "Depth"
+msgstr "Derinlik"
 
 #: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:59
 msgid "Limit"
@@ -181,10 +109,10 @@ msgstr "SHA512 sağlaması"
 msgid "Checksum SHA2"
 msgstr "SHA2 sağlaması"
 
-#: templates/forms/collect/add_file.html.twig inc/collect.class.php:262
+#: templates/forms/collect/add_file.html.twig
 #: inc/collect_file_content.class.php:93
-#: inc/collect_file_content.class.php:148 inc/deployfile.class.php:1093
-#: inc/collect_file.class.php:63
+#: inc/collect_file_content.class.php:148 inc/collect_file.class.php:63
+#: inc/collect.class.php:263 inc/deployfile.class.php:1123
 msgid "Size"
 msgstr "Boyut"
 
@@ -216,9 +144,9 @@ msgstr "Karşılaştırma türü"
 msgid "Filter name"
 msgstr "Süzgeç adı"
 
-#: templates/forms/collect/add_file.html.twig inc/deploycheck.class.php:376
-#: inc/deploycheck.class.php:389 inc/deploycheck.class.php:396
-#: inc/deployfile.class.php:316 inc/collect_file.class.php:83
+#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:83
+#: inc/deploycheck.class.php:376 inc/deploycheck.class.php:389
+#: inc/deploycheck.class.php:396 inc/deployfile.class.php:316
 msgid "File"
 msgstr "Dosya"
 
@@ -227,50 +155,122 @@ msgstr "Dosya"
 msgid "Folder"
 msgstr "Klasör"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:104
-msgid "Mode"
-msgstr "Kip"
+#: templates/forms/agentmodule.html.twig hook.php:55 hook.php:62 hook.php:69
+#: hook.php:76 hook.php:83 hook.php:90
+msgid "Module"
+msgstr "Modül"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:101
-msgid "Hive"
-msgstr "Kovan"
+#: templates/forms/agentmodule.html.twig
+msgid "Activation"
+msgstr "Etkinleştirme"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:102
-#: inc/collect_registry_content.class.php:403
-msgid "Path"
-msgstr "Yol"
+#: templates/forms/agentmodule.html.twig
+msgid "Activation (by default)"
+msgstr "Etkinleştirme (varsayılan)"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:103
-#: inc/collect_registry_content.class.php:405
-#: inc/collect_registry_content.class.php:487
-msgid "Key"
-msgstr "Anahtar"
+#: templates/forms/agentmodule.html.twig
+msgid "Exceptions"
+msgstr "Katılmayacaklar"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:105
-msgid "Depth"
-msgstr "Derinlik"
+#: templates/forms/config/deploy.html.twig
+msgid "Use this GLPI server as a mirror server"
+msgstr "Bu GLPI sunucusu yansı olarak kullanılsın"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:60
-#: inc/collect_wmi_content.class.php:118
-msgid "Class"
-msgstr "Sınıf"
+#: templates/forms/config/deploy.html.twig
+msgid "Match mirrors to agents"
+msgstr "Yansıları aracılarla eşleştirme"
 
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
-msgid "Properties"
-msgstr "Özellikler"
+#: templates/forms/config/deploy.html.twig
+msgid "Delete successful on demand tasks after (in days)"
+msgstr "Tamamlanmış istek görevleri silinsin (gün sonra)"
 
-#: front/taskjob.php:34 front/credential.php:34 front/stateinventory.php:34
-#: front/credentialip.php:34 front/statediscovery.php:34
-#: front/credentialip.form.php:42 front/task.php:34 front/iprange.php:34
-#: front/task.form.php:39 front/menu.php:38 front/collect.php:34
-#: front/credential.form.php:39 front/agentmodule.form.php:34
-#: front/iprange.form.php:36 front/menu_snmpinventory.php:37
-#: front/taskjob.form.php:36 front/timeslot.php:37 inc/profile.class.php:124
+#: templates/forms/config/main.html.twig
+msgid "SSL-only for agent"
+msgstr "Aracı yalnızca SSL kullansın"
+
+#: templates/forms/config/main.html.twig
+msgid "Agent port"
+msgstr "Aracı bağlantı noktası"
+
+#: templates/forms/config/main.html.twig
+msgid "Delete tasks logs after"
+msgstr "Şundan sonra görev günlükleri silinsin"
+
+#: templates/forms/config/main.html.twig
+msgid "Re-prepare successful jobs"
+msgstr "Başarılı işler yeniden hazırlansın"
+
+#: templates/forms/config/main.html.twig
+msgid "Maximum number of agents to wake up in a task"
+msgstr "Bir görevin uyandıracağı en fazla aracı sayısı"
+
+#: templates/forms/config/main.html.twig
+msgid "Extra-debug"
+msgstr "Ek hata ayıklama"
+
+#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:183
+msgid "Threads number"
+msgstr "İşlem sayısı"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:75
+#: hook.php:83
+msgid "Network discovery"
+msgstr "Ağ keşfi"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:81
+#: inc/agentmodule.class.php:122
+msgid "Network inventory (SNMP)"
+msgstr "Ağ envanteri (SNMP)"
+
+#: templates/forms/config/netinv.html.twig
+msgid "SNMP timeout"
+msgstr "SNMP zaman aşımı"
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Interaction format"
+msgstr "Etkileşim biçimi"
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Interaction type"
+msgstr "Etkileşim türü"
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Alert icon"
+msgstr "Uyarı simgesi"
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Retry job after"
+msgstr "İşin yeniden denenme zamanı"
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Maximum number of retry allowed"
+msgstr "İzin verilecek en fazla yeniden deneme sayısı"
+
+#: templates/forms/deployuserinteractiontemplate.html.twig
+msgid "Alert display timeout"
+msgstr "Uyarı görüntülenme zaman aşımı"
+
+#: templates/forms/iprange.html.twig inc/iprange.class.php:138
+#: inc/iprange.class.php:230
+msgid "Start of IP range"
+msgstr "IP aralığının başlangıcı"
+
+#: templates/forms/iprange.html.twig inc/iprange.class.php:145
+#: inc/iprange.class.php:233
+msgid "End of IP range"
+msgstr "IP aralığının sonu"
+
+#: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:253
+msgid "Mirror server address"
+msgstr "Yansı sunucu adresi"
+
+#: front/menu_snmpinventory.php:37 front/collect.php:34 front/timeslot.php:37
+#: front/stateinventory.php:34 front/agentmodule.form.php:34
+#: front/statediscovery.php:34 front/credential.php:34
+#: front/credentialip.form.php:42 front/iprange.form.php:36
+#: front/taskjob.form.php:36 front/task.form.php:39 front/task.php:34
+#: front/credential.form.php:39 front/menu.php:38 front/taskjob.php:34
+#: front/iprange.php:34 front/credentialip.php:34 inc/profile.class.php:124
 #: inc/menu.class.php:48 src/Controller/InventoryController.php:81
 msgid "GLPI Inventory"
 msgstr "GLPI envanter"
@@ -278,17 +278,6 @@ msgstr "GLPI envanter"
 #: front/config.form.php:36
 msgid "Features"
 msgstr "Özellikler"
-
-#: front/deployfile.clean.php:59
-msgid "Delete unused files"
-msgstr "Kullanılmayan dosyaları sil"
-
-#: front/deployuserinteractiontemplate.php:36 inc/profile.class.php:289
-#: inc/deployuserinteractiontemplate.class.php:135 inc/menu.class.php:391
-msgid "User interaction template"
-msgid_plural "User interaction templates"
-msgstr[0] "Kullanıcı etkileşimi kalıbı"
-msgstr[1] "Kullanıcı etkileşimi kalıpları"
 
 #: front/deployfile_download.php:90
 msgid "An error occurs"
@@ -298,1454 +287,40 @@ msgstr "Bir sorun çıktı"
 msgid "File not found"
 msgstr "Dosya bulunamadı"
 
-#: front/collect.form.php:36
-msgid "Collect management"
-msgstr "Derleme yönetimi"
-
 #: front/deploygroup.php:36 inc/deploytaskjob.class.php:222
 #: inc/profile.class.php:396 inc/menu.class.php:213
 msgid "Groups of computers"
 msgstr "Bilgisayar grupları"
 
-#: hook.php:55 inc/menu.class.php:402
-msgid "Deploy"
-msgstr "Dağıtım"
-
-#: hook.php:62
-msgid "Local inventory"
-msgstr "Yerel envanter"
-
-#: hook.php:69
-msgid "ESX/VMWare"
-msgstr "ESX/VMWare"
-
-#: hook.php:76
-msgid "Network inventory"
-msgstr "Ağ envanteri"
-
-#: hook.php:90
-msgid "Collect"
-msgstr "Derle"
-
-#: hook.php:94 inc/deploygroup.class.php:89 inc/deploygroup.class.php:805
-msgid "Static group"
-msgstr "Durağan grup"
-
-#: hook.php:130 inc/task.class.php:212 inc/menu.class.php:266
-msgid "Tasks"
-msgstr "Görevler"
-
-#: hook.php:138 hook.php:148 hook.php:158 hook.php:168
-#, php-format
-msgid "%s inventoried"
-msgstr "%s envantere alındı"
-
-#: hook.php:351
-msgid "Setup"
-msgstr "Kur"
-
-#: hook.php:410 inc/iprange.class.php:284 inc/deploygroup.class.php:231
-msgid "Target a task"
-msgstr "Bir görevi hedefle"
-
-#: hook.php:414 inc/deploygroup_staticdata.class.php:155
-#: inc/deploygroup_staticdata.class.php:171
-msgid "Add to static group"
-msgstr "Durağan gruba ekle"
-
-#: hook.php:416 inc/deploygroup_staticdata.class.php:227
-msgid "Remove from static group"
-msgstr "Durağan gruptan çıkar"
-
-#: inc/iprange.class.php:78
-msgid "Communication mode"
-msgstr "İletişim kipi"
-
-#: inc/iprange.class.php:81
-msgid "See all informations of task"
-msgstr "Görev bilgilerini görüntüle"
-
-#: inc/iprange.class.php:83 inc/iprange.class.php:86
-#: inc/staticmisc.class.php:331 inc/staticmisc.class.php:365
-#: inc/menu.class.php:318
-msgid "IP Ranges"
-msgstr "IP aralıkları"
-
-#: inc/iprange.class.php:113 inc/profile.class.php:317
-msgid "IP range configuration"
-msgstr "IP aralığı ayarları"
-
-#: inc/iprange.class.php:227
-msgid "Bad IP"
-msgstr "Kötü IP"
-
-#: inc/collect_wmi.class.php:48
-msgid "Found WMI"
-msgid_plural "Found WMIs"
-msgstr[0] "Bulunan WMI"
-msgstr[1] "Bulunan WMI"
-
-#: inc/collect.class.php:56 inc/profile.class.php:401 inc/menu.class.php:253
-msgid "Collect information"
-msgstr "Derleme bilgileri"
-
-#: inc/collect.class.php:147 inc/collect.class.php:209
-#: inc/deploycheck.class.php:52
-msgid "Registry"
-msgstr "Kayıt defteri"
-
-#: inc/collect.class.php:148 inc/collect.class.php:227
-msgid "WMI"
-msgstr "WMI"
-
-#: inc/collect.class.php:149 inc/collect.class.php:245
-#: inc/collect.class.php:260
-msgid "Find file"
-msgstr "Dosya arama"
-
-#: inc/collect.class.php:247
-msgid "pathfile"
-msgstr "yoldosya"
-
-#: inc/collect.class.php:507
-msgid "Collect module has been disabled for this agent"
-msgstr "Bu aracı için derleme modülü etkisizleştirilmiş"
-
-#: inc/collect.class.php:676
-msgid "Path not found"
-msgstr "Yol bulunamadı"
-
-#: inc/deployaction.class.php:53
-msgid "Return code is equal to"
-msgstr "Dönüş kodu şuna eşit olan"
-
-#: inc/deployaction.class.php:54
-msgid "Return code is not equal to"
-msgstr "Dönüş kodu şundan farklı olan"
-
-#: inc/deployaction.class.php:55
-msgid "Command output contains"
-msgstr "Komut çıktısında şu bulunan"
-
-#: inc/deployaction.class.php:56
-msgid "Command output does not contains"
-msgstr "Komut çıktısında şu bulunmayan"
-
-#: inc/deployaction.class.php:69
-msgid "Command"
-msgstr "Komut"
-
-#: inc/deployaction.class.php:70
-msgid "Move"
-msgstr "Taşınsın"
-
-#: inc/deployaction.class.php:71
-msgid "Copy"
-msgstr "Kopyalansın"
-
-#: inc/deployaction.class.php:72
-msgid "Delete directory"
-msgstr "Klasörü sil"
-
-#: inc/deployaction.class.php:73
-msgid "Create directory"
-msgstr "Klasör oluştur"
-
-#: inc/deployaction.class.php:200
-msgid "Command to execute"
-msgstr "Yürütülecek komut"
-
-#: inc/deployaction.class.php:203 inc/deployaction.class.php:343
-msgid "Action label"
-msgstr "İşlem etiketi"
-
-#: inc/deployaction.class.php:206 inc/deployaction.class.php:425
-msgid "Number of output lines to retrieve"
-msgstr "Alınacak çıktı satırı sayısı"
-
-#: inc/deployaction.class.php:223
-msgid "return codes saved for this command"
-msgstr "bu komut için kaydedilmiş geri dönüş kodları"
-
-#: inc/deployaction.class.php:236 inc/deploycheck.class.php:264
-#: inc/deployuserinteraction.class.php:250 inc/deployfile.class.php:257
-msgid "drag"
-msgstr "sürükleyin"
-
-#: inc/deployaction.class.php:250 inc/deploycheck.class.php:278
-#: inc/deployuserinteraction.class.php:264 inc/taskjobview.class.php:279
-#: inc/deployfile.class.php:270
-msgid "Delete"
-msgstr "Sil"
-
-#: inc/deployaction.class.php:296
-msgid "From"
-msgstr "Nereden"
-
-#: inc/deployaction.class.php:298
-msgid "To"
-msgstr "Nereye"
-
-#: inc/deployaction.class.php:309
-msgid "exec"
-msgstr "yürütme"
-
-#: inc/deployaction.class.php:324
-msgid "path"
-msgstr "yol"
-
-#: inc/deployaction.class.php:370
-msgid "Execution checks"
-msgstr "Yürütme denetimleri"
-
-#: inc/deployaction.class.php:435 inc/deploycheck.class.php:233
-#: inc/deploycheck.class.php:351 inc/deploycheck.class.php:362
-#: inc/deploycheck.class.php:371
-#, php-format
-msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
-msgstr ""
-"GLPI-Agent ya da Fusioninventory-Agent sürümünün %1s ya da üzerinde olması "
-"gereklidir"
-
-#: inc/config.class.php:201
-msgid "Network Inventory"
-msgstr "Ağ envanteri"
-
-#: inc/config.class.php:202 inc/menu.class.php:377
-msgid "Package management"
-msgstr "Paket yönetimi"
-
-#: inc/config.class.php:284
-msgid "Change the status"
-msgstr "Durumu değiştir"
-
-#: inc/config.class.php:287
-msgid "Clean agents"
-msgstr "Aracıları temizle"
-
-#: inc/config.class.php:315
-msgid "with location"
-msgstr "konuma göre"
-
-#: inc/config.class.php:316
-msgid "with entity"
-msgstr "varlığa göre"
-
-#: inc/config.class.php:317
-msgid "with both"
-msgstr "ikisine de göre"
-
-#: inc/deploygroup_staticdata.class.php:107
-msgid "CSV import"
-msgstr "CSV içe aktarma"
-
-#: inc/deploygroup_staticdata.class.php:154
-#, php-format
-msgid ""
-"Make a search to get desired computer, then use massive actions and use %s"
-msgstr ""
-"İstenilen bilgisayarı almak için bir arama yapın. Ardından toplu işlemleri "
-"ve %s kullanın"
-
-#: inc/deploygroup_staticdata.class.php:336
-msgid ""
-"Import a list of computers from a CSV file (the first column must contain "
-"the computer ID)"
-msgstr ""
-"CSV dosyasından bilgisayar listesini içe aktarın (ilk sütunda bilgisayar "
-"kimliği bulunmalıdır)"
-
-#: inc/deploygroup_staticdata.class.php:381
-msgid "Computers imported successfully from CSV file"
-msgstr "CSV dosyasından bilgisayarlar içe aktarıldı"
-
-#: inc/deploygroup_staticdata.class.php:384
-msgid "Impossible to read the CSV file"
-msgstr "CSV dosyası okunamadı"
-
-#: inc/credential.class.php:77 inc/credential.class.php:186
-#: inc/credentialip.class.php:132 inc/credentialip.class.php:155
-#: inc/profile.class.php:322 inc/menu.class.php:342
-msgid "Authentication for remote devices (VMware)"
-msgstr "Uzak aygıtlar için kimlik doğrulaması (VMware)"
-
-#: inc/credential.class.php:302 inc/credential.class.php:320
-#: inc/profile.class.php:332
-msgid "VMware host"
-msgstr "VMware sunucusu"
-
-#: inc/taskview.class.php:70
-msgid "Include old jobs"
-msgstr "Eski işler katılsın"
-
-#: inc/taskview.class.php:88
-msgid "refresh interval"
-msgstr "yenileme sıklığı"
-
-#: inc/taskview.class.php:91
-msgid "Off"
-msgstr "Kapalı"
-
-#: inc/taskview.class.php:108
-msgid "Export task result"
-msgstr "Görev sonuçlarını dışa aktar"
-
-#: inc/taskview.class.php:126
-msgid "Task execution states"
-msgstr "Görev yürütme durumları"
-
-#: inc/taskview.class.php:164 inc/stateinventory.class.php:114
-#: inc/deploytask.class.php:53 inc/deploytask.class.php:153
-#: inc/task.class.php:1562 inc/task.class.php:1602
-#: inc/statediscovery.class.php:177 inc/profile.class.php:391
-msgid "Task"
-msgid_plural "Tasks"
-msgstr[0] "Görev"
-msgstr[1] "Görevler"
-
-#: inc/taskview.class.php:212
-msgid "Show/Hide details"
-msgstr "Ayrıntıları görüntüle./ gizle"
-
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1375
-msgid "In error"
-msgstr "Hata"
-
-#: inc/taskview.class.php:236 inc/deploypackage.class.php:1376
-msgid "Successful"
-msgstr "Başarılı"
-
-#: inc/taskview.class.php:237 inc/deploypackage.class.php:1377
-msgid "Running"
-msgstr "Çalışıyor"
-
-#: inc/taskview.class.php:238 inc/stateinventory.class.php:192
-#: inc/taskjoblog.class.php:92 inc/taskjoblog.class.php:282
-#: inc/taskjobstate.class.php:144 inc/deploypackage.class.php:1378
-#: inc/statediscovery.class.php:261
-msgid "Prepared"
-msgstr "Hazırlanmış"
-
-#: inc/taskview.class.php:239 inc/taskjobstate.class.php:149
-#: inc/deploypackage.class.php:1379
-msgid "Cancelled"
-msgstr "İptal edildi"
-
-#: inc/taskview.class.php:322 inc/task.class.php:143
-msgid "Permit to re-prepare task after run"
-msgstr "Çalıştırıldıktan sonra görev yeniden hazırlanabilsin"
-
-#: inc/taskview.class.php:327
-msgid "This is an on demand deployment task"
-msgstr "Bu isteğe bağlı bir dağıtım görevidir"
-
-#: inc/taskview.class.php:338 inc/task.class.php:102
-msgid "Schedule start"
-msgstr "Zamanlama başlangıcı"
-
-#: inc/taskview.class.php:344 inc/task.class.php:110
-msgid "Schedule end"
-msgstr "Zamanlama bitişi"
-
-#: inc/taskview.class.php:350
-msgid "Preparation timeslot"
-msgstr "Hazırlanma zaman aralığı"
-
-#: inc/taskview.class.php:358
-msgid "Execution timeslot"
-msgstr "Yürütülme zaman aralığı"
-
-#: inc/taskview.class.php:366
-msgid "Agent wakeup interval (in minutes)"
-msgstr "Aracı uyanma sıklığı (dakika)"
-
-#: inc/taskview.class.php:376
-msgid "Number of agents to wake up"
-msgstr "Uyanacak aracı sayısı"
-
-#: inc/taskview.class.php:422
-msgid "Force start"
-msgstr "Başlatmaya zorla"
-
-#: inc/taskview.class.php:942
-msgid "Device no longer defined in definition of job"
-msgstr "Aygıt artık iş tanımında bulunmuyor"
-
-#: inc/stateinventory.class.php:113 inc/taskjoblog.class.php:212
-#: inc/statediscovery.class.php:176
-msgid "Unique id"
-msgstr "Eşsiz kimlik"
-
-#: inc/stateinventory.class.php:117 inc/statediscovery.class.php:180
-msgid "Starting date"
-msgstr "Başlangıç tarihi"
-
-#: inc/stateinventory.class.php:118 inc/statediscovery.class.php:181
-msgid "Ending date"
-msgstr "Bitiş tarihi"
-
-#: inc/stateinventory.class.php:120
-msgid "Number per second"
-msgstr "Saniyedeki sayı"
-
-#: inc/stateinventory.class.php:121
-msgid "Threads / Timeout configuration"
-msgstr "İşlemler / Zaman aşımı yapılandırması"
-
-#: inc/stateinventory.class.php:122
-msgid "To inventory"
-msgstr "Envantere"
-
-#: inc/stateinventory.class.php:123
-msgid "Error(s)"
-msgstr "Hata"
-
-#: inc/stateinventory.class.php:197 inc/taskjoblog.class.php:93
-#: inc/taskjoblog.class.php:286 inc/statediscovery.class.php:266
-msgid "Started"
-msgstr "Başlatılmış"
-
-#: inc/stateinventory.class.php:201 inc/statediscovery.class.php:270
-msgid "Finished tasks"
-msgstr "Bitirilmiş görevler"
-
-#: inc/deploygroup.class.php:90 inc/deploygroup.class.php:826
-msgid "Dynamic group"
-msgstr "Devingen grup"
-
-#: inc/deploygroup.class.php:103
-msgid "Inventory group"
-msgid_plural "Inventory groups"
-msgstr[0] "Envanter grubu"
-msgstr[1] "Envanter grupları"
-
-#: inc/deploygroup.class.php:120
-msgid "Associated task"
-msgid_plural "Associated tasks"
-msgstr[0] "İlgili görev"
-msgstr[1] "İlgili görevler"
-
-#: inc/deploygroup.class.php:173 inc/taskjobview.class.php:637
-msgid "Module method"
-msgstr "Modül yöntemi"
-
-#: inc/deploygroup.class.php:389
-msgid "Add group"
-msgstr "Grup ekle"
-
-#: inc/collect_registry.class.php:63
-msgid "Found entry"
-msgid_plural "Found entries"
-msgstr[0] "Bulunan kayıt"
-msgstr[1] "Bulunan kayıtlar"
-
-#: inc/collect_registry.class.php:91
-msgid "Default"
-msgstr "Varsayılan"
-
-#: inc/collect_registry.class.php:92
-msgid "Check path existence"
-msgstr "Yolun varlığını denetle"
-
-#: inc/collect_registry.class.php:93
-msgid "Check if a key is defined"
-msgstr "Bir anahtar tanımlanmış mı denetle"
-
-#: inc/collect_registry.class.php:94
-msgid "All values"
-msgstr "Tüm değerler"
-
-#: inc/deploymirror.class.php:67 inc/profile.class.php:294
-#: inc/menu.class.php:384
-msgid "Mirror servers"
-msgstr "Yansı sunucular"
-
-#: inc/staticmisc.class.php:59
-msgid "Computer Inventory"
-msgstr "Bilgisayar envanteri"
-
-#: inc/staticmisc.class.php:67
-msgid "VMware host remote inventory"
-msgstr "VMware uzak sunucu envanteri"
-
-#: inc/staticmisc.class.php:87 inc/deploypackage.class.php:1069
-msgid "Package deploy"
-msgstr "Paket dağıtımı"
-
-#: inc/staticmisc.class.php:95
-msgid "Collect data"
-msgstr "Derleme verileri"
-
-#: inc/staticmisc.class.php:434 inc/staticmisc.class.php:440
-#: inc/taskjob.class.php:801
-msgid "Auto management dynamic of agents"
-msgstr "Aracının otomatik yönetim devinimi"
-
-#: inc/timeslot.class.php:67 inc/timeslot.class.php:83
-#: inc/timeslotentry.class.php:79 inc/menu.class.php:259
-msgid "Time slot"
-msgstr "Zaman aralığı"
-
-#: inc/deploytask.class.php:109
-msgid "Order list"
-msgstr "Listeyi sırala"
-
-#: inc/deploytask.class.php:156
-msgid "Add task"
-msgstr "Görev ekle"
-
-#: inc/deploytask.class.php:181
-msgid "Edit impossible, this task is active"
-msgstr "Bu görev etkin olduğundan düzenlenemez"
-
-#: inc/deploytask.class.php:212
-msgid "This task is active. delete denied"
-msgstr "Bu görev etkin olduğundan silinemez"
-
-#: inc/taskjoblog.class.php:95
-msgid "Ok"
-msgstr "Tamam"
-
-#: inc/taskjoblog.class.php:97
-msgid "Info"
-msgstr "Bilgiler"
-
-#: inc/taskjoblog.class.php:186 inc/task.class.php:1619
-#: inc/taskjob.class.php:56 inc/agentwakeup.class.php:69
-msgid "Job"
-msgstr "İş"
-
-#: inc/taskjoblog.class.php:304
-msgid "unknown"
-msgstr "bilinmiyor"
-
-#: inc/taskjoblog.class.php:340
-msgid "devices queried"
-msgstr "sorgulanan aygıt"
-
-#: inc/taskjoblog.class.php:341
-msgid "devices found"
-msgstr "bulunan aygıt"
-
-#: inc/taskjoblog.class.php:342
-msgid "Add the item"
-msgstr "Ögeyi ekle"
-
-#: inc/taskjoblog.class.php:343
-msgid "Update the item"
-msgstr "Ögeyi güncelle"
-
-#: inc/taskjoblog.class.php:344
-msgid "Inventory started"
-msgstr "Envanter başlatıldı"
-
-#: inc/taskjoblog.class.php:345
-msgid "Detail"
-msgstr "Ayrıntı"
-
-#: inc/taskjoblog.class.php:346
-msgid "Agent communication error, impossible to start agent"
-msgstr "Aracı iletişim hatası, aracı başlatılamadı"
-
-#: inc/taskjoblog.class.php:347
-msgid "Agent stopped/crashed"
-msgstr "Aracı durdu / çöktü"
-
-#: inc/taskjoblog.class.php:348
-msgid "Import denied"
-msgstr "İçe aktarım reddedildi"
-
-#: inc/agentmodule.class.php:62
-msgid "Agents modules"
-msgstr "Aracı modülleri"
-
-#: inc/agentmodule.class.php:126
-msgid "Package deployment"
-msgstr "Paket dağıtımı"
-
-#: inc/commonview.class.php:296
-msgid "Warning:"
-msgstr "Uyarı:"
-
-#: inc/commonview.class.php:301
-msgid "Error:"
-msgstr "Hata:"
-
-#: inc/task.class.php:63 inc/menu.class.php:237
-msgid "Task management"
-msgstr "Görev yönetimi"
-
-#: inc/task.class.php:153
-msgid "deploy on demand task"
-msgstr "isteğe bağlı görevi dağıt"
-
-#: inc/task.class.php:177
-msgid "Associated tasks"
-msgstr "İlgili görevler"
-
-#: inc/task.class.php:405
-msgid ""
-"The agent is requesting a configuration that has already been sent to him by"
-" the server. It is more likely that the agent is subject to a critical "
-"error."
-msgstr ""
-"Aracı zaten sunucu tarafından kendisine gönderilmiş ayarları istiyor. "
-"Aracıda kritik bir sorun çıkmış olma olasılığı daha yüksek. "
-
-#: inc/task.class.php:418
-msgid "The task has been deactivated after preparation of this job."
-msgstr "Bu işin hazırlanmasından sonra görev devre dışı bırakıldı."
-
-#: inc/task.class.php:439
-msgid "This job can not be executed anymore due to the task's schedule."
-msgstr "Görev zamanlaması nedeniyle bu iş bir daha yürütülemeyecek."
-
-#: inc/task.class.php:485
-msgid "This job can not be executed anymore due to the task's timeslot."
-msgstr "Görevin zaman aralığı nedeniyle bu iş bir daha yürütülemeyecek."
-
-#: inc/task.class.php:504
-msgid "This agent does not belong anymore in the actors defined in the job."
-msgstr "Bu aracı artık işin içinde tanımlanmış aktörlere bağlı değil."
-
-#: inc/task.class.php:541
-msgid "The task cannot be updated if it is active"
-msgstr "Görev etkinse güncellenemez"
-
-#: inc/task.class.php:696
-msgid "Inventory task scheduler"
-msgstr "Envanter görevi zamanlayıcısı"
-
-#: inc/task.class.php:699
-msgid "Clean on demand deployment tasks"
-msgstr "Dağıtım görevlerini temizleme isteği"
-
-#: inc/task.class.php:1514
-msgid "Task has been disabled"
-msgstr "Görev etkisizleştirilmiş"
-
-#: inc/task.class.php:1580 inc/deploypackage.class.php:102
-msgid "Package"
-msgstr "Paket"
-
-#: inc/task.class.php:1713
-msgid ""
-"You must choose a task and a package to target a task with a deployment "
-"package."
-msgstr "Bir hedefe dağıtmak için bir görev ve bir paket seçmelisiniz."
-
-#: inc/task.class.php:1730
-msgid "Deployment job, package: "
-msgstr "Dağıtım işi, paket:"
-
-#: inc/task.class.php:1747
-msgid "Updated a deployment job, package: "
-msgstr "Bir dağıtım işi, paket güncellendi: "
-
-#: inc/task.class.php:1748 inc/task.class.php:1791
-msgid ", actors: "
-msgstr ", aktörler: "
-
-#: inc/task.class.php:1776
-msgid "The selected task already has a deployment job for another package: "
-msgstr "Seçilmiş görevin zaten başka bir paket için dağıtım işi var: "
-
-#: inc/task.class.php:1790
-msgid "Created a deployment job, package: "
-msgstr "Bir dağıtım işi, paket oluşturuldu:"
-
-#: inc/timeslotentry.class.php:63
-msgid "Time slot entry"
-msgstr "Zaman aralığı kaydı"
-
-#: inc/timeslotentry.class.php:213
-msgid "End day must be after start day"
-msgstr "Bitiş günü başlangıç gününden sonra olmalıdır"
-
-#: inc/timeslotentry.class.php:223
-msgid "End time must be after start time"
-msgstr "Bitiş saati başlangıç saatinden sonra olmalıdır"
-
-#: inc/taskjobstate.class.php:124
-msgid "Tasks / Groups"
-msgstr "Görevler / gruplar"
-
-#: inc/taskjobstate.class.php:129
-msgid "Job executions"
-msgstr "İş yürütmeleri"
-
-#: inc/taskjobstate.class.php:145
-msgid "Server has sent data to the agent"
-msgstr "Sunucu aracıya veri gönderdi"
-
-#: inc/taskjobstate.class.php:146
-msgid "Agent replied with data to the server"
-msgstr "Aracı sunucuya veri yanıtı gönderdi"
-
-#: inc/taskjobstate.class.php:147
-msgid "Finished"
-msgstr "Tamamlandı"
-
-#: inc/taskjobstate.class.php:148
-msgid "Error"
-msgstr "Hata"
-
-#: inc/taskjobstate.class.php:150
-msgid "Postponed"
-msgstr "Ertelenmiş"
-
-#: inc/taskjobstate.class.php:520
-#, php-format
-msgid "Job available for next execution at %s"
-msgstr "İş %s zamanında sonraki yürütülmeye hazır"
-
-#: inc/taskjobstate.class.php:535
-#, php-format
-msgid "Retry #%d"
-msgstr "Yeniden deneme sayısı %d"
-
-#: inc/taskjobstate.class.php:537
-msgid "Maximum number of retry reached: force deployment"
-msgstr "En fazla yeniden deneme sayısına ulaşıldı: Zorla dağıtılsın"
-
-#: inc/taskjobstate.class.php:562
-msgid "Clean taskjob (retention time)"
-msgstr "Temizleme işlemi görevi (tutma süresi)"
-
-#: inc/collectcommon.class.php:74
-msgid "Collect configuration"
-msgstr "Derleme yapılandırması"
-
-#: inc/deploypackage.class.php:156 inc/menu.class.php:148
-msgid "Import"
-msgstr "İçe aktar"
-
-#: inc/deploypackage.class.php:159
-msgid "Export"
-msgstr "Dışa aktar"
-
-#: inc/deploypackage.class.php:280
-msgid "Modification Denied"
-msgstr "Değişiklik reddedildi"
-
-#: inc/deploypackage.class.php:283
-msgid "The following task is running with this package"
-msgid_plural "The following tasks are running with this package"
-msgstr[0] "Bu paketle birlikte şu görev yürütülüyor"
-msgstr[1] "Bu paketle birlikte şu görevler yürütülüyor"
-
-#: inc/deploypackage.class.php:389 inc/deploypackage.class.php:513
-msgid "Enable deploy on demand for the following group"
-msgstr "Şu grup için isteğe göre dağıtım kullanılsın"
-
-#: inc/deploypackage.class.php:532
-msgid "Audits"
-msgstr "Denetimler"
-
-#: inc/deploypackage.class.php:533
-msgid "Files"
-msgstr "Dosyalar"
-
-#: inc/deploypackage.class.php:534 public/b/deploy/index.php:153
-msgid "Actions"
-msgstr "İşlemler"
-
-#: inc/deploypackage.class.php:535
-msgid "User interactions"
-msgstr "Kullanıcı etkileşimleri"
-
-#: inc/deploypackage.class.php:687
-msgid "JSON package representation"
-msgstr "JSON paketi gösterimi"
-
-#: inc/deploypackage.class.php:811
-msgid "Package exported in"
-msgstr "Paket şuraya dışa aktarıldı"
-
-#: inc/deploypackage.class.php:884
-msgid "Packages to import"
-msgstr "İçe aktarılacak paketler"
-
-#: inc/deploypackage.class.php:1013 inc/deploypackageitem.class.php:332
-msgid "The modified JSON contained a syntax error :"
-msgstr "Değiştirilmiş JSON içinde bir yazım hatası var :"
-
-#: inc/deploypackage.class.php:1041
-msgid "Package actions"
-msgstr "Paket işlemleri"
-
-#: inc/deploypackage.class.php:1050
-msgid "Target for deploy on demand"
-msgid_plural "Targets for deploy on demand"
-msgstr[0] "İsteğe bağlı dağıtım hedefi"
-msgstr[1] "İsteğe bağlı dağıtım hedefleri"
-
-#: inc/deploypackage.class.php:1142
-msgid "Add a target for self-service"
-msgstr "Kendi kendine hizmet için bir hedef ekleyin"
-
-#: inc/deploypackage.class.php:1500
-msgid "Restart job"
-msgstr "İşi yeniden başlat"
-
-#: inc/deploypackage.class.php:1507
-msgid "refresh job"
-msgstr "işi yenile"
-
-#: inc/deploypackage.class.php:1652
-msgid "Select packages you want install"
-msgstr "Kurmak istediğiniz paketleri seçin"
-
-#: inc/deploypackage.class.php:1661
-msgid "Prepare for install"
-msgstr "Kurulum için hazırla"
-
-#: inc/deploypackage.class.php:1666
-msgid "I'm on this computer: local wakeup"
-msgstr "Bu bilgisayardayım: Yerel olarak uyandır"
-
-#: inc/deploypackage.class.php:1667
-msgid "I'm not on this computer: wakeup from the server"
-msgstr "Bu bilgisayarda değilim: Sunucudan uyandır"
-
-#: inc/deploypackage.class.php:1668
-msgid "Don't wakeup"
-msgstr "Uyandırma"
-
-#: inc/deploypackage.class.php:1684
-msgid "No packages available to install"
-msgstr "Kurulabilecek bir paket yok"
-
-#: inc/credentialip.class.php:76
-msgid "Remote device inventory"
-msgstr "Uzak aygıt envanteri"
-
-#: inc/statediscovery.class.php:184
-msgid "Total discovery devices"
-msgstr "Toplam keşfedilen aygıt"
-
-#: inc/statediscovery.class.php:185
-msgid "Devices not imported"
-msgstr "İçe aktarılmayan aygıtlar"
-
-#: inc/statediscovery.class.php:186
-msgid "Devices linked"
-msgstr "Bağlanan aygıtlar"
-
-#: inc/statediscovery.class.php:187
-msgid "Devices imported"
-msgstr "İçe aktarılan aygıtlar"
-
-#: inc/deploycheck.class.php:53
-msgid "Registry key exists"
-msgstr "Kayıt defteri anahtarı olan"
-
-#: inc/deploycheck.class.php:54
-msgid "Registry value exists"
-msgstr "Kayıt defteri değeri olan"
-
-#: inc/deploycheck.class.php:55
-msgid "Registry key missing"
-msgstr "Kayıt defteri anahtarı olmayan"
-
-#: inc/deploycheck.class.php:56
-msgid "Registry value missing"
-msgstr "Kayıt defteri değeri olmayan"
-
-#: inc/deploycheck.class.php:57
-msgid "Registry value equals to"
-msgstr "Kayıt defteri değeri şuna eşit olan"
-
-#: inc/deploycheck.class.php:58
-msgid "Registry value not equals to"
-msgstr "Kayıt defteri değeri şuna eşit olmayan"
-
-#: inc/deploycheck.class.php:59
-msgid "Type of registry value equals to"
-msgstr "Kayıt defteri değeri türü şuna eşit olan"
-
-#: inc/deploycheck.class.php:62
-msgid "File exists"
-msgstr "Dosya var olan"
-
-#: inc/deploycheck.class.php:63
-msgid "File is missing"
-msgstr "Dosya eksik olan"
-
-#: inc/deploycheck.class.php:64
-msgid "File size is greater than"
-msgstr "Dosya boyutu şundan büyük olan"
-
-#: inc/deploycheck.class.php:65
-msgid "File size is equal to"
-msgstr "Dosya boyutu şuna eşit olan"
-
-#: inc/deploycheck.class.php:66
-msgid "File size is lower than"
-msgstr "Dosya boyutu şundan küçük olan"
-
-#: inc/deploycheck.class.php:67
-msgid "SHA-512 hash value matches"
-msgstr "SHA-512 karma değeri şuna eşit olan"
-
-#: inc/deploycheck.class.php:68
-msgid "SHA-512 hash value mismatch"
-msgstr "SHA-512 karma değeri şuna eşit olmayan"
-
-#: inc/deploycheck.class.php:71
-msgid "Directory exists"
-msgstr "Klasör bulundu"
-
-#: inc/deploycheck.class.php:72
-msgid "Directory is missing"
-msgstr "Klasör bulunamadı"
-
-#: inc/deploycheck.class.php:75
-msgid "Free space is greater than"
-msgstr "Boş alan şundan büyük olan"
-
-#: inc/deploycheck.class.php:122
-msgid "continue"
-msgstr "devam"
-
-#: inc/deploycheck.class.php:124
-msgid "passed"
-msgstr "geçti"
-
-#: inc/deploycheck.class.php:126
-msgid "otherwise"
-msgstr "değil ise"
-
-#: inc/deploycheck.class.php:297 inc/deploycheck.class.php:440
-msgid "Audit label"
-msgstr "Denetim etiketi"
-
-#: inc/deploycheck.class.php:340
-msgid "Path to the key"
-msgstr "Anahtarın yolu"
-
-#: inc/deploycheck.class.php:342
-msgid "Example of registry key"
-msgstr "Kayıt defteri anahtarı örneği"
-
-#: inc/deploycheck.class.php:343 inc/deploycheck.class.php:360
-#, php-format
-msgid "GLPI-Agent or Fusioninventory-Agent >= %1s recommended"
-msgstr ""
-"GLPI-Agent ya da Fusioninventory-Agent sürümünün %1s ya da üzerinde olması "
-"önerilir"
-
-#: inc/deploycheck.class.php:348 inc/deploycheck.class.php:356
-#: inc/deploycheck.class.php:367
-msgid "Path to the value"
-msgstr "Değerin yolu"
-
-#: inc/deploycheck.class.php:350 inc/deploycheck.class.php:358
-#: inc/deploycheck.class.php:370
-msgid "Example of registry value"
-msgstr "Kayıt defteri değeri örneği"
-
+#: front/deployfile.clean.php:59
+msgid "Delete unused files"
+msgstr "Kullanılmayan dosyaları sil"
+
+#: front/deployuserinteractiontemplate.php:36
+#: inc/deployuserinteractiontemplate.class.php:135 inc/profile.class.php:289
+#: inc/menu.class.php:391
+msgid "User interaction template"
+msgid_plural "User interaction templates"
+msgstr[0] "Kullanıcı etkileşimi kalıbı"
+msgstr[1] "Kullanıcı etkileşimi kalıpları"
+
+#: front/collect.form.php:36
+msgid "Collect management"
+msgstr "Derleme yönetimi"
+
+#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:184
+msgid "Property"
+msgstr "Varlık"
+
+#: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
 #: inc/deploycheck.class.php:357 inc/deploycheck.class.php:390
 #: inc/deploycheck.class.php:397 inc/deploycheck.class.php:403
 #: inc/collect_registry_content.class.php:410
 #: inc/collect_registry_content.class.php:473
 #: inc/collect_registry_content.class.php:488
 #: inc/collect_registry_content.class.php:503
-#: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
 msgid "Value"
 msgstr "Değer"
-
-#: inc/deploycheck.class.php:368
-msgid "Type of value"
-msgstr "Değer türü"
-
-#: inc/deploycheck.class.php:382
-msgid "Directory"
-msgstr "Klasör"
-
-#: inc/deploycheck.class.php:402
-msgid "Disk or directory"
-msgstr "Disk ya da klasör"
-
-#: inc/deploycheck.class.php:499
-msgid "Unit"
-msgstr "Birim"
-
-#: inc/deploycheck.class.php:522
-msgid "If not successful"
-msgstr "Başarılı değilse"
-
-#: inc/deploycheck.class.php:553
-msgid "abort job"
-msgstr "işi durdur"
-
-#: inc/deploycheck.class.php:554
-msgid "skip job"
-msgstr "işi atla"
-
-#: inc/deploycheck.class.php:555
-msgid "start job now"
-msgstr "işi şimdi başlat"
-
-#: inc/deploycheck.class.php:556
-msgid "report info"
-msgstr "bilgileri raporla"
-
-#: inc/deploycheck.class.php:557
-msgid "report warning"
-msgstr "uyarıları raporla"
-
-#: inc/collect_registry_content.class.php:74
-msgid "Windows registry content"
-msgstr "Windows kayıt defteri içeriği"
-
-#: inc/collect_registry_content.class.php:279
-#, php-format
-msgid "%s path found"
-msgstr "%s yolu bulundu"
-
-#: inc/collect_registry_content.class.php:280
-#, php-format
-msgid "%s path not found"
-msgstr "%s yolu bulunamadı"
-
-#: inc/collect_registry_content.class.php:290
-#, php-format
-msgid "%s value exists"
-msgstr "%s değeri var"
-
-#: inc/collect_registry_content.class.php:291
-#, php-format
-msgid "%s value does not exist"
-msgstr "%s değeri yok"
-
-#: inc/collect_registry_content.class.php:299
-#, php-format
-msgid "%s: Found a value"
-msgstr "%s: Bir değer bulundu"
-
-#: inc/collect_registry_content.class.php:304
-#, php-format
-msgid "%s: Found %d values"
-msgstr "%s: %d değer bulundu"
-
-#: inc/collect_registry_content.class.php:311
-#, php-format
-msgid "%s: Found a result"
-msgstr "%s: Bir sonuç bulundu"
-
-#: inc/collect_registry_content.class.php:359
-msgid "Exist"
-msgstr "Var"
-
-#: inc/collect_registry_content.class.php:360
-msgid "Does not exist"
-msgstr "Yok"
-
-#: inc/collect_registry_content.class.php:371
-msgid "Defined"
-msgstr "Tanımlanmış"
-
-#: inc/collect_registry_content.class.php:372
-msgid "Not defined"
-msgstr "Tanımlanmamış"
-
-#: inc/collect_registry_content.class.php:406
-#: inc/collect_registry_content.class.php:408
-msgid "State"
-msgstr "Durum"
-
-#: inc/collect_registry_content.class.php:411
-#: inc/collect_registry_content.class.php:504
-msgid "Data"
-msgstr "Veri"
-
-#: inc/deployuserinteraction.class.php:79
-msgid "User interaction"
-msgid_plural "User interactions"
-msgstr[0] "Kullanıcı etkileşimi"
-msgstr[1] "Kullanıcı etkileşimleri"
-
-#: inc/deployuserinteraction.class.php:95
-msgid "Before download"
-msgstr "İndirilmeden önce"
-
-#: inc/deployuserinteraction.class.php:96
-msgid "After download"
-msgstr "İndirildikten sonra"
-
-#: inc/deployuserinteraction.class.php:97
-msgid "After actions"
-msgstr "İşlemlerden sonra"
-
-#: inc/deployuserinteraction.class.php:98
-msgid "On download failure"
-msgstr "İndirilemediğinde"
-
-#: inc/deployuserinteraction.class.php:99
-msgid "On actions failure"
-msgstr "İşlemler yapılamadığında"
-
-#: inc/deployuserinteraction.class.php:187
-msgid "Interaction label"
-msgstr "Etkileşim etiketi"
-
-#: inc/deployuserinteraction.class.php:382
-#, php-format
-msgid "Job cancelled by the user %1$s"
-msgstr "İş %1$s kullanıcısı tarafından iptal edildi"
-
-#: inc/deployuserinteraction.class.php:389
-#, php-format
-msgid "User %1$s agreed to continue the job"
-msgstr "%1$s kullanıcısı işi sürdürmeyi onayladı"
-
-#: inc/deployuserinteraction.class.php:396
-#, php-format
-msgid "Job postponed by the user %1$s"
-msgstr "%1$s kullanıcısı işi erteledi"
-
-#: inc/deployuserinteraction.class.php:402
-msgid "Bad event sent to the agent"
-msgstr "Aracıya hatalı bir işlem gönderildi"
-
-#: inc/deployuserinteraction.class.php:421
-msgid "Alert displayed, no input required"
-msgstr "Uyarı görüntülendi, herhangi bir giriş gerekmiyor"
-
-#: inc/deployuserinteraction.class.php:427
-msgid "Retry"
-msgstr "Yeniden dene"
-
-#: inc/deployuserinteraction.class.php:433
-msgid "Abort"
-msgstr "Vazgeç"
-
-#: inc/deployuserinteraction.class.php:436
-msgid "Ignore"
-msgstr "Yok say"
-
-#: inc/deployuserinteraction.class.php:442
-msgid "Alert duration exceeded"
-msgstr "Uyarı süresi aşıldı"
-
-#: inc/deployuserinteraction.class.php:445
-msgid "No user connected"
-msgstr "Herhangi bir kullanıcı bağlı değil"
-
-#: inc/deployuserinteraction.class.php:448
-msgid "Multiple users connected"
-msgstr "Birden çok kullanıcı bağlı"
-
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:147
-msgid "Path/file"
-msgstr "Yol / dosya"
-
-#: inc/display.class.php:134
-msgid "Progress"
-msgstr "İşlem"
-
-#: inc/taskjobview.class.php:69
-msgid "Job configuration"
-msgstr "İş yapılandırması"
-
-#: inc/taskjobview.class.php:235
-msgid ""
-"Several jobs in the same task is not anymore supported because of unexpected side-effects.\n"
-"         Please consider modifying this task to avoid unexpected results."
-msgstr ""
-"Beklenmedik yan etkiler çıkabildiği için artık aynı görev içinde birden çok iş desteklenmiyor.\n"
-"         Lütfen beklenmeyen sonuçlardan kaçınmak için bu görevi değiştirmeyi değerlendirin."
-
-#: inc/taskjobview.class.php:250
-msgid "Add a job"
-msgstr "İş ekle"
-
-#: inc/taskjobview.class.php:358
-msgid "Actor Type"
-msgstr "Aktör türü"
-
-#: inc/taskjobview.class.php:362
-msgid "Target Type"
-msgstr "Hedef türü"
-
-#: inc/taskjobview.class.php:405
-msgid "Actor Item"
-msgstr "Aktör ögesi"
-
-#: inc/taskjobview.class.php:409
-msgid "Target Item"
-msgstr "Hedef öge"
-
-#: inc/taskjobview.class.php:594 inc/taskjobview.class.php:597
-msgid "New action"
-msgstr "Yeni işlem"
-
-#: inc/taskjobview.class.php:672
-msgid "Restrict scope to task entity"
-msgstr "Kapsam görev varlığı ile sınırlansın"
-
-#: inc/taskjobview.class.php:690 inc/taskjobview.class.php:723
-msgid "Targets"
-msgstr "Hedefler"
-
-#: inc/taskjobview.class.php:696
-msgid "The items that should be applied for this job."
-msgstr "Bu işin uygulanacağı ögeler."
-
-#: inc/taskjobview.class.php:702 inc/taskjobview.class.php:745
-msgid "Actors"
-msgstr "Aktörler"
-
-#: inc/taskjobview.class.php:707
-msgid "The items that should carry out those targets."
-msgstr "Bu hedeflere ulaşacak ögeler."
-
-#: inc/taskjobview.class.php:731 inc/taskjobview.class.php:753
-msgid "Clear list"
-msgstr "Listeyi temizle"
-
-#: inc/taskjobview.class.php:736 inc/taskjobview.class.php:758
-msgid "Delete selected items"
-msgstr "Seçilmiş ögeleri sil"
-
-#: inc/taskjobview.class.php:776
-msgid "Cancel modifications"
-msgstr "Değişiklikleri iptal et"
-
-#: inc/taskjobview.class.php:781
-msgid "Purge"
-msgstr "Sil"
-
-#: inc/taskjobview.class.php:784
-msgid "Confirm the final deletion ?"
-msgstr "Silme işlemini onaylıyor musunuz?"
-
-#: inc/deployfile.class.php:87
-msgid "Upload from computer"
-msgstr "Bilgisayardan yükle"
-
-#: inc/deployfile.class.php:91
-msgid "Upload from server"
-msgstr "Sunucudan yükle"
-
-#: inc/deployfile.class.php:200
-msgid "p2p"
-msgstr "p2p"
-
-#: inc/deployfile.class.php:201 inc/deployfile.class.php:366
-msgid "retention"
-msgstr "tutma"
-
-#: inc/deployfile.class.php:203 inc/deployfile.class.php:367
-#: inc/taskjob.class.php:764
-msgid "Minute(s)"
-msgstr "dakika"
-
-#: inc/deployfile.class.php:215
-msgid "uncompress"
-msgstr "ayıkla"
-
-#: inc/deployfile.class.php:222
-msgid "Download"
-msgstr "İndir"
-
-#: inc/deployfile.class.php:322
-msgid "filename"
-msgstr "dosyaadı"
-
-#: inc/deployfile.class.php:329
-msgid "Choose"
-msgstr "Seçin"
-
-#: inc/deployfile.class.php:335
-msgid "Select the file on server"
-msgstr "Sunucudan dosya seçin"
-
-#: inc/deployfile.class.php:351
-msgid "Uncompress"
-msgstr "Ayıkla"
-
-#: inc/deployfile.class.php:358
-msgid "P2P"
-msgstr "P2P"
-
-#: inc/deployfile.class.php:439
-#, php-format
-msgid "Files need to be uploaded to %s folder to be displayed here"
-msgstr "Burada görüntülenmesi için dosyalar %s klasörüne yüklenmelidir"
-
-#: inc/deployfile.class.php:631
-msgid "Upload error"
-msgstr "Yükleme sorunu"
-
-#: inc/deployfile.class.php:635
-msgid "Transfer error: the file size is too big"
-msgstr "Aktarım hatası: Dosya boyutu çok büyük"
-
-#: inc/deployfile.class.php:639
-msgid "The uploaded file was only partially uploaded"
-msgstr "Dosyanın yalnızca bir kısmı yüklenebildi"
-
-#: inc/deployfile.class.php:643
-msgid "No file was uploaded"
-msgstr "Henüz bir dosya yüklenmemiş"
-
-#: inc/deployfile.class.php:647
-msgid "Missing a temporary folder"
-msgstr "Bir geçici klasör bulunamadı"
-
-#: inc/deployfile.class.php:651
-msgid "Failed to write file to disk"
-msgstr "Dosya diske yazılamadı"
-
-#: inc/deployfile.class.php:655
-msgid "PHP extension stopped the file upload"
-msgstr "PHP eklentisi dosya yüklemeyi durdurdu"
-
-#: inc/deployfile.class.php:683 inc/deployfile.class.php:738
-msgid "File saved!"
-msgstr "Dosya kaydedildi!"
-
-#: inc/deployfile.class.php:686 inc/deployfile.class.php:741
-msgid "Failed to copy file"
-msgstr "Dosya kopyalanamadı"
-
-#: inc/deployfile.class.php:690 inc/deployfile.class.php:745
-msgid "File missing"
-msgstr "Dosya eksik"
-
-#: inc/deployfile.class.php:1076
-msgid "Max file size"
-msgstr "En büyük dosya boyutu"
-
-#: inc/deployfile.class.php:1077
-msgid "Mio"
-msgstr "MB"
-
-#: inc/deployfile.class.php:1090
-msgid "Unused file"
-msgstr "Kullanılmayan dosya"
-
-#: inc/collect_wmi_content.class.php:119 inc/collect_wmi_content.class.php:184
-msgid "Property"
-msgstr "Varlık"
-
-#: inc/collect_file.class.php:48
-msgid "Found file"
-msgid_plural "Found files"
-msgstr[0] "Bulunan dosya"
-msgstr[1] "Bulunan dosyalar "
-
-#: inc/collect_file.class.php:61
-msgid "Recursive"
-msgstr "Yinelenen"
-
-#: inc/collect_file.class.php:66
-msgid "Name"
-msgstr "Ad"
-
-#: inc/collect_file.class.php:67
-msgid "Iname"
-msgstr "Iad"
-
-#: inc/collect_file.class.php:68
-msgid "Type"
-msgstr "Tür"
-
-#: inc/communicationnetworkdiscovery.class.php:109
-#, php-format
-msgid "Processed: %1$s Created: %2$s Updated: %3$s"
-msgstr "İşlenen: %1$s Oluşturulan: %2$s Güncellenen: %3$s"
-
-#: inc/taskjob.class.php:744
-msgid "Scheduled date"
-msgstr "Zamanlanan tarih"
-
-#: inc/taskjob.class.php:745
-msgid "Periodicity"
-msgstr "Sıklık"
-
-#: inc/taskjob.class.php:746
-msgid "Definition"
-msgstr "Açıklama"
-
-#: inc/taskjob.class.php:747
-msgid "Action"
-msgstr "İşlem"
-
-#: inc/taskjob.class.php:769
-msgid "hour(s)"
-msgstr "saat"
-
-#: inc/taskjob.class.php:774
-msgid "day(s)"
-msgstr "gün"
-
-#: inc/taskjob.class.php:803
-msgid "Auto management dynamic of agents (same subnet)"
-msgstr "Aracıların otomatik yönetim devinimi (aynı alt ağda)"
-
-#: inc/taskjob.class.php:1005
-msgid "Force the end"
-msgstr "Durmaya zorla"
-
-#: inc/profile.class.php:170 inc/menu.class.php:226
-msgid "General"
-msgstr "Genel"
-
-#: inc/profile.class.php:176
-msgid "Inventory"
-msgstr "Envanter"
-
-#: inc/profile.class.php:182 inc/profile.class.php:228
-msgid "Software deployment"
-msgstr "Yazılım dağıtma"
-
-#: inc/profile.class.php:222 inc/profile.class.php:299
-msgid "Deploy packages on demand"
-msgstr "Paketleri isteğe göre dağıt"
-
-#: inc/profile.class.php:284
-msgid "Manage packages"
-msgstr "Paket yönetimi"
-
-#: inc/profile.class.php:327 inc/menu.class.php:326
-msgid "Remote devices to inventory (VMware)"
-msgstr "Envantere eklenecek uzak aygıtlar (VMware)"
-
-#: inc/profile.class.php:341
-msgid "Network equipment SNMP"
-msgstr "Ağ aygıtı SNMP"
-
-#: inc/profile.class.php:346
-msgid "Printer SNMP"
-msgstr "Yazıcı SNMP"
-
-#: inc/profile.class.php:380
-msgid "Menu"
-msgstr "Menü"
-
-#: inc/profile.class.php:386
-msgid "Configuration"
-msgstr "Yapılandırma"
-
-#: inc/iprange_snmpcredential.class.php:101
-msgid "Associated SNMP credentials"
-msgstr "Atanmış SNMP kimlik doğrulama bilgileri"
-
-#: inc/iprange_snmpcredential.class.php:209
-msgid "SNMP credentials"
-msgstr "SNMP kimlik doğrulama bilgileri"
-
-#: inc/iprange_snmpcredential.class.php:212
-msgid "Version"
-msgstr "Sürüm"
-
-#: inc/iprange_snmpcredential.class.php:215
-msgid "By order of priority"
-msgstr "Öncelik sırasına göre"
 
 #: inc/deployuserinteractiontemplate.class.php:99
 msgid "Behavior"
@@ -1857,9 +432,1348 @@ msgstr "Bir kaç etkin oturum var"
 msgid "Behaviors"
 msgstr "Davranışlar"
 
+#: inc/commonview.class.php:296
+msgid "Warning:"
+msgstr "Uyarı:"
+
+#: inc/commonview.class.php:301
+msgid "Error:"
+msgstr "Hata:"
+
+#: inc/collect_file_content.class.php:92
+#: inc/collect_file_content.class.php:147
+msgid "Path/file"
+msgstr "Yol / dosya"
+
+#: inc/collect_file.class.php:48
+msgid "Found file"
+msgid_plural "Found files"
+msgstr[0] "Bulunan dosya"
+msgstr[1] "Bulunan dosyalar "
+
+#: inc/collect_file.class.php:61
+msgid "Recursive"
+msgstr "Yinelenen"
+
+#: inc/collect_file.class.php:66
+msgid "Name"
+msgstr "Ad"
+
+#: inc/collect_file.class.php:67
+msgid "Iname"
+msgstr "Iad"
+
+#: inc/collect_file.class.php:68
+msgid "Type"
+msgstr "Tür"
+
+#: inc/deployuserinteraction.class.php:79
+msgid "User interaction"
+msgid_plural "User interactions"
+msgstr[0] "Kullanıcı etkileşimi"
+msgstr[1] "Kullanıcı etkileşimleri"
+
+#: inc/deployuserinteraction.class.php:95
+msgid "Before download"
+msgstr "İndirilmeden önce"
+
+#: inc/deployuserinteraction.class.php:96
+msgid "After download"
+msgstr "İndirildikten sonra"
+
+#: inc/deployuserinteraction.class.php:97
+msgid "After actions"
+msgstr "İşlemlerden sonra"
+
+#: inc/deployuserinteraction.class.php:98
+msgid "On download failure"
+msgstr "İndirilemediğinde"
+
+#: inc/deployuserinteraction.class.php:99
+msgid "On actions failure"
+msgstr "İşlemler yapılamadığında"
+
+#: inc/deployuserinteraction.class.php:187
+msgid "Interaction label"
+msgstr "Etkileşim etiketi"
+
+#: inc/deployuserinteraction.class.php:250 inc/deploycheck.class.php:264
+#: inc/deployaction.class.php:236 inc/deployfile.class.php:257
+msgid "drag"
+msgstr "sürükleyin"
+
+#: inc/deployuserinteraction.class.php:264 inc/taskjobview.class.php:280
+#: inc/deploycheck.class.php:278 inc/deployaction.class.php:250
+#: inc/deployfile.class.php:270
+msgid "Delete"
+msgstr "Sil"
+
+#: inc/deployuserinteraction.class.php:382
+#, php-format
+msgid "Job cancelled by the user %1$s"
+msgstr "İş %1$s kullanıcısı tarafından iptal edildi"
+
+#: inc/deployuserinteraction.class.php:389
+#, php-format
+msgid "User %1$s agreed to continue the job"
+msgstr "%1$s kullanıcısı işi sürdürmeyi onayladı"
+
+#: inc/deployuserinteraction.class.php:396
+#, php-format
+msgid "Job postponed by the user %1$s"
+msgstr "%1$s kullanıcısı işi erteledi"
+
+#: inc/deployuserinteraction.class.php:402
+msgid "Bad event sent to the agent"
+msgstr "Aracıya hatalı bir işlem gönderildi"
+
+#: inc/deployuserinteraction.class.php:421
+msgid "Alert displayed, no input required"
+msgstr "Uyarı görüntülendi, herhangi bir giriş gerekmiyor"
+
+#: inc/deployuserinteraction.class.php:427
+msgid "Retry"
+msgstr "Yeniden dene"
+
+#: inc/deployuserinteraction.class.php:433
+msgid "Abort"
+msgstr "Vazgeç"
+
+#: inc/deployuserinteraction.class.php:436
+msgid "Ignore"
+msgstr "Yok say"
+
+#: inc/deployuserinteraction.class.php:442
+msgid "Alert duration exceeded"
+msgstr "Uyarı süresi aşıldı"
+
+#: inc/deployuserinteraction.class.php:445
+msgid "No user connected"
+msgstr "Herhangi bir kullanıcı bağlı değil"
+
+#: inc/deployuserinteraction.class.php:448
+msgid "Multiple users connected"
+msgstr "Birden çok kullanıcı bağlı"
+
+#: inc/timeslotentry.class.php:63
+msgid "Time slot entry"
+msgstr "Zaman aralığı kaydı"
+
+#: inc/timeslotentry.class.php:79 inc/menu.class.php:259
+#: inc/timeslot.class.php:67 inc/timeslot.class.php:83
+msgid "Time slot"
+msgstr "Zaman aralığı"
+
+#: inc/timeslotentry.class.php:214
+msgid "End day must be after start day"
+msgstr "Bitiş günü başlangıç gününden sonra olmalıdır"
+
+#: inc/timeslotentry.class.php:224
+msgid "End time must be after start time"
+msgstr "Bitiş saati başlangıç saatinden sonra olmalıdır"
+
+#: inc/taskjobstate.class.php:124
+msgid "Tasks / Groups"
+msgstr "Görevler / gruplar"
+
+#: inc/taskjobstate.class.php:129
+msgid "Job executions"
+msgstr "İş yürütmeleri"
+
+#: inc/taskjobstate.class.php:144 inc/deploypackage.class.php:1656
+#: inc/taskjoblog.class.php:92 inc/taskjoblog.class.php:283
+#: inc/stateinventory.class.php:192 inc/statediscovery.class.php:261
+#: inc/taskview.class.php:238
+msgid "Prepared"
+msgstr "Hazırlanmış"
+
+#: inc/taskjobstate.class.php:145
+msgid "Server has sent data to the agent"
+msgstr "Sunucu aracıya veri gönderdi"
+
+#: inc/taskjobstate.class.php:146
+msgid "Agent replied with data to the server"
+msgstr "Aracı sunucuya veri yanıtı gönderdi"
+
+#: inc/taskjobstate.class.php:147
+msgid "Finished"
+msgstr "Tamamlandı"
+
+#: inc/taskjobstate.class.php:148
+msgid "Error"
+msgstr "Hata"
+
+#: inc/taskjobstate.class.php:149 inc/deploypackage.class.php:1657
+#: inc/taskview.class.php:239
+msgid "Cancelled"
+msgstr "İptal edildi"
+
+#: inc/taskjobstate.class.php:150
+msgid "Postponed"
+msgstr "Ertelenmiş"
+
+#: inc/taskjobstate.class.php:520
+#, php-format
+msgid "Job available for next execution at %s"
+msgstr "İş %s zamanında sonraki yürütülmeye hazır"
+
+#: inc/taskjobstate.class.php:535
+#, php-format
+msgid "Retry #%d"
+msgstr "Yeniden deneme sayısı %d"
+
+#: inc/taskjobstate.class.php:537
+msgid "Maximum number of retry reached: force deployment"
+msgstr "En fazla yeniden deneme sayısına ulaşıldı: Zorla dağıtılsın"
+
+#: inc/taskjobstate.class.php:562
+msgid "Clean taskjob (retention time)"
+msgstr "Temizleme işlemi görevi (tutma süresi)"
+
+#: inc/deploypackage.class.php:109 inc/task.class.php:1581
+msgid "Package"
+msgstr "Paket"
+
+#: inc/deploypackage.class.php:163 inc/menu.class.php:148
+msgid "Import"
+msgstr "İçe aktar"
+
+#: inc/deploypackage.class.php:166
+msgid "Export"
+msgstr "Dışa aktar"
+
+#: inc/deploypackage.class.php:273
+msgid "Unable to import package archive"
+msgstr "Paket arşiv dosyası içe aktarılamadı"
+
+#: inc/deploypackage.class.php:314
+msgid "Modification Denied"
+msgstr "Değişiklik reddedildi"
+
+#: inc/deploypackage.class.php:317
+msgid "The following task is running with this package"
+msgid_plural "The following tasks are running with this package"
+msgstr[0] "Bu paketle birlikte şu görev yürütülüyor"
+msgstr[1] "Bu paketle birlikte şu görevler yürütülüyor"
+
+#: inc/deploypackage.class.php:374
+msgid "Package content cannot be modified while a task is running with it"
+msgstr "Bir görev onunla çalışırken paket içeriği değiştirilemez"
+
+#: inc/deploypackage.class.php:398
+msgid "Invalid package uuid"
+msgstr "Paket uuid değeri geçersiz"
+
+#: inc/deploypackage.class.php:409
+msgid "Invalid package content"
+msgstr "Paket içeriği geçersiz"
+
+#: inc/deploypackage.class.php:484 inc/deploypackage.class.php:608
+msgid "Enable deploy on demand for the following group"
+msgstr "Şu grup için isteğe göre dağıtım kullanılsın"
+
+#: inc/deploypackage.class.php:627
+msgid "Audits"
+msgstr "Denetimler"
+
+#: inc/deploypackage.class.php:628
+msgid "Files"
+msgstr "Dosyalar"
+
+#: inc/deploypackage.class.php:629 public/b/deploy/index.php:153
+msgid "Actions"
+msgstr "İşlemler"
+
+#: inc/deploypackage.class.php:630
+msgid "User interactions"
+msgstr "Kullanıcı etkileşimleri"
+
+#: inc/deploypackage.class.php:782
+msgid "JSON package representation"
+msgstr "JSON paketi gösterimi"
+
+#: inc/deploypackage.class.php:914
+msgid "Package exported in"
+msgstr "Paket şuraya dışa aktarıldı"
+
+#: inc/deploypackage.class.php:1162
+msgid "Packages to import"
+msgstr "İçe aktarılacak paketler"
+
+#: inc/deploypackage.class.php:1291 inc/deploypackageitem.class.php:332
+msgid "The modified JSON contained a syntax error :"
+msgstr "Değiştirilmiş JSON içinde bir yazım hatası var :"
+
+#: inc/deploypackage.class.php:1319
+msgid "Package actions"
+msgstr "Paket işlemleri"
+
+#: inc/deploypackage.class.php:1328
+msgid "Target for deploy on demand"
+msgid_plural "Targets for deploy on demand"
+msgstr[0] "İsteğe bağlı dağıtım hedefi"
+msgstr[1] "İsteğe bağlı dağıtım hedefleri"
+
+#: inc/deploypackage.class.php:1347 inc/staticmisc.class.php:87
+msgid "Package deploy"
+msgstr "Paket dağıtımı"
+
+#: inc/deploypackage.class.php:1420
+msgid "Add a target for self-service"
+msgstr "Kendi kendine hizmet için bir hedef ekleyin"
+
+#: inc/deploypackage.class.php:1653 inc/taskview.class.php:235
+msgid "In error"
+msgstr "Hata"
+
+#: inc/deploypackage.class.php:1654 inc/taskview.class.php:236
+msgid "Successful"
+msgstr "Başarılı"
+
+#: inc/deploypackage.class.php:1655 inc/taskview.class.php:237
+msgid "Running"
+msgstr "Çalışıyor"
+
+#: inc/deploypackage.class.php:1778
+msgid "Restart job"
+msgstr "İşi yeniden başlat"
+
+#: inc/deploypackage.class.php:1785
+msgid "refresh job"
+msgstr "işi yenile"
+
+#: inc/deploypackage.class.php:1930
+msgid "Select packages you want install"
+msgstr "Kurmak istediğiniz paketleri seçin"
+
+#: inc/deploypackage.class.php:1939
+msgid "Prepare for install"
+msgstr "Kurulum için hazırla"
+
+#: inc/deploypackage.class.php:1944
+msgid "I'm on this computer: local wakeup"
+msgstr "Bu bilgisayardayım: Yerel olarak uyandır"
+
+#: inc/deploypackage.class.php:1945
+msgid "I'm not on this computer: wakeup from the server"
+msgstr "Bu bilgisayarda değilim: Sunucudan uyandır"
+
+#: inc/deploypackage.class.php:1946
+msgid "Don't wakeup"
+msgstr "Uyandırma"
+
+#: inc/deploypackage.class.php:1962
+msgid "No packages available to install"
+msgstr "Kurulabilecek bir paket yok"
+
+#: inc/collect_registry.class.php:63
+msgid "Found entry"
+msgid_plural "Found entries"
+msgstr[0] "Bulunan kayıt"
+msgstr[1] "Bulunan kayıtlar"
+
+#: inc/collect_registry.class.php:91
+msgid "Default"
+msgstr "Varsayılan"
+
+#: inc/collect_registry.class.php:92
+msgid "Check path existence"
+msgstr "Yolun varlığını denetle"
+
+#: inc/collect_registry.class.php:93
+msgid "Check if a key is defined"
+msgstr "Bir anahtar tanımlanmış mı denetle"
+
+#: inc/collect_registry.class.php:94
+msgid "All values"
+msgstr "Tüm değerler"
+
+#: inc/deploymirror.class.php:67 inc/profile.class.php:294
+#: inc/menu.class.php:384
+msgid "Mirror servers"
+msgstr "Yansı sunucular"
+
+#: inc/taskjobview.class.php:70
+msgid "Job configuration"
+msgstr "İş yapılandırması"
+
+#: inc/taskjobview.class.php:236
+msgid ""
+"Several jobs in the same task is not anymore supported because of unexpected side-effects.\n"
+"         Please consider modifying this task to avoid unexpected results."
+msgstr ""
+"Beklenmedik yan etkiler çıkabildiği için artık aynı görev içinde birden çok iş desteklenmiyor.\n"
+"         Lütfen beklenmeyen sonuçlardan kaçınmak için bu görevi değiştirmeyi değerlendirin."
+
+#: inc/taskjobview.class.php:251
+msgid "Add a job"
+msgstr "İş ekle"
+
+#: inc/taskjobview.class.php:359
+msgid "Actor Type"
+msgstr "Aktör türü"
+
+#: inc/taskjobview.class.php:363
+msgid "Target Type"
+msgstr "Hedef türü"
+
+#: inc/taskjobview.class.php:406
+msgid "Actor Item"
+msgstr "Aktör ögesi"
+
+#: inc/taskjobview.class.php:410
+msgid "Target Item"
+msgstr "Hedef öge"
+
+#: inc/taskjobview.class.php:595 inc/taskjobview.class.php:598
+msgid "New action"
+msgstr "Yeni işlem"
+
+#: inc/taskjobview.class.php:638 inc/deploygroup.class.php:173
+msgid "Module method"
+msgstr "Modül yöntemi"
+
+#: inc/taskjobview.class.php:673
+msgid "Restrict scope to task entity"
+msgstr "Kapsam görev varlığı ile sınırlansın"
+
+#: inc/taskjobview.class.php:691 inc/taskjobview.class.php:724
+msgid "Targets"
+msgstr "Hedefler"
+
+#: inc/taskjobview.class.php:697
+msgid "The items that should be applied for this job."
+msgstr "Bu işin uygulanacağı ögeler."
+
+#: inc/taskjobview.class.php:703 inc/taskjobview.class.php:746
+msgid "Actors"
+msgstr "Aktörler"
+
+#: inc/taskjobview.class.php:708
+msgid "The items that should carry out those targets."
+msgstr "Bu hedeflere ulaşacak ögeler."
+
+#: inc/taskjobview.class.php:732 inc/taskjobview.class.php:754
+msgid "Clear list"
+msgstr "Listeyi temizle"
+
+#: inc/taskjobview.class.php:737 inc/taskjobview.class.php:759
+msgid "Delete selected items"
+msgstr "Seçilmiş ögeleri sil"
+
+#: inc/taskjobview.class.php:777
+msgid "Cancel modifications"
+msgstr "Değişiklikleri iptal et"
+
+#: inc/taskjobview.class.php:782
+msgid "Purge"
+msgstr "Sil"
+
+#: inc/taskjobview.class.php:785
+msgid "Confirm the final deletion ?"
+msgstr "Silme işlemini onaylıyor musunuz?"
+
+#: inc/staticmisc.class.php:59
+msgid "Computer Inventory"
+msgstr "Bilgisayar envanteri"
+
+#: inc/staticmisc.class.php:67
+msgid "VMware host remote inventory"
+msgstr "VMware uzak sunucu envanteri"
+
+#: inc/staticmisc.class.php:95
+msgid "Collect data"
+msgstr "Derleme verileri"
+
+#: inc/staticmisc.class.php:331 inc/staticmisc.class.php:365
+#: inc/iprange.class.php:83 inc/iprange.class.php:86 inc/menu.class.php:318
+msgid "IP Ranges"
+msgstr "IP aralıkları"
+
+#: inc/staticmisc.class.php:434 inc/staticmisc.class.php:440
+#: inc/taskjob.class.php:803
+msgid "Auto management dynamic of agents"
+msgstr "Aracının otomatik yönetim devinimi"
+
+#: inc/iprange_snmpcredential.class.php:101
+msgid "Associated SNMP credentials"
+msgstr "Atanmış SNMP kimlik doğrulama bilgileri"
+
+#: inc/iprange_snmpcredential.class.php:209
+msgid "SNMP credentials"
+msgstr "SNMP kimlik doğrulama bilgileri"
+
+#: inc/iprange_snmpcredential.class.php:212
+msgid "Version"
+msgstr "Sürüm"
+
+#: inc/iprange_snmpcredential.class.php:215
+msgid "By order of priority"
+msgstr "Öncelik sırasına göre"
+
+#: inc/credentialip.class.php:76
+msgid "Remote device inventory"
+msgstr "Uzak aygıt envanteri"
+
+#: inc/credentialip.class.php:132 inc/credentialip.class.php:157
+#: inc/credential.class.php:77 inc/credential.class.php:186
+#: inc/profile.class.php:322 inc/menu.class.php:342
+msgid "Authentication for remote devices (VMware)"
+msgstr "Uzak aygıtlar için kimlik doğrulaması (VMware)"
+
+#: inc/display.class.php:134
+msgid "Progress"
+msgstr "İşlem"
+
+#: inc/taskjoblog.class.php:93 inc/taskjoblog.class.php:287
+#: inc/stateinventory.class.php:197 inc/statediscovery.class.php:266
+msgid "Started"
+msgstr "Başlatılmış"
+
+#: inc/taskjoblog.class.php:95
+msgid "Ok"
+msgstr "Tamam"
+
+#: inc/taskjoblog.class.php:97
+msgid "Info"
+msgstr "Bilgiler"
+
+#: inc/taskjoblog.class.php:188 inc/agentwakeup.class.php:69
+#: inc/taskjob.class.php:56 inc/task.class.php:1620
+msgid "Job"
+msgstr "İş"
+
+#: inc/taskjoblog.class.php:214 inc/stateinventory.class.php:113
+#: inc/statediscovery.class.php:176
+msgid "Unique id"
+msgstr "Eşsiz kimlik"
+
+#: inc/taskjoblog.class.php:305
+msgid "unknown"
+msgstr "bilinmiyor"
+
+#: inc/taskjoblog.class.php:343
+msgid "devices queried"
+msgstr "sorgulanan aygıt"
+
+#: inc/taskjoblog.class.php:344
+msgid "devices found"
+msgstr "bulunan aygıt"
+
+#: inc/taskjoblog.class.php:345
+msgid "Add the item"
+msgstr "Ögeyi ekle"
+
+#: inc/taskjoblog.class.php:346
+msgid "Update the item"
+msgstr "Ögeyi güncelle"
+
+#: inc/taskjoblog.class.php:347
+msgid "Inventory started"
+msgstr "Envanter başlatıldı"
+
+#: inc/taskjoblog.class.php:348
+msgid "Detail"
+msgstr "Ayrıntı"
+
+#: inc/taskjoblog.class.php:349
+msgid "Agent communication error, impossible to start agent"
+msgstr "Aracı iletişim hatası, aracı başlatılamadı"
+
+#: inc/taskjoblog.class.php:350
+msgid "Agent stopped/crashed"
+msgstr "Aracı durdu / çöktü"
+
+#: inc/taskjoblog.class.php:351
+msgid "Import denied"
+msgstr "İçe aktarım reddedildi"
+
+#: inc/collect.class.php:56 inc/profile.class.php:401 inc/menu.class.php:253
+msgid "Collect information"
+msgstr "Derleme bilgileri"
+
+#: inc/collect.class.php:147 inc/collect.class.php:210
+#: inc/deploycheck.class.php:52
+msgid "Registry"
+msgstr "Kayıt defteri"
+
+#: inc/collect.class.php:148 inc/collect.class.php:228
+msgid "WMI"
+msgstr "WMI"
+
+#: inc/collect.class.php:149 inc/collect.class.php:246
+#: inc/collect.class.php:261
+msgid "Find file"
+msgstr "Dosya arama"
+
+#: inc/collect.class.php:248
+msgid "pathfile"
+msgstr "yoldosya"
+
+#: inc/collect.class.php:508
+msgid "Collect module has been disabled for this agent"
+msgstr "Bu aracı için derleme modülü etkisizleştirilmiş"
+
+#: inc/collect.class.php:677
+msgid "Path not found"
+msgstr "Yol bulunamadı"
+
+#: inc/deploytask.class.php:53 inc/deploytask.class.php:153
+#: inc/stateinventory.class.php:114 inc/statediscovery.class.php:177
+#: inc/taskview.class.php:164 inc/task.class.php:1563 inc/task.class.php:1603
+#: inc/profile.class.php:391
+msgid "Task"
+msgid_plural "Tasks"
+msgstr[0] "Görev"
+msgstr[1] "Görevler"
+
+#: inc/deploytask.class.php:109
+msgid "Order list"
+msgstr "Listeyi sırala"
+
+#: inc/deploytask.class.php:156
+msgid "Add task"
+msgstr "Görev ekle"
+
+#: inc/deploytask.class.php:181
+msgid "Edit impossible, this task is active"
+msgstr "Bu görev etkin olduğundan düzenlenemez"
+
+#: inc/deploytask.class.php:212
+msgid "This task is active. delete denied"
+msgstr "Bu görev etkin olduğundan silinemez"
+
+#: inc/deploygroup_staticdata.class.php:107
+msgid "CSV import"
+msgstr "CSV içe aktarma"
+
+#: inc/deploygroup_staticdata.class.php:154
+#, php-format
+msgid ""
+"Make a search to get desired computer, then use massive actions and use %s"
+msgstr ""
+"İstenilen bilgisayarı almak için bir arama yapın. Ardından toplu işlemleri "
+"ve %s kullanın"
+
+#: inc/deploygroup_staticdata.class.php:155
+#: inc/deploygroup_staticdata.class.php:171 hook.php:414
+msgid "Add to static group"
+msgstr "Durağan gruba ekle"
+
+#: inc/deploygroup_staticdata.class.php:227 hook.php:416
+msgid "Remove from static group"
+msgstr "Durağan gruptan çıkar"
+
+#: inc/deploygroup_staticdata.class.php:336
+msgid ""
+"Import a list of computers from a CSV file (the first column must contain "
+"the computer ID)"
+msgstr ""
+"CSV dosyasından bilgisayar listesini içe aktarın (ilk sütunda bilgisayar "
+"kimliği bulunmalıdır)"
+
+#: inc/deploygroup_staticdata.class.php:381
+msgid "Computers imported successfully from CSV file"
+msgstr "CSV dosyasından bilgisayarlar içe aktarıldı"
+
+#: inc/deploygroup_staticdata.class.php:384
+msgid "Impossible to read the CSV file"
+msgstr "CSV dosyası okunamadı"
+
+#: inc/iprange.class.php:78
+msgid "Communication mode"
+msgstr "İletişim kipi"
+
+#: inc/iprange.class.php:81
+msgid "See all informations of task"
+msgstr "Görev bilgilerini görüntüle"
+
+#: inc/iprange.class.php:113 inc/profile.class.php:317
+msgid "IP range configuration"
+msgstr "IP aralığı ayarları"
+
+#: inc/iprange.class.php:228
+msgid "Bad IP"
+msgstr "Kötü IP"
+
+#: inc/iprange.class.php:285 inc/deploygroup.class.php:231 hook.php:410
+msgid "Target a task"
+msgstr "Bir görevi hedefle"
+
+#: inc/communicationnetworkdiscovery.class.php:109
+#, php-format
+msgid "Processed: %1$s Created: %2$s Updated: %3$s"
+msgstr "İşlenen: %1$s Oluşturulan: %2$s Güncellenen: %3$s"
+
+#: inc/stateinventory.class.php:117 inc/statediscovery.class.php:180
+msgid "Starting date"
+msgstr "Başlangıç tarihi"
+
+#: inc/stateinventory.class.php:118 inc/statediscovery.class.php:181
+msgid "Ending date"
+msgstr "Bitiş tarihi"
+
+#: inc/stateinventory.class.php:120
+msgid "Number per second"
+msgstr "Saniyedeki sayı"
+
+#: inc/stateinventory.class.php:121
+msgid "Threads / Timeout configuration"
+msgstr "İşlemler / Zaman aşımı yapılandırması"
+
+#: inc/stateinventory.class.php:122
+msgid "To inventory"
+msgstr "Envantere"
+
+#: inc/stateinventory.class.php:123
+msgid "Error(s)"
+msgstr "Hata"
+
+#: inc/stateinventory.class.php:201 inc/statediscovery.class.php:270
+msgid "Finished tasks"
+msgstr "Bitirilmiş görevler"
+
+#: inc/credential.class.php:303 inc/credential.class.php:321
+#: inc/profile.class.php:332
+msgid "VMware host"
+msgstr "VMware sunucusu"
+
+#: inc/config.class.php:201
+msgid "Network Inventory"
+msgstr "Ağ envanteri"
+
+#: inc/config.class.php:202 inc/menu.class.php:377
+msgid "Package management"
+msgstr "Paket yönetimi"
+
+#: inc/config.class.php:284
+msgid "Change the status"
+msgstr "Durumu değiştir"
+
+#: inc/config.class.php:287
+msgid "Clean agents"
+msgstr "Aracıları temizle"
+
+#: inc/config.class.php:315
+msgid "with location"
+msgstr "konuma göre"
+
+#: inc/config.class.php:316
+msgid "with entity"
+msgstr "varlığa göre"
+
+#: inc/config.class.php:317
+msgid "with both"
+msgstr "ikisine de göre"
+
+#: inc/deploycheck.class.php:53
+msgid "Registry key exists"
+msgstr "Kayıt defteri anahtarı olan"
+
+#: inc/deploycheck.class.php:54
+msgid "Registry value exists"
+msgstr "Kayıt defteri değeri olan"
+
+#: inc/deploycheck.class.php:55
+msgid "Registry key missing"
+msgstr "Kayıt defteri anahtarı olmayan"
+
+#: inc/deploycheck.class.php:56
+msgid "Registry value missing"
+msgstr "Kayıt defteri değeri olmayan"
+
+#: inc/deploycheck.class.php:57
+msgid "Registry value equals to"
+msgstr "Kayıt defteri değeri şuna eşit olan"
+
+#: inc/deploycheck.class.php:58
+msgid "Registry value not equals to"
+msgstr "Kayıt defteri değeri şuna eşit olmayan"
+
+#: inc/deploycheck.class.php:59
+msgid "Type of registry value equals to"
+msgstr "Kayıt defteri değeri türü şuna eşit olan"
+
+#: inc/deploycheck.class.php:62
+msgid "File exists"
+msgstr "Dosya var olan"
+
+#: inc/deploycheck.class.php:63
+msgid "File is missing"
+msgstr "Dosya eksik olan"
+
+#: inc/deploycheck.class.php:64
+msgid "File size is greater than"
+msgstr "Dosya boyutu şundan büyük olan"
+
+#: inc/deploycheck.class.php:65
+msgid "File size is equal to"
+msgstr "Dosya boyutu şuna eşit olan"
+
+#: inc/deploycheck.class.php:66
+msgid "File size is lower than"
+msgstr "Dosya boyutu şundan küçük olan"
+
+#: inc/deploycheck.class.php:67
+msgid "SHA-512 hash value matches"
+msgstr "SHA-512 karma değeri şuna eşit olan"
+
+#: inc/deploycheck.class.php:68
+msgid "SHA-512 hash value mismatch"
+msgstr "SHA-512 karma değeri şuna eşit olmayan"
+
+#: inc/deploycheck.class.php:71
+msgid "Directory exists"
+msgstr "Klasör bulundu"
+
+#: inc/deploycheck.class.php:72
+msgid "Directory is missing"
+msgstr "Klasör bulunamadı"
+
+#: inc/deploycheck.class.php:75
+msgid "Free space is greater than"
+msgstr "Boş alan şundan büyük olan"
+
+#: inc/deploycheck.class.php:122
+msgid "continue"
+msgstr "devam"
+
+#: inc/deploycheck.class.php:124
+msgid "passed"
+msgstr "geçti"
+
+#: inc/deploycheck.class.php:126
+msgid "otherwise"
+msgstr "değil ise"
+
+#: inc/deploycheck.class.php:233 inc/deploycheck.class.php:351
+#: inc/deploycheck.class.php:362 inc/deploycheck.class.php:371
+#: inc/deployaction.class.php:435
+#, php-format
+msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
+msgstr ""
+"GLPI-Agent ya da Fusioninventory-Agent sürümünün %1s ya da üzerinde olması "
+"gereklidir"
+
+#: inc/deploycheck.class.php:297 inc/deploycheck.class.php:440
+msgid "Audit label"
+msgstr "Denetim etiketi"
+
+#: inc/deploycheck.class.php:340
+msgid "Path to the key"
+msgstr "Anahtarın yolu"
+
+#: inc/deploycheck.class.php:342
+msgid "Example of registry key"
+msgstr "Kayıt defteri anahtarı örneği"
+
+#: inc/deploycheck.class.php:343 inc/deploycheck.class.php:360
+#, php-format
+msgid "GLPI-Agent or Fusioninventory-Agent >= %1s recommended"
+msgstr ""
+"GLPI-Agent ya da Fusioninventory-Agent sürümünün %1s ya da üzerinde olması "
+"önerilir"
+
+#: inc/deploycheck.class.php:348 inc/deploycheck.class.php:356
+#: inc/deploycheck.class.php:367
+msgid "Path to the value"
+msgstr "Değerin yolu"
+
+#: inc/deploycheck.class.php:350 inc/deploycheck.class.php:358
+#: inc/deploycheck.class.php:370
+msgid "Example of registry value"
+msgstr "Kayıt defteri değeri örneği"
+
+#: inc/deploycheck.class.php:368
+msgid "Type of value"
+msgstr "Değer türü"
+
+#: inc/deploycheck.class.php:382
+msgid "Directory"
+msgstr "Klasör"
+
+#: inc/deploycheck.class.php:402
+msgid "Disk or directory"
+msgstr "Disk ya da klasör"
+
+#: inc/deploycheck.class.php:499
+msgid "Unit"
+msgstr "Birim"
+
+#: inc/deploycheck.class.php:522
+msgid "If not successful"
+msgstr "Başarılı değilse"
+
+#: inc/deploycheck.class.php:553
+msgid "abort job"
+msgstr "işi durdur"
+
+#: inc/deploycheck.class.php:554
+msgid "skip job"
+msgstr "işi atla"
+
+#: inc/deploycheck.class.php:555
+msgid "start job now"
+msgstr "işi şimdi başlat"
+
+#: inc/deploycheck.class.php:556
+msgid "report info"
+msgstr "bilgileri raporla"
+
+#: inc/deploycheck.class.php:557
+msgid "report warning"
+msgstr "uyarıları raporla"
+
+#: inc/collectcommon.class.php:74
+msgid "Collect configuration"
+msgstr "Derleme yapılandırması"
+
+#: inc/statediscovery.class.php:184
+msgid "Total discovery devices"
+msgstr "Toplam keşfedilen aygıt"
+
+#: inc/statediscovery.class.php:185
+msgid "Devices not imported"
+msgstr "İçe aktarılmayan aygıtlar"
+
+#: inc/statediscovery.class.php:186
+msgid "Devices linked"
+msgstr "Bağlanan aygıtlar"
+
+#: inc/statediscovery.class.php:187
+msgid "Devices imported"
+msgstr "İçe aktarılan aygıtlar"
+
 #: inc/agentwakeup.class.php:56
 msgid "Wake agents up"
 msgstr "Aracıları uyandır"
+
+#: inc/deploygroup.class.php:89 inc/deploygroup.class.php:806 hook.php:94
+msgid "Static group"
+msgstr "Durağan grup"
+
+#: inc/deploygroup.class.php:90 inc/deploygroup.class.php:827
+msgid "Dynamic group"
+msgstr "Devingen grup"
+
+#: inc/deploygroup.class.php:103
+msgid "Inventory group"
+msgid_plural "Inventory groups"
+msgstr[0] "Envanter grubu"
+msgstr[1] "Envanter grupları"
+
+#: inc/deploygroup.class.php:120
+msgid "Associated task"
+msgid_plural "Associated tasks"
+msgstr[0] "İlgili görev"
+msgstr[1] "İlgili görevler"
+
+#: inc/deploygroup.class.php:389
+msgid "Add group"
+msgstr "Grup ekle"
+
+#: inc/taskview.class.php:70
+msgid "Include old jobs"
+msgstr "Eski işler katılsın"
+
+#: inc/taskview.class.php:88
+msgid "refresh interval"
+msgstr "yenileme sıklığı"
+
+#: inc/taskview.class.php:91
+msgid "Off"
+msgstr "Kapalı"
+
+#: inc/taskview.class.php:108
+msgid "Export task result"
+msgstr "Görev sonuçlarını dışa aktar"
+
+#: inc/taskview.class.php:126
+msgid "Task execution states"
+msgstr "Görev yürütme durumları"
+
+#: inc/taskview.class.php:212
+msgid "Show/Hide details"
+msgstr "Ayrıntıları görüntüle./ gizle"
+
+#: inc/taskview.class.php:322 inc/task.class.php:144
+msgid "Permit to re-prepare task after run"
+msgstr "Çalıştırıldıktan sonra görev yeniden hazırlanabilsin"
+
+#: inc/taskview.class.php:327
+msgid "This is an on demand deployment task"
+msgstr "Bu isteğe bağlı bir dağıtım görevidir"
+
+#: inc/taskview.class.php:338 inc/task.class.php:103
+msgid "Schedule start"
+msgstr "Zamanlama başlangıcı"
+
+#: inc/taskview.class.php:344 inc/task.class.php:111
+msgid "Schedule end"
+msgstr "Zamanlama bitişi"
+
+#: inc/taskview.class.php:350
+msgid "Preparation timeslot"
+msgstr "Hazırlanma zaman aralığı"
+
+#: inc/taskview.class.php:358
+msgid "Execution timeslot"
+msgstr "Yürütülme zaman aralığı"
+
+#: inc/taskview.class.php:366
+msgid "Agent wakeup interval (in minutes)"
+msgstr "Aracı uyanma sıklığı (dakika)"
+
+#: inc/taskview.class.php:376
+msgid "Number of agents to wake up"
+msgstr "Uyanacak aracı sayısı"
+
+#: inc/taskview.class.php:422
+msgid "Force start"
+msgstr "Başlatmaya zorla"
+
+#: inc/taskview.class.php:943
+msgid "Device no longer defined in definition of job"
+msgstr "Aygıt artık iş tanımında bulunmuyor"
+
+#: inc/deployaction.class.php:53
+msgid "Return code is equal to"
+msgstr "Dönüş kodu şuna eşit olan"
+
+#: inc/deployaction.class.php:54
+msgid "Return code is not equal to"
+msgstr "Dönüş kodu şundan farklı olan"
+
+#: inc/deployaction.class.php:55
+msgid "Command output contains"
+msgstr "Komut çıktısında şu bulunan"
+
+#: inc/deployaction.class.php:56
+msgid "Command output does not contains"
+msgstr "Komut çıktısında şu bulunmayan"
+
+#: inc/deployaction.class.php:69
+msgid "Command"
+msgstr "Komut"
+
+#: inc/deployaction.class.php:70
+msgid "Move"
+msgstr "Taşınsın"
+
+#: inc/deployaction.class.php:71
+msgid "Copy"
+msgstr "Kopyalansın"
+
+#: inc/deployaction.class.php:72
+msgid "Delete directory"
+msgstr "Klasörü sil"
+
+#: inc/deployaction.class.php:73
+msgid "Create directory"
+msgstr "Klasör oluştur"
+
+#: inc/deployaction.class.php:200
+msgid "Command to execute"
+msgstr "Yürütülecek komut"
+
+#: inc/deployaction.class.php:203 inc/deployaction.class.php:343
+msgid "Action label"
+msgstr "İşlem etiketi"
+
+#: inc/deployaction.class.php:206 inc/deployaction.class.php:425
+msgid "Number of output lines to retrieve"
+msgstr "Alınacak çıktı satırı sayısı"
+
+#: inc/deployaction.class.php:223
+msgid "return codes saved for this command"
+msgstr "bu komut için kaydedilmiş geri dönüş kodları"
+
+#: inc/deployaction.class.php:296
+msgid "From"
+msgstr "Nereden"
+
+#: inc/deployaction.class.php:298
+msgid "To"
+msgstr "Nereye"
+
+#: inc/deployaction.class.php:309
+msgid "exec"
+msgstr "yürütme"
+
+#: inc/deployaction.class.php:324
+msgid "path"
+msgstr "yol"
+
+#: inc/deployaction.class.php:370
+msgid "Execution checks"
+msgstr "Yürütme denetimleri"
+
+#: inc/taskjob.class.php:746
+msgid "Scheduled date"
+msgstr "Zamanlanan tarih"
+
+#: inc/taskjob.class.php:747
+msgid "Periodicity"
+msgstr "Sıklık"
+
+#: inc/taskjob.class.php:748
+msgid "Definition"
+msgstr "Açıklama"
+
+#: inc/taskjob.class.php:749
+msgid "Action"
+msgstr "İşlem"
+
+#: inc/taskjob.class.php:766 inc/deployfile.class.php:203
+#: inc/deployfile.class.php:367
+msgid "Minute(s)"
+msgstr "dakika"
+
+#: inc/taskjob.class.php:771
+msgid "hour(s)"
+msgstr "saat"
+
+#: inc/taskjob.class.php:776
+msgid "day(s)"
+msgstr "gün"
+
+#: inc/taskjob.class.php:805
+msgid "Auto management dynamic of agents (same subnet)"
+msgstr "Aracıların otomatik yönetim devinimi (aynı alt ağda)"
+
+#: inc/taskjob.class.php:1007
+msgid "Force the end"
+msgstr "Durmaya zorla"
+
+#: inc/task.class.php:63 inc/menu.class.php:237
+msgid "Task management"
+msgstr "Görev yönetimi"
+
+#: inc/task.class.php:154
+msgid "deploy on demand task"
+msgstr "isteğe bağlı görevi dağıt"
+
+#: inc/task.class.php:178
+msgid "Associated tasks"
+msgstr "İlgili görevler"
+
+#: inc/task.class.php:213 inc/menu.class.php:266 hook.php:130
+msgid "Tasks"
+msgstr "Görevler"
+
+#: inc/task.class.php:406
+msgid ""
+"The agent is requesting a configuration that has already been sent to him by"
+" the server. It is more likely that the agent is subject to a critical "
+"error."
+msgstr ""
+"Aracı zaten sunucu tarafından kendisine gönderilmiş ayarları istiyor. "
+"Aracıda kritik bir sorun çıkmış olma olasılığı daha yüksek. "
+
+#: inc/task.class.php:419
+msgid "The task has been deactivated after preparation of this job."
+msgstr "Bu işin hazırlanmasından sonra görev devre dışı bırakıldı."
+
+#: inc/task.class.php:440
+msgid "This job can not be executed anymore due to the task's schedule."
+msgstr "Görev zamanlaması nedeniyle bu iş bir daha yürütülemeyecek."
+
+#: inc/task.class.php:486
+msgid "This job can not be executed anymore due to the task's timeslot."
+msgstr "Görevin zaman aralığı nedeniyle bu iş bir daha yürütülemeyecek."
+
+#: inc/task.class.php:505
+msgid "This agent does not belong anymore in the actors defined in the job."
+msgstr "Bu aracı artık işin içinde tanımlanmış aktörlere bağlı değil."
+
+#: inc/task.class.php:542
+msgid "The task cannot be updated if it is active"
+msgstr "Görev etkinse güncellenemez"
+
+#: inc/task.class.php:697
+msgid "Inventory task scheduler"
+msgstr "Envanter görevi zamanlayıcısı"
+
+#: inc/task.class.php:700
+msgid "Clean on demand deployment tasks"
+msgstr "Dağıtım görevlerini temizleme isteği"
+
+#: inc/task.class.php:1515
+msgid "Task has been disabled"
+msgstr "Görev etkisizleştirilmiş"
+
+#: inc/task.class.php:1714
+msgid ""
+"You must choose a task and a package to target a task with a deployment "
+"package."
+msgstr "Bir hedefe dağıtmak için bir görev ve bir paket seçmelisiniz."
+
+#: inc/task.class.php:1731
+msgid "Deployment job, package: "
+msgstr "Dağıtım işi, paket:"
+
+#: inc/task.class.php:1748
+msgid "Updated a deployment job, package: "
+msgstr "Bir dağıtım işi, paket güncellendi: "
+
+#: inc/task.class.php:1749 inc/task.class.php:1792
+msgid ", actors: "
+msgstr ", aktörler: "
+
+#: inc/task.class.php:1777
+msgid "The selected task already has a deployment job for another package: "
+msgstr "Seçilmiş görevin zaten başka bir paket için dağıtım işi var: "
+
+#: inc/task.class.php:1791
+msgid "Created a deployment job, package: "
+msgstr "Bir dağıtım işi, paket oluşturuldu:"
+
+#: inc/collect_wmi.class.php:48
+msgid "Found WMI"
+msgid_plural "Found WMIs"
+msgstr[0] "Bulunan WMI"
+msgstr[1] "Bulunan WMI"
+
+#: inc/deployfile.class.php:87
+msgid "Upload from computer"
+msgstr "Bilgisayardan yükle"
+
+#: inc/deployfile.class.php:91
+msgid "Upload from server"
+msgstr "Sunucudan yükle"
+
+#: inc/deployfile.class.php:200
+msgid "p2p"
+msgstr "p2p"
+
+#: inc/deployfile.class.php:201 inc/deployfile.class.php:366
+msgid "retention"
+msgstr "tutma"
+
+#: inc/deployfile.class.php:215
+msgid "uncompress"
+msgstr "ayıkla"
+
+#: inc/deployfile.class.php:222
+msgid "Download"
+msgstr "İndir"
+
+#: inc/deployfile.class.php:322
+msgid "filename"
+msgstr "dosyaadı"
+
+#: inc/deployfile.class.php:329
+msgid "Choose"
+msgstr "Seçin"
+
+#: inc/deployfile.class.php:335
+msgid "Select the file on server"
+msgstr "Sunucudan dosya seçin"
+
+#: inc/deployfile.class.php:351
+msgid "Uncompress"
+msgstr "Ayıkla"
+
+#: inc/deployfile.class.php:358
+msgid "P2P"
+msgstr "P2P"
+
+#: inc/deployfile.class.php:439
+#, php-format
+msgid "Files need to be uploaded to %s folder to be displayed here"
+msgstr "Burada görüntülenmesi için dosyalar %s klasörüne yüklenmelidir"
+
+#: inc/deployfile.class.php:631
+msgid "Upload error"
+msgstr "Yükleme sorunu"
+
+#: inc/deployfile.class.php:635
+msgid "Transfer error: the file size is too big"
+msgstr "Aktarım hatası: Dosya boyutu çok büyük"
+
+#: inc/deployfile.class.php:639
+msgid "The uploaded file was only partially uploaded"
+msgstr "Dosyanın yalnızca bir kısmı yüklenebildi"
+
+#: inc/deployfile.class.php:643
+msgid "No file was uploaded"
+msgstr "Henüz bir dosya yüklenmemiş"
+
+#: inc/deployfile.class.php:647
+msgid "Missing a temporary folder"
+msgstr "Bir geçici klasör bulunamadı"
+
+#: inc/deployfile.class.php:651
+msgid "Failed to write file to disk"
+msgstr "Dosya diske yazılamadı"
+
+#: inc/deployfile.class.php:655
+msgid "PHP extension stopped the file upload"
+msgstr "PHP eklentisi dosya yüklemeyi durdurdu"
+
+#: inc/deployfile.class.php:683 inc/deployfile.class.php:743
+msgid "File saved!"
+msgstr "Dosya kaydedildi!"
+
+#: inc/deployfile.class.php:686 inc/deployfile.class.php:746
+msgid "Failed to copy file"
+msgstr "Dosya kopyalanamadı"
+
+#: inc/deployfile.class.php:690 inc/deployfile.class.php:750
+msgid "File missing"
+msgstr "Dosya eksik"
+
+#: inc/deployfile.class.php:1106
+msgid "Max file size"
+msgstr "En büyük dosya boyutu"
+
+#: inc/deployfile.class.php:1107
+msgid "Mio"
+msgstr "MB"
+
+#: inc/deployfile.class.php:1120
+msgid "Unused file"
+msgstr "Kullanılmayan dosya"
+
+#: inc/profile.class.php:170 inc/menu.class.php:226
+msgid "General"
+msgstr "Genel"
+
+#: inc/profile.class.php:176
+msgid "Inventory"
+msgstr "Envanter"
+
+#: inc/profile.class.php:182 inc/profile.class.php:228
+msgid "Software deployment"
+msgstr "Yazılım dağıtma"
+
+#: inc/profile.class.php:222 inc/profile.class.php:299
+msgid "Deploy packages on demand"
+msgstr "Paketleri isteğe göre dağıt"
+
+#: inc/profile.class.php:284
+msgid "Manage packages"
+msgstr "Paket yönetimi"
+
+#: inc/profile.class.php:327 inc/menu.class.php:326
+msgid "Remote devices to inventory (VMware)"
+msgstr "Envantere eklenecek uzak aygıtlar (VMware)"
+
+#: inc/profile.class.php:341
+msgid "Network equipment SNMP"
+msgstr "Ağ aygıtı SNMP"
+
+#: inc/profile.class.php:346
+msgid "Printer SNMP"
+msgstr "Yazıcı SNMP"
+
+#: inc/profile.class.php:380
+msgid "Menu"
+msgstr "Menü"
+
+#: inc/profile.class.php:386
+msgid "Configuration"
+msgstr "Yapılandırma"
 
 #: inc/menu.class.php:154
 msgid "Clean unused files"
@@ -1908,6 +1822,10 @@ msgstr "Ağ envanteri durumu"
 #: inc/menu.class.php:364
 msgid "Networking"
 msgstr "Ağ"
+
+#: inc/menu.class.php:402 hook.php:55
+msgid "Deploy"
+msgstr "Dağıtım"
 
 #: inc/menu.class.php:414
 msgid "SNMP inventory"
@@ -1977,6 +1895,79 @@ msgstr ""
 "Ağ envanteri modülünde önceden belirlediğiniz aracı ile yeni bir görev "
 "oluşturun"
 
+#: inc/agentmodule.class.php:62
+msgid "Agents modules"
+msgstr "Aracı modülleri"
+
+#: inc/agentmodule.class.php:126
+msgid "Package deployment"
+msgstr "Paket dağıtımı"
+
+#: inc/collect_registry_content.class.php:74
+msgid "Windows registry content"
+msgstr "Windows kayıt defteri içeriği"
+
+#: inc/collect_registry_content.class.php:279
+#, php-format
+msgid "%s path found"
+msgstr "%s yolu bulundu"
+
+#: inc/collect_registry_content.class.php:280
+#, php-format
+msgid "%s path not found"
+msgstr "%s yolu bulunamadı"
+
+#: inc/collect_registry_content.class.php:290
+#, php-format
+msgid "%s value exists"
+msgstr "%s değeri var"
+
+#: inc/collect_registry_content.class.php:291
+#, php-format
+msgid "%s value does not exist"
+msgstr "%s değeri yok"
+
+#: inc/collect_registry_content.class.php:299
+#, php-format
+msgid "%s: Found a value"
+msgstr "%s: Bir değer bulundu"
+
+#: inc/collect_registry_content.class.php:304
+#, php-format
+msgid "%s: Found %d values"
+msgstr "%s: %d değer bulundu"
+
+#: inc/collect_registry_content.class.php:311
+#, php-format
+msgid "%s: Found a result"
+msgstr "%s: Bir sonuç bulundu"
+
+#: inc/collect_registry_content.class.php:359
+msgid "Exist"
+msgstr "Var"
+
+#: inc/collect_registry_content.class.php:360
+msgid "Does not exist"
+msgstr "Yok"
+
+#: inc/collect_registry_content.class.php:371
+msgid "Defined"
+msgstr "Tanımlanmış"
+
+#: inc/collect_registry_content.class.php:372
+msgid "Not defined"
+msgstr "Tanımlanmamış"
+
+#: inc/collect_registry_content.class.php:406
+#: inc/collect_registry_content.class.php:408
+msgid "State"
+msgstr "Durum"
+
+#: inc/collect_registry_content.class.php:411
+#: inc/collect_registry_content.class.php:504
+msgid "Data"
+msgstr "Veri"
+
 #: public/b/deploy/index.php:84
 msgid "Deploy module has been disabled for this agent"
 msgstr "Bu aracının dağıtma modülü etkisizleştirilmiş"
@@ -2000,6 +1991,31 @@ msgstr "Kullanıcı işi iptal etti"
 #: public/b/deploy/index.php:265
 msgid "User postponed the job"
 msgstr "Kullanıcı işi erteledi"
+
+#: hook.php:62
+msgid "Local inventory"
+msgstr "Yerel envanter"
+
+#: hook.php:69
+msgid "ESX/VMWare"
+msgstr "ESX/VMWare"
+
+#: hook.php:76
+msgid "Network inventory"
+msgstr "Ağ envanteri"
+
+#: hook.php:90
+msgid "Collect"
+msgstr "Derle"
+
+#: hook.php:138 hook.php:148 hook.php:158 hook.php:168
+#, php-format
+msgid "%s inventoried"
+msgstr "%s envantere alındı"
+
+#: hook.php:351
+msgid "Setup"
+msgstr "Kur"
 
 #: public/js/taskjobs.js:747
 msgid "The preparation of the task did not return any targets"
