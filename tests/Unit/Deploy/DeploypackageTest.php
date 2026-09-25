@@ -48,6 +48,7 @@ class DeploypackageTest extends TestCase
     protected function tearDown(): void
     {
         $_SESSION['glpiactiveprofile'][PluginGlpiinventoryDeployPackage::$rightname] = $this->package_right;
+        Session::changeActiveEntities(0, true);
     }
 
 
@@ -116,6 +117,42 @@ class DeploypackageTest extends TestCase
 
         $_SESSION['glpiactiveprofile'][PluginGlpiinventoryDeployPackage::$rightname] = READ;
         $this->assertFalse($package->canUpdateContent());
+    }
+
+
+    public function testCanUpdateContentRejectsPackageOutsideActiveEntities(): void
+    {
+        $package = $this->createPackageInSubEntity('package_content_foreign');
+        Session::changeActiveEntities(0, false);
+
+        $this->assertTrue($package->getFromDB($package->getID()));
+        $this->assertFalse($package->canUpdateContent());
+    }
+
+
+    public function testCanReadRequiresPackageRight(): void
+    {
+        $package = $this->createPackage('package_read_right');
+
+        $this->assertTrue($package->can($package->getID(), READ));
+
+        $_SESSION['glpiactiveprofile'][PluginGlpiinventoryDeployPackage::$rightname] = 0;
+        $this->assertFalse($package->can($package->getID(), READ));
+    }
+
+
+    public function testCanReadRejectsPackageOutsideActiveEntities(): void
+    {
+        $package = $this->createPackageInSubEntity('package_foreign');
+        Session::changeActiveEntities(0, false);
+
+        $this->assertFalse($package->can($package->getID(), READ));
+    }
+
+
+    public function testCanReadRejectsUnknownPackage(): void
+    {
+        $this->assertFalse((new PluginGlpiinventoryDeployPackage())->can(999999, READ));
     }
 
 
@@ -531,6 +568,18 @@ class DeploypackageTest extends TestCase
     {
         unlink(PLUGIN_GLPI_INVENTORY_MANIFESTS_DIR . $manifest);
         unlink(PLUGIN_GLPI_INVENTORY_REPOSITORY_DIR . (new PluginGlpiinventoryDeployFile())->getDirBySha512($part) . '/' . $part);
+    }
+
+
+    private function createPackageInSubEntity(string $name): PluginGlpiinventoryDeployPackage
+    {
+        $entity = new Entity();
+        $entities_id = $entity->add(['name' => $name . '_entity', 'entities_id' => 0]);
+        $this->assertNotFalse($entities_id);
+        $package = new PluginGlpiinventoryDeployPackage();
+        $this->assertNotFalse($package->add(['name' => $name, 'entities_id' => $entities_id]));
+
+        return $package;
     }
 
 

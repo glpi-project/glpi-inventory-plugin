@@ -40,7 +40,11 @@ $fi_move_item = filter_input(INPUT_POST, "move_item");
 if (!empty($fi_move_item)) { //ajax request
     $json_response = ["success" => true, "reason"  => ''];
 
-    if (Session::haveRight('plugin_glpiinventory_package', UPDATE)) {
+    $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
+    if (
+        $pfDeployPackage->getFromDB((int) filter_input(INPUT_POST, "id"))
+        && $pfDeployPackage->canUpdateContent()
+    ) {
         $params = [
             'old_index' => filter_input(INPUT_POST, "old_index"),
             'new_index' => filter_input(INPUT_POST, "new_index"),
@@ -79,7 +83,9 @@ if (!empty($fi_move_item)) { //ajax request
     }
 
     $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
-    $pfDeployPackage->getFromDB($packages_id);
+    if (!$pfDeployPackage->can((int) $packages_id, READ)) {
+        Html::displayRightError();
+    }
 
     //TODO: In the displayForm function, $_REQUEST is somewhat too much for the '$datas' parameter
     // I think we could use only $order -- Kevin 'kiniou' Roy
