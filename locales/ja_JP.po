@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-25 02:25+0000\n"
+"POT-Creation-Date: 2026-09-28 02:30+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Daisuke INOUE, 2026\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
@@ -638,7 +638,7 @@ msgstr "エクスポート"
 
 #: inc/deploypackage.class.php:273
 msgid "Unable to import package archive"
-msgstr ""
+msgstr "パッケージアーカイブをインポートできません"
 
 #: inc/deploypackage.class.php:314
 msgid "Modification Denied"
@@ -651,15 +651,15 @@ msgstr[0] "以下のタスクが、このパッケージを実行中"
 
 #: inc/deploypackage.class.php:374
 msgid "Package content cannot be modified while a task is running with it"
-msgstr ""
+msgstr "パッケージの内容は、それを対象にタスクが実行されている間は変更できません"
 
 #: inc/deploypackage.class.php:398
 msgid "Invalid package uuid"
-msgstr ""
+msgstr "無効なパッケージ UUID"
 
 #: inc/deploypackage.class.php:409
 msgid "Invalid package content"
-msgstr ""
+msgstr "無効なパッケージ内容"
 
 #: inc/deploypackage.class.php:484 inc/deploypackage.class.php:608
 msgid "Enable deploy on demand for the following group"
