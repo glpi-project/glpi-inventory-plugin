@@ -6,15 +6,16 @@
 # Translators:
 # Cédric Anne, 2021
 # DWXXX, 2026
+# RuiQin Shen, 2026
 # 
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-25 02:25+0000\n"
+"POT-Creation-Date: 2026-09-29 03:12+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
-"Last-Translator: DWXXX, 2026\n"
+"Last-Translator: RuiQin Shen, 2026\n"
 "Language-Team: Chinese (China) (https://app.transifex.com/teclib/teams/28042/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -54,7 +55,7 @@ msgstr "属性"
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:104
 msgid "Mode"
-msgstr ""
+msgstr "模式"
 
 #: templates/forms/collect/add_registry.html.twig
 #: inc/collect_registry.class.php:101
@@ -766,11 +767,11 @@ msgstr[0] "找到实体"
 
 #: inc/collect_registry.class.php:91
 msgid "Default"
-msgstr ""
+msgstr "缺省"
 
 #: inc/collect_registry.class.php:92
 msgid "Check path existence"
-msgstr ""
+msgstr "检查路径是否存在"
 
 #: inc/collect_registry.class.php:93
 msgid "Check if a key is defined"
@@ -1930,7 +1931,7 @@ msgstr ""
 #: inc/collect_registry_content.class.php:406
 #: inc/collect_registry_content.class.php:408
 msgid "State"
-msgstr ""
+msgstr "状态"
 
 #: inc/collect_registry_content.class.php:411
 #: inc/collect_registry_content.class.php:504
