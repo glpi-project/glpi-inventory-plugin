@@ -507,6 +507,37 @@ class PackageSelfDeployTest extends DbTestCase
         $this->assertArrayNotHasKey($foreign_computers_id, $packages);
     }
 
+    public function testFilterAllowedDeploymentsKeepsForeignComputerOnCentral(): void
+    {
+        $this->testPackageForMeExcludesForeignComputer();
+
+        $computer        = new Computer();
+        $pfDeployPackage = new PluginGlpiinventoryDeployPackage();
+
+        $this->assertTrue($computer->getFromDBByCrit(['name' => 'pc-foreign']));
+        $foreign_computers_id = $computer->getID();
+        $this->assertTrue($pfDeployPackage->getFromDBByCrit(['name' => 'test1']));
+        $packages_id = $pfDeployPackage->getID();
+
+        $posted = [
+            'prepareinstall'                       => 1,
+            "deploypackages_$foreign_computers_id" => [$packages_id],
+        ];
+
+        $this->assertSame(
+            [],
+            $pfDeployPackage->filterAllowedDeployments($posted, (int) $_SESSION['glpiID'])
+        );
+
+        $_SESSION['glpiactiveprofile']['interface'] = 'central';
+        $_SESSION['glpiactiveprofile']['computer']  = READ;
+
+        $this->assertSame(
+            [$foreign_computers_id => [$packages_id]],
+            $pfDeployPackage->filterAllowedDeployments($posted, (int) $_SESSION['glpiID'])
+        );
+    }
+
     public function testFilterAllowedDeploymentsRejectsUnofferedSelection(): void
     {
         $this->testPackageTargetEntity();
