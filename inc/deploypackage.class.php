@@ -1971,7 +1971,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      */
     public function filterAllowedDeployments(array $posted, int $users_id): array
     {
-        $allowed_packages = $this->getPackageForMe($users_id);
+        //Mirror showPackageForMe(): central offers every computer of the active entities
+        $allowed_packages = Session::getCurrentInterface() === 'central'
+            ? $this->getPackageForMe(false)
+            : $this->getPackageForMe($users_id);
         $computer         = new Computer();
         $deployments      = [];
 
