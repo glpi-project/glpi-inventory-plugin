@@ -569,7 +569,7 @@ class PackageSelfDeployTest extends TestCase
         ]);
     }
 
-    public function testPackageForMeExcludesForeignComputer(): void
+    private function createForeignComputerWithTargetedPackage(): int
     {
         $this->enableDeployModule();
         $this->PackageTargetEntity();
@@ -604,10 +604,46 @@ class PackageSelfDeployTest extends TestCase
             'plugin_glpiinventory_deploypackages_id' => $pfDeployPackage->fields['id'],
         ]);
 
+        return $foreign_computers_id;
+    }
+
+    public function testPackageForMeExcludesForeignComputer(): void
+    {
+        $foreign_computers_id = $this->createForeignComputerWithTargetedPackage();
+        $pfDeployPackage      = new PluginGlpiinventoryDeployPackage();
+
         $_SERVER['REQUEST_URI'] = 'front/deploypackage.public.php';
         $packages = $pfDeployPackage->getPackageForMe($_SESSION['glpiID']);
 
         $this->assertArrayNotHasKey($foreign_computers_id, $packages);
+    }
+
+    public function testFilterAllowedDeploymentsKeepsForeignComputerOnCentral(): void
+    {
+        $foreign_computers_id = $this->createForeignComputerWithTargetedPackage();
+        $pfDeployPackage      = new PluginGlpiinventoryDeployPackage();
+
+        $_SERVER['REQUEST_URI'] = 'front/deploypackage.public.php';
+        $this->assertTrue($pfDeployPackage->getFromDBByCrit(['name' => 'test1']));
+        $packages_id = $pfDeployPackage->getID();
+
+        $posted = [
+            'prepareinstall'                       => 1,
+            "deploypackages_$foreign_computers_id" => [$packages_id],
+        ];
+
+        $this->assertSame(
+            [],
+            $pfDeployPackage->filterAllowedDeployments($posted, (int) $_SESSION['glpiID'])
+        );
+
+        $_SESSION['glpiactiveprofile']['interface'] = 'central';
+        $_SESSION['glpiactiveprofile']['computer']  = READ;
+
+        $this->assertSame(
+            [$foreign_computers_id => [$packages_id]],
+            $pfDeployPackage->filterAllowedDeployments($posted, (int) $_SESSION['glpiID'])
+        );
     }
 
     public function testFilterAllowedDeploymentsRejectsUnofferedSelection(): void
