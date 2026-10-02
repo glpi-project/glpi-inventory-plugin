@@ -5592,13 +5592,11 @@ function do_computeroperatingsystem_migration(Migration $migration): void
             } else {
                 // else try unserialize
                 $from_serialize = true;
-                try {
-                    $unserialized = @unserialize($fields_array, ['allowed_classes' => false]); //@phpstan-ignore theCodingMachineSafe.function (see https://github.com/glpi-project/glpi-inventory-plugin/issues/981)
+                $unserialized = @unserialize($fields_array, ['allowed_classes' => false]); //@phpstan-ignore theCodingMachineSafe.function (see https://github.com/glpi-project/glpi-inventory-plugin/issues/981)
 
-                    if ($unserialized !== false) {
-                        $fields = $unserialized;
-                    }
-                } catch (Throwable $e) {
+                if ($unserialized !== false) {
+                    $fields = $unserialized;
+                } else {
                     $migration->displayMessage(
                         "GlpiInventory - Invalid data for DynamicGroup ID {$id}, data will be reset."
                     );
