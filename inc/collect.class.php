@@ -565,7 +565,6 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     // Check agent uses POST method to use the right submitted values.
                     if (isset($_GET['method']) && $_GET['method'] == 'POST') {
                         $a_values = $_POST;
-                        unset($a_values['_glpi_csrf_token']);
                     }
                     $sid = $a_values['_sid'] ?? 0;
                     $cpt = $a_values['_cpt'] ?? 0;
