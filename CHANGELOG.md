@@ -5,11 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [UNRELEASED]
-
+## [1.7.0] - 2026-10-06
 
 - Fix on-demand package deployment from central interface on computers assigned to another user
-
+- GLPI 12 compatibility
 
 ## [1.6.11] - 2026-09-25
 
