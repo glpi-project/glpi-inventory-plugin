@@ -2004,10 +2004,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
      */
     public function filterAllowedDeployments(array $posted, int $users_id): array
     {
-        //Mirror showPackageForMe(): central offers every computer of the active entities
-        $allowed_packages = Session::getCurrentInterface() === 'central'
-            ? $this->getPackageForMe(false)
-            : $this->getPackageForMe($users_id);
+        //Mirror showPackageForMe(), but only compute the offering of the submitted computers
+        $self_service     = Session::getCurrentInterface() !== 'central';
+        $allowed_packages = $self_service ? $this->getPackageForMe($users_id) : [];
         $computer         = new Computer();
         $deployments      = [];
 
@@ -2017,6 +2016,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             }
 
             $computers_id = (int) str_replace('deploypackages_', '', $key);
+            if (!$self_service && $computers_id > 0 && !isset($allowed_packages[$computers_id])) {
+                $allowed_packages += $this->getPackageForMe(false, $computers_id);
+            }
             if (!isset($allowed_packages[$computers_id])) {
                 continue;
             }
@@ -2082,27 +2084,27 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         //Get packages that a the user can deploy
         $packages = $this->canUserDeploySelf();
 
-        if ($packages) {
+        //Keep only the requested computer(s) with the deploy feature enabled (checked only once per computer)
+        foreach (array_keys($mycomputers) as $comp_id) {
+            if (($computers_id && $comp_id != $computers_id) || !self::isDeployEnabled($comp_id)) {
+                unset($mycomputers[$comp_id]);
+            }
+        }
+
+        if ($packages && count($mycomputers)) {
+            $targets_cache = [];
             //Browse all packages that the user can install
             foreach ($packages as $package) {
-                //Get computers that can be targeted for this package installation
-                $computers = $pfDeployGroup->getTargetsForGroup($package['plugin_glpiinventory_deploygroups_id']);
+                //Get computers that can be targeted for this package installation (once per group)
+                $groups_id = $package['plugin_glpiinventory_deploygroups_id'];
+                if (!isset($targets_cache[$groups_id])) {
+                    $targets_cache[$groups_id] = $pfDeployGroup->getTargetsForGroup($groups_id);
+                }
+                $computers = $targets_cache[$groups_id];
 
                 //Browse all computers that are target by a package installation
 
                 foreach ($mycomputers as $comp_id => $data) {
-                    //If we only want packages for one computer
-                    //check if it's the computer we look for
-                    if ($computers_id && $comp_id != $computers_id) {
-                        continue;
-                    }
-
-                    //If the agent associated with the computer has not the
-                    //deploy feature enabled, do not propose to deploy packages on it
-                    if (!self::isDeployEnabled($comp_id)) {
-                        continue;
-                    }
-
                     //Get computers that can be targeted for this package installation
                     //Check if the package belong to one of the entity that
                     //are currently visible
