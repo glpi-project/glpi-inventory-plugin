@@ -89,6 +89,13 @@ class CollectsTest extends DbTestCase
         $this->assertNotFalse($collectFileId);
     }
 
+    private function assertJobstateState(int $jobstates_id, int $expected): void
+    {
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $this->assertTrue($pfTaskjobstate->getFromDB($jobstates_id));
+        $this->assertSame($expected, (int) $pfTaskjobstate->fields['state']);
+    }
+
     private function createComputer(string $name = 'pc01'): int
     {
         global $DB;
@@ -327,6 +334,7 @@ class CollectsTest extends DbTestCase
 
         $this->assertEquals($result, '{"jobs":[{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/Wow6432Node\/TeamViewer\/*","uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_tm . '},'
                                           . '{"function":"getFromRegistry","path":"HKEY_LOCAL_MACHINE\/software\/GLPI-Agent\/*","uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_fi . '}],"postmethod":"POST"}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA);
         // answer 1
         $params = [
             'action'                => 'setAnswer',
@@ -346,6 +354,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
         // answer 2
         $params = [
@@ -372,6 +381,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
         // jobsdone
         $params = [
@@ -384,6 +394,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::FINISHED);
     }
 
     public function testWmiProcessWithAgent(): void
@@ -478,6 +489,7 @@ class CollectsTest extends DbTestCase
 
         $this->assertEquals($result, '{"jobs":[{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Name"],"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_kn . '},'
                                           . '{"function":"getFromWMI","class":"Win32_Keyboard","properties":["Description"],"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_kd . '}],"postmethod":"POST"}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA);
 
         // answer 1
         $params = [
@@ -492,6 +504,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
         // answer 2
         $params = [
@@ -506,6 +519,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
         // jobsdone
         $params = [
@@ -517,6 +531,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::FINISHED);
 
         // check data in db
         $content = $pfCollect_Wmi_Content->find();
@@ -636,6 +651,7 @@ class CollectsTest extends DbTestCase
 
         $this->assertEquals($result, '{"jobs":[{"function":"findFile","dir":"C:\\\Users\\\toto\\\Desktop","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_desktop . '},'
                                           . '{"function":"findFile","dir":"C:\\\Users\\\toto\\\Downloads","limit":10,"recursive":1,"filter":{"is_file":1,"is_dir":0},"uuid":"' . $jobstate['uniqid'] . '","_sid":' . $registry_down . '}],"postmethod":"POST"}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA);
         // answer 1
         $params = [
             'action' => 'setAnswer',
@@ -651,6 +667,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
         $params = [
             'action' => 'setAnswer',
@@ -666,6 +683,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
         $params = [
             'action' => 'setAnswer',
@@ -681,6 +699,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
         // answer 2
         $params = [
@@ -697,6 +716,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
         $params = [
             'action' => 'setAnswer',
@@ -712,6 +732,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
 
         // jobsdone
         $params = [
@@ -724,6 +745,7 @@ class CollectsTest extends DbTestCase
         $result = json_encode($resultObject);
 
         $this->assertEquals($result, '{}');
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::FINISHED);
 
         // check data in db
         $content = $pfCollect_File_Content->find();
