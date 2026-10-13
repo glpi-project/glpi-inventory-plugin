@@ -55,6 +55,7 @@ define(
 define('TU_USER', '_test_user');
 define('TU_PASS', 'PhpUnit_4');
 
+global $kernel;
 $kernel = new Kernel('testing');
 $kernel->boot();
 
