@@ -162,7 +162,7 @@ jobs:
         php-version: ${{ matrix.php-versions }}
         extensions: ${{ env.extensions }}
     - name: Setup Node
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@v7
       with:
         node-version: '24'
     - name: Cache Composer dependencies
