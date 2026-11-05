@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 02:29+0000\n"
+"POT-Creation-Date: 2026-10-29 03:25+0000\n"
 "PO-Revision-Date: 2021-12-15 15:19+0000\n"
 "Last-Translator: Daisuke INOUE, 2026\n"
 "Language-Team: Japanese (Japan) (https://app.transifex.com/teclib/teams/28042/ja_JP/)\n"
@@ -45,59 +45,42 @@ msgstr "再試行の最大回数"
 msgid "Alert display timeout"
 msgstr "警告表示がタイムアウト"
 
-#: templates/forms/config/main.html.twig
-msgid "SSL-only for agent"
-msgstr "エージェントに SSL のみ"
+#: templates/forms/collect/add_wmi.html.twig
+#: inc/collect_wmi_content.class.php:118 inc/collect_wmi.class.php:60
+msgid "Class"
+msgstr "クラス"
 
-#: templates/forms/config/main.html.twig
-msgid "Agent port"
-msgstr "エージェント ポート"
+#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
+msgid "Properties"
+msgstr "プロパティー"
 
-#: templates/forms/config/main.html.twig
-msgid "Delete tasks logs after"
-msgstr "タスクのログを削除するまでの期間"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:104
+msgid "Mode"
+msgstr "モード"
 
-#: templates/forms/config/main.html.twig
-msgid "Re-prepare successful jobs"
-msgstr "成功ジョブを再準備"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:101
+msgid "Hive"
+msgstr "Hive"
 
-#: templates/forms/config/main.html.twig
-msgid "Maximum number of agents to wake up in a task"
-msgstr "タスクで起動指示するエージェントの最大数"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:102
+#: inc/collect_registry_content.class.php:403
+msgid "Path"
+msgstr "パス"
 
-#: templates/forms/config/main.html.twig
-msgid "Extra-debug"
-msgstr "拡張デバッグ"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:103
+#: inc/collect_registry_content.class.php:405
+#: inc/collect_registry_content.class.php:487
+msgid "Key"
+msgstr "キー"
 
-#: templates/forms/config/deploy.html.twig
-msgid "Use this GLPI server as a mirror server"
-msgstr "この GLPI サーバーをミラーサーバーとして扱う"
-
-#: templates/forms/config/deploy.html.twig
-msgid "Match mirrors to agents"
-msgstr "エージェントをミラーに結びつける"
-
-#: templates/forms/config/deploy.html.twig
-msgid "Delete successful on demand tasks after (in days)"
-msgstr "成功したオンデマンドタスクを削除するまでの日数"
-
-#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:183
-msgid "Threads number"
-msgstr "スレッド数"
-
-#: templates/forms/config/netinv.html.twig hook.php:83
-#: inc/staticmisc.class.php:75
-msgid "Network discovery"
-msgstr "ネットワーク探索"
-
-#: templates/forms/config/netinv.html.twig inc/agentmodule.class.php:122
-#: inc/staticmisc.class.php:81
-msgid "Network inventory (SNMP)"
-msgstr "ネットワーク インベントリー（SNMP）"
-
-#: templates/forms/config/netinv.html.twig
-msgid "SNMP timeout"
-msgstr "SNMP タイムアウト"
+#: templates/forms/collect/add_registry.html.twig
+#: inc/collect_registry.class.php:105
+msgid "Depth"
+msgstr "深さ"
 
 #: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:59
 msgid "Limit"
@@ -128,10 +111,10 @@ msgstr "SHA512 チェックサム"
 msgid "Checksum SHA2"
 msgstr "SHA2 チェックサム"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:63
-#: inc/deployfile.class.php:1122 inc/collect.class.php:263
+#: templates/forms/collect/add_file.html.twig
 #: inc/collect_file_content.class.php:93
-#: inc/collect_file_content.class.php:148
+#: inc/collect_file_content.class.php:148 inc/deployfile.class.php:1122
+#: inc/collect_file.class.php:63 inc/collect.class.php:263
 msgid "Size"
 msgstr "サイズ"
 
@@ -163,8 +146,8 @@ msgstr "比較型"
 msgid "Filter name"
 msgstr "姓"
 
-#: templates/forms/collect/add_file.html.twig inc/collect_file.class.php:83
-#: inc/deployfile.class.php:316 inc/deploycheck.class.php:376
+#: templates/forms/collect/add_file.html.twig inc/deployfile.class.php:316
+#: inc/collect_file.class.php:83 inc/deploycheck.class.php:376
 #: inc/deploycheck.class.php:389 inc/deploycheck.class.php:396
 msgid "File"
 msgstr "ファイル"
@@ -174,42 +157,22 @@ msgstr "ファイル"
 msgid "Folder"
 msgstr "フォルダー"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:104
-msgid "Mode"
-msgstr "モード"
+#: templates/forms/agentmodule.html.twig hook.php:55 hook.php:62 hook.php:69
+#: hook.php:76 hook.php:83 hook.php:90
+msgid "Module"
+msgstr "モジュール"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:101
-msgid "Hive"
-msgstr "Hive"
+#: templates/forms/agentmodule.html.twig
+msgid "Activation"
+msgstr "起動"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry_content.class.php:403
-#: inc/collect_registry.class.php:102
-msgid "Path"
-msgstr "パス"
+#: templates/forms/agentmodule.html.twig
+msgid "Activation (by default)"
+msgstr "活性化（標準）"
 
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry_content.class.php:405
-#: inc/collect_registry_content.class.php:487
-#: inc/collect_registry.class.php:103
-msgid "Key"
-msgstr "キー"
-
-#: templates/forms/collect/add_registry.html.twig
-#: inc/collect_registry.class.php:105
-msgid "Depth"
-msgstr "深さ"
-
-#: templates/forms/collect/add_wmi.html.twig
-#: inc/collect_wmi_content.class.php:118 inc/collect_wmi.class.php:60
-msgid "Class"
-msgstr "クラス"
-
-#: templates/forms/collect/add_wmi.html.twig inc/collect_wmi.class.php:61
-msgid "Properties"
-msgstr "プロパティー"
+#: templates/forms/agentmodule.html.twig
+msgid "Exceptions"
+msgstr "例外"
 
 #: templates/forms/timeslot/entry.html.twig
 msgid "Weekly view of the configured time slots"
@@ -241,26 +204,74 @@ msgstr "IP 範囲のはじまり"
 msgid "End of IP range"
 msgstr "IP 範囲の終わり"
 
+#: templates/forms/config/deploy.html.twig
+msgid "Use this GLPI server as a mirror server"
+msgstr "この GLPI サーバーをミラーサーバーとして扱う"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Match mirrors to agents"
+msgstr "エージェントをミラーに結びつける"
+
+#: templates/forms/config/deploy.html.twig
+msgid "Delete successful on demand tasks after (in days)"
+msgstr "成功したオンデマンドタスクを削除するまでの日数"
+
+#: templates/forms/config/main.html.twig
+msgid "SSL-only for agent"
+msgstr "エージェントに SSL のみ"
+
+#: templates/forms/config/main.html.twig
+msgid "Agent port"
+msgstr "エージェント ポート"
+
+#: templates/forms/config/main.html.twig
+msgid "Delete tasks logs after"
+msgstr "タスクのログを削除するまでの期間"
+
+#: templates/forms/config/main.html.twig
+msgid "Re-prepare successful jobs"
+msgstr "成功ジョブを再準備"
+
+#: templates/forms/config/main.html.twig
+msgid "Maximum number of agents to wake up in a task"
+msgstr "タスクで起動指示するエージェントの最大数"
+
+#: templates/forms/config/main.html.twig
+msgid "Extra-debug"
+msgstr "拡張デバッグ"
+
+#: templates/forms/config/netinv.html.twig inc/statediscovery.class.php:183
+msgid "Threads number"
+msgstr "スレッド数"
+
+#: templates/forms/config/netinv.html.twig hook.php:83
+#: inc/staticmisc.class.php:75
+msgid "Network discovery"
+msgstr "ネットワーク探索"
+
+#: templates/forms/config/netinv.html.twig inc/staticmisc.class.php:81
+#: inc/agentmodule.class.php:122
+msgid "Network inventory (SNMP)"
+msgstr "ネットワーク インベントリー（SNMP）"
+
+#: templates/forms/config/netinv.html.twig
+msgid "SNMP timeout"
+msgstr "SNMP タイムアウト"
+
 #: templates/forms/deploymirror.html.twig inc/deploymirror.class.php:253
 msgid "Mirror server address"
 msgstr "ミラーサーバー アドレス"
 
-#: templates/forms/agentmodule.html.twig hook.php:55 hook.php:62 hook.php:69
-#: hook.php:76 hook.php:83 hook.php:90
-msgid "Module"
-msgstr "モジュール"
-
-#: templates/forms/agentmodule.html.twig
-msgid "Activation"
-msgstr "起動"
-
-#: templates/forms/agentmodule.html.twig
-msgid "Activation (by default)"
-msgstr "活性化（標準）"
-
-#: templates/forms/agentmodule.html.twig
-msgid "Exceptions"
-msgstr "例外"
+#: src/Controller/InventoryController.php:81 inc/profile.class.php:124
+#: inc/menu.class.php:49 front/task.form.php:39 front/task.php:34
+#: front/taskjob.form.php:36 front/stateinventory.php:34 front/collect.php:34
+#: front/iprange.php:34 front/timeslot.php:37 front/agentmodule.form.php:34
+#: front/credential.form.php:39 front/credential.php:34 front/taskjob.php:34
+#: front/credentialip.form.php:42 front/menu_snmpinventory.php:37
+#: front/menu.php:38 front/statediscovery.php:34 front/iprange.form.php:36
+#: front/credentialip.php:34
+msgid "GLPI Inventory"
+msgstr "GLPI Inventory"
 
 #: hook.php:55 inc/menu.class.php:403
 msgid "Deploy"
@@ -299,7 +310,7 @@ msgstr "検出済%s "
 msgid "Setup"
 msgstr "セットアップ"
 
-#: hook.php:410 inc/deploygroup.class.php:231 inc/iprange.class.php:285
+#: hook.php:410 inc/iprange.class.php:285 inc/deploygroup.class.php:231
 msgid "Target a task"
 msgstr "タスクと対象を結びつける"
 
@@ -312,78 +323,194 @@ msgstr "静的グループに追加"
 msgid "Remove from static group"
 msgstr "静的グループから削除"
 
-#: front/credential.form.php:39 front/menu_snmpinventory.php:37
-#: front/agentmodule.form.php:34 front/iprange.form.php:36
-#: front/collect.php:34 front/credential.php:34 front/timeslot.php:37
-#: front/iprange.php:34 front/menu.php:38 front/statediscovery.php:34
-#: front/task.form.php:39 front/taskjob.php:34 front/credentialip.php:34
-#: front/taskjob.form.php:36 front/stateinventory.php:34
-#: front/credentialip.form.php:42 front/task.php:34 inc/menu.class.php:49
-#: inc/profile.class.php:124 src/Controller/InventoryController.php:81
-msgid "GLPI Inventory"
-msgstr "GLPI Inventory"
+#: inc/deployaction.class.php:53
+msgid "Return code is equal to"
+msgstr "戻り値が等しい"
 
-#: front/deployuserinteractiontemplate.php:36 inc/menu.class.php:392
-#: inc/deployuserinteractiontemplate.class.php:135 inc/profile.class.php:289
-msgid "User interaction template"
-msgid_plural "User interaction templates"
-msgstr[0] "ユーザー操作テンプレート"
+#: inc/deployaction.class.php:54
+msgid "Return code is not equal to"
+msgstr "戻り値が等しくない"
 
-#: front/deploygroup.php:36 inc/deploytaskjob.class.php:222
-#: inc/menu.class.php:214 inc/profile.class.php:396
-msgid "Groups of computers"
-msgstr "コンピューターのグループ"
+#: inc/deployaction.class.php:55
+msgid "Command output contains"
+msgstr "コマンド出力に含む : "
 
-#: front/deployfile_download.php:90
-msgid "An error occurs"
-msgstr "エラー発生"
+#: inc/deployaction.class.php:56
+msgid "Command output does not contains"
+msgstr "コマンド出力に含まれない : "
 
-#: front/deployfile_download.php:93 front/deployfile_download.php:96
-msgid "File not found"
-msgstr "ファイルがない"
+#: inc/deployaction.class.php:69
+msgid "Command"
+msgstr "コマンド"
 
-#: front/collect.form.php:36
-msgid "Collect management"
-msgstr "収集管理"
+#: inc/deployaction.class.php:70
+msgid "Move"
+msgstr "移動"
 
-#: front/deployfile.clean.php:59
-msgid "Delete unused files"
-msgstr "不使用ファイルの削除"
+#: inc/deployaction.class.php:71
+msgid "Copy"
+msgstr "コピー"
 
-#: front/config.form.php:36
-msgid "Features"
-msgstr "機能"
+#: inc/deployaction.class.php:72
+msgid "Delete directory"
+msgstr "ディレクトリーの削除"
 
-#: public/b/deploy/index.php:84
-msgid "Deploy module has been disabled for this agent"
-msgstr "このエージェントでは配置モジュールが無効に設定されています"
+#: inc/deployaction.class.php:73
+msgid "Create directory"
+msgstr "ディレクトリーを作成"
 
-#: public/b/deploy/index.php:150
-msgid "Checks"
-msgstr "チェック"
+#: inc/deployaction.class.php:200
+msgid "Command to execute"
+msgstr "実行するコマンド"
 
-#: public/b/deploy/index.php:151
-msgid "Files download"
-msgstr "ファイル ダウンロード"
+#: inc/deployaction.class.php:203 inc/deployaction.class.php:343
+msgid "Action label"
+msgstr "操作ラベル"
 
-#: public/b/deploy/index.php:152
-msgid "Files preparation"
-msgstr "ファイル準備"
+#: inc/deployaction.class.php:206 inc/deployaction.class.php:425
+msgid "Number of output lines to retrieve"
+msgstr "取得する出力行数"
 
-#: public/b/deploy/index.php:153 inc/deploypackage.class.php:629
-msgid "Actions"
-msgstr "操作"
+#: inc/deployaction.class.php:223
+msgid "return codes saved for this command"
+msgstr "このコマンド用に保存した戻り値"
 
-#: public/b/deploy/index.php:263
-msgid "User canceled the job"
-msgstr "ユーザーがジョブを取り消しました"
+#: inc/deployaction.class.php:236 inc/deployfile.class.php:257
+#: inc/deploycheck.class.php:264 inc/deployuserinteraction.class.php:250
+msgid "drag"
+msgstr "ドラッグ"
 
-#: public/b/deploy/index.php:265
-msgid "User postponed the job"
-msgstr "ユーザーがジョブを延期しました"
+#: inc/deployaction.class.php:250 inc/deployfile.class.php:270
+#: inc/deploycheck.class.php:278 inc/deployuserinteraction.class.php:264
+#: inc/taskjobview.class.php:280
+msgid "Delete"
+msgstr "削除"
 
-#: inc/taskjob.class.php:56 inc/agentwakeup.class.php:69
-#: inc/taskjoblog.class.php:188 inc/task.class.php:1620
+#: inc/deployaction.class.php:296
+msgid "From"
+msgstr "元"
+
+#: inc/deployaction.class.php:298
+msgid "To"
+msgstr "先"
+
+#: inc/deployaction.class.php:309
+msgid "exec"
+msgstr "exec"
+
+#: inc/deployaction.class.php:324
+msgid "path"
+msgstr "パス"
+
+#: inc/deployaction.class.php:370
+msgid "Execution checks"
+msgstr "実行チェック"
+
+#: inc/deployaction.class.php:435 inc/deploycheck.class.php:233
+#: inc/deploycheck.class.php:351 inc/deploycheck.class.php:362
+#: inc/deploycheck.class.php:371
+#, php-format
+msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
+msgstr "GLPI-Agent または Fusioninventory-Agent の %1s 以上必須"
+
+#: inc/statediscovery.class.php:176 inc/taskjoblog.class.php:214
+#: inc/stateinventory.class.php:113
+msgid "Unique id"
+msgstr "ユニーク ID"
+
+#: inc/statediscovery.class.php:177 inc/profile.class.php:391
+#: inc/stateinventory.class.php:114 inc/deploytask.class.php:53
+#: inc/deploytask.class.php:153 inc/taskview.class.php:164
+#: inc/task.class.php:1563 inc/task.class.php:1603
+msgid "Task"
+msgid_plural "Tasks"
+msgstr[0] "タスク"
+
+#: inc/statediscovery.class.php:180 inc/stateinventory.class.php:117
+msgid "Starting date"
+msgstr "開始日"
+
+#: inc/statediscovery.class.php:181 inc/stateinventory.class.php:118
+msgid "Ending date"
+msgstr "終了日"
+
+#: inc/statediscovery.class.php:184
+msgid "Total discovery devices"
+msgstr "総探索デバイス数"
+
+#: inc/statediscovery.class.php:185
+msgid "Devices not imported"
+msgstr "未インポートデバイス"
+
+#: inc/statediscovery.class.php:186
+msgid "Devices linked"
+msgstr "リンク済みデバイス"
+
+#: inc/statediscovery.class.php:187
+msgid "Devices imported"
+msgstr "インポート済みデバイス"
+
+#: inc/statediscovery.class.php:261 inc/deploypackage.class.php:1656
+#: inc/taskjoblog.class.php:92 inc/taskjoblog.class.php:283
+#: inc/stateinventory.class.php:192 inc/taskview.class.php:238
+#: inc/taskjobstate.class.php:144
+msgid "Prepared"
+msgstr "準備済"
+
+#: inc/statediscovery.class.php:266 inc/taskjoblog.class.php:93
+#: inc/taskjoblog.class.php:287 inc/stateinventory.class.php:197
+msgid "Started"
+msgstr "開始しました"
+
+#: inc/statediscovery.class.php:270 inc/stateinventory.class.php:201
+msgid "Finished tasks"
+msgstr "完了タスク"
+
+#: inc/deploypackageitem.class.php:332 inc/deploypackage.class.php:1291
+msgid "The modified JSON contained a syntax error :"
+msgstr "修正した JSON に構文エラーが含まれています : "
+
+#: inc/credential.class.php:77 inc/credential.class.php:186
+#: inc/profile.class.php:322 inc/menu.class.php:343
+#: inc/credentialip.class.php:132 inc/credentialip.class.php:157
+msgid "Authentication for remote devices (VMware)"
+msgstr "リモートデバイス (VMWare) の認証"
+
+#: inc/credential.class.php:303 inc/credential.class.php:321
+#: inc/profile.class.php:332
+msgid "VMware host"
+msgstr "VMware ホスト"
+
+#: inc/config.class.php:201
+msgid "Network Inventory"
+msgstr "ネットワーク インベントリー"
+
+#: inc/config.class.php:202 inc/menu.class.php:378
+msgid "Package management"
+msgstr "パッケージ管理"
+
+#: inc/config.class.php:284
+msgid "Change the status"
+msgstr "状態の変更"
+
+#: inc/config.class.php:287
+msgid "Clean agents"
+msgstr "エージェントの初期化"
+
+#: inc/config.class.php:315
+msgid "with location"
+msgstr "場所"
+
+#: inc/config.class.php:316
+msgid "with entity"
+msgstr "エンティティー"
+
+#: inc/config.class.php:317
+msgid "with both"
+msgstr "両方"
+
+#: inc/taskjob.class.php:56 inc/taskjoblog.class.php:188
+#: inc/agentwakeup.class.php:69 inc/task.class.php:1620
 msgid "Job"
 msgstr "ジョブ"
 
@@ -434,182 +561,279 @@ msgid "Property"
 msgstr "プロパティー"
 
 #: inc/collect_wmi_content.class.php:120 inc/collect_wmi_content.class.php:185
+#: inc/deploycheck.class.php:357 inc/deploycheck.class.php:390
+#: inc/deploycheck.class.php:397 inc/deploycheck.class.php:403
 #: inc/collect_registry_content.class.php:410
 #: inc/collect_registry_content.class.php:473
 #: inc/collect_registry_content.class.php:488
-#: inc/collect_registry_content.class.php:503 inc/deploycheck.class.php:357
-#: inc/deploycheck.class.php:390 inc/deploycheck.class.php:397
-#: inc/deploycheck.class.php:403
+#: inc/collect_registry_content.class.php:503
 msgid "Value"
 msgstr "値"
 
-#: inc/collect_wmi.class.php:48
-msgid "Found WMI"
-msgid_plural "Found WMIs"
-msgstr[0] "見つかった WMI"
+#: inc/iprange.class.php:78
+msgid "Communication mode"
+msgstr "コミュニケーション モード"
 
-#: inc/iprange_snmpcredential.class.php:101
-msgid "Associated SNMP credentials"
-msgstr "関連 SNMP 認証"
+#: inc/iprange.class.php:81
+msgid "See all informations of task"
+msgstr "タスクのすべての情報を表示"
 
-#: inc/iprange_snmpcredential.class.php:209
-msgid "SNMP credentials"
-msgstr "SNMP 認証"
+#: inc/iprange.class.php:83 inc/iprange.class.php:86 inc/menu.class.php:319
+#: inc/staticmisc.class.php:331 inc/staticmisc.class.php:365
+msgid "IP Ranges"
+msgstr "IP 範囲"
 
-#: inc/iprange_snmpcredential.class.php:212
-msgid "Version"
-msgstr "バージョン"
+#: inc/iprange.class.php:113 inc/profile.class.php:317
+msgid "IP range configuration"
+msgstr "IP 範囲設定"
 
-#: inc/iprange_snmpcredential.class.php:215
-msgid "By order of priority"
-msgstr "優先度準"
+#: inc/iprange.class.php:228
+msgid "Bad IP"
+msgstr "不正 IP"
 
-#: inc/collect_file.class.php:48
-msgid "Found file"
-msgid_plural "Found files"
-msgstr[0] "見つかったファイル"
+#: inc/deploypackage.class.php:109 inc/task.class.php:1581
+msgid "Package"
+msgstr "パッケージ"
 
-#: inc/collect_file.class.php:61
-msgid "Recursive"
-msgstr "再帰"
+#: inc/deploypackage.class.php:163 inc/menu.class.php:149
+msgid "Import"
+msgstr "インポート"
 
-#: inc/collect_file.class.php:66
-msgid "Name"
-msgstr "名前"
+#: inc/deploypackage.class.php:166
+msgid "Export"
+msgstr "エクスポート"
 
-#: inc/collect_file.class.php:67
-msgid "Iname"
-msgstr "Iname"
+#: inc/deploypackage.class.php:273
+msgid "Unable to import package archive"
+msgstr "パッケージアーカイブをインポートできません"
 
-#: inc/collect_file.class.php:68
-msgid "Type"
-msgstr "型"
+#: inc/deploypackage.class.php:314
+msgid "Modification Denied"
+msgstr "変更できません"
 
-#: inc/taskview.class.php:70
-msgid "Include old jobs"
-msgstr "以前のジョブを含む"
+#: inc/deploypackage.class.php:317
+msgid "The following task is running with this package"
+msgid_plural "The following tasks are running with this package"
+msgstr[0] "以下のタスクが、このパッケージを実行中"
 
-#: inc/taskview.class.php:88
-msgid "refresh interval"
-msgstr "更新間隔"
+#: inc/deploypackage.class.php:374
+msgid "Package content cannot be modified while a task is running with it"
+msgstr "パッケージの内容は、それを対象にタスクが実行されている間は変更できません"
 
-#: inc/taskview.class.php:91
-msgid "Off"
-msgstr "オフ"
+#: inc/deploypackage.class.php:398
+msgid "Invalid package uuid"
+msgstr "無効なパッケージ UUID"
 
-#: inc/taskview.class.php:108
-msgid "Export task result"
-msgstr "エクスポート タスク結果"
+#: inc/deploypackage.class.php:409
+msgid "Invalid package content"
+msgstr "無効なパッケージ内容"
 
-#: inc/taskview.class.php:126
-msgid "Task execution states"
-msgstr "タスク実行状態"
+#: inc/deploypackage.class.php:484 inc/deploypackage.class.php:608
+msgid "Enable deploy on demand for the following group"
+msgstr "以下のグループでオンデマンド配置を有効にする"
 
-#: inc/taskview.class.php:164 inc/statediscovery.class.php:177
-#: inc/stateinventory.class.php:114 inc/profile.class.php:391
-#: inc/deploytask.class.php:53 inc/deploytask.class.php:153
-#: inc/task.class.php:1563 inc/task.class.php:1603
-msgid "Task"
-msgid_plural "Tasks"
-msgstr[0] "タスク"
+#: inc/deploypackage.class.php:627
+msgid "Audits"
+msgstr "検査"
 
-#: inc/taskview.class.php:212
-msgid "Show/Hide details"
-msgstr "詳細の表示・非表示"
+#: inc/deploypackage.class.php:628
+msgid "Files"
+msgstr "ファイル"
 
-#: inc/taskview.class.php:235 inc/deploypackage.class.php:1653
+#: inc/deploypackage.class.php:629 public/b/deploy/index.php:153
+msgid "Actions"
+msgstr "操作"
+
+#: inc/deploypackage.class.php:630
+msgid "User interactions"
+msgstr "ユーザー操作"
+
+#: inc/deploypackage.class.php:782
+msgid "JSON package representation"
+msgstr "JSON パッケージ表現"
+
+#: inc/deploypackage.class.php:914
+msgid "Package exported in"
+msgstr "パッケージのエクスポート先 : "
+
+#: inc/deploypackage.class.php:1162
+msgid "Packages to import"
+msgstr "インポートするパッケージ"
+
+#: inc/deploypackage.class.php:1319
+msgid "Package actions"
+msgstr "パッケージの操作"
+
+#: inc/deploypackage.class.php:1328
+msgid "Target for deploy on demand"
+msgid_plural "Targets for deploy on demand"
+msgstr[0] "オンデマンドで配置する対象"
+
+#: inc/deploypackage.class.php:1347 inc/staticmisc.class.php:87
+msgid "Package deploy"
+msgstr "パッケージ配置"
+
+#: inc/deploypackage.class.php:1420
+msgid "Add a target for self-service"
+msgstr "セルフサービス向けに対象を追加"
+
+#: inc/deploypackage.class.php:1653 inc/taskview.class.php:235
 msgid "In error"
 msgstr "エラー"
 
-#: inc/taskview.class.php:236 inc/deploypackage.class.php:1654
+#: inc/deploypackage.class.php:1654 inc/taskview.class.php:236
 msgid "Successful"
 msgstr "成功"
 
-#: inc/taskview.class.php:237 inc/deploypackage.class.php:1655
+#: inc/deploypackage.class.php:1655 inc/taskview.class.php:237
 msgid "Running"
 msgstr "実行中"
 
-#: inc/taskview.class.php:238 inc/statediscovery.class.php:261
-#: inc/taskjobstate.class.php:144 inc/stateinventory.class.php:192
-#: inc/deploypackage.class.php:1656 inc/taskjoblog.class.php:92
-#: inc/taskjoblog.class.php:283
-msgid "Prepared"
-msgstr "準備済"
-
-#: inc/taskview.class.php:239 inc/taskjobstate.class.php:149
-#: inc/deploypackage.class.php:1657
+#: inc/deploypackage.class.php:1657 inc/taskview.class.php:239
+#: inc/taskjobstate.class.php:149
 msgid "Cancelled"
 msgstr "取消済"
 
-#: inc/taskview.class.php:322 inc/task.class.php:144
-msgid "Permit to re-prepare task after run"
-msgstr "実行後、タスクの再準備を許可"
+#: inc/deploypackage.class.php:1778
+msgid "Restart job"
+msgstr "ジョブの再実行"
 
-#: inc/taskview.class.php:327
-msgid "This is an on demand deployment task"
-msgstr "これはオンデマンド配置タスクです"
+#: inc/deploypackage.class.php:1785
+msgid "refresh job"
+msgstr "ジョブを更新"
 
-#: inc/taskview.class.php:338 inc/task.class.php:103
-msgid "Schedule start"
-msgstr "スケジュール開始"
+#: inc/deploypackage.class.php:1930
+msgid "Select packages you want install"
+msgstr "インストールしたいパッケージを選択"
 
-#: inc/taskview.class.php:344 inc/task.class.php:111
-msgid "Schedule end"
-msgstr "スケジュール終了"
+#: inc/deploypackage.class.php:1939
+msgid "Prepare for install"
+msgstr "インストール準備"
 
-#: inc/taskview.class.php:350
-msgid "Preparation timeslot"
-msgstr "準備タイムスロット"
+#: inc/deploypackage.class.php:1944
+msgid "I'm on this computer: local wakeup"
+msgstr "このコンピューター上で作業 : ローカル 起動指示"
 
-#: inc/taskview.class.php:358
-msgid "Execution timeslot"
-msgstr "実行タイムスロット"
+#: inc/deploypackage.class.php:1945
+msgid "I'm not on this computer: wakeup from the server"
+msgstr "このコンピューター上で作業していない : サーバーから起動指示"
 
-#: inc/taskview.class.php:366
-msgid "Agent wakeup interval (in minutes)"
-msgstr "エージェントの起動指示間隔（分）"
+#: inc/deploypackage.class.php:1946
+msgid "Don't wakeup"
+msgstr "起動指示しない"
 
-#: inc/taskview.class.php:376
-msgid "Number of agents to wake up"
-msgstr "起動指示するエージェント数"
+#: inc/deploypackage.class.php:1962
+msgid "No packages available to install"
+msgstr "インストールすべきパッケージはありません"
 
-#: inc/taskview.class.php:422
-msgid "Force start"
-msgstr "強制実行"
+#: inc/profile.class.php:170 inc/menu.class.php:227
+msgid "General"
+msgstr "全般"
 
-#: inc/taskview.class.php:943
-msgid "Device no longer defined in definition of job"
-msgstr "デバイスはすでにジョブの定義に含まれていません"
+#: inc/profile.class.php:176
+msgid "Inventory"
+msgstr "インベントリー"
 
-#: inc/agentwakeup.class.php:56
-msgid "Wake agents up"
-msgstr "エージェントを起動する"
+#: inc/profile.class.php:182 inc/profile.class.php:228
+msgid "Software deployment"
+msgstr "ソフトウェアの配置"
 
-#: inc/deploygroup.class.php:90 inc/deploygroup.class.php:827
-msgid "Dynamic group"
-msgstr "動的グループ"
+#: inc/profile.class.php:222 inc/profile.class.php:299
+msgid "Deploy packages on demand"
+msgstr "オンデマンドでパッケージを配置"
 
-#: inc/deploygroup.class.php:103
-msgid "Inventory group"
-msgid_plural "Inventory groups"
-msgstr[0] "インベントリー グループ"
+#: inc/profile.class.php:284
+msgid "Manage packages"
+msgstr "パッケージ管理"
 
-#: inc/deploygroup.class.php:120
-msgid "Associated task"
-msgid_plural "Associated tasks"
-msgstr[0] "関連タスク"
+#: inc/profile.class.php:289 inc/menu.class.php:392
+#: inc/deployuserinteractiontemplate.class.php:135
+#: front/deployuserinteractiontemplate.php:36
+msgid "User interaction template"
+msgid_plural "User interaction templates"
+msgstr[0] "ユーザー操作テンプレート"
 
-#: inc/deploygroup.class.php:173 inc/taskjobview.class.php:638
-msgid "Module method"
-msgstr "モジュール メソッド"
+#: inc/profile.class.php:294 inc/menu.class.php:385
+#: inc/deploymirror.class.php:67
+msgid "Mirror servers"
+msgstr "ミラーサーバー"
 
-#: inc/deploygroup.class.php:389
-msgid "Add group"
-msgstr "グループを追加"
+#: inc/profile.class.php:327 inc/menu.class.php:327
+msgid "Remote devices to inventory (VMware)"
+msgstr "インベントリー対象のリモートデバイス（VMware）"
 
-#: inc/menu.class.php:149 inc/deploypackage.class.php:163
-msgid "Import"
-msgstr "インポート"
+#: inc/profile.class.php:341
+msgid "Network equipment SNMP"
+msgstr "ネットワーク機器 SNMP"
+
+#: inc/profile.class.php:346
+msgid "Printer SNMP"
+msgstr "プリンター SNMP"
+
+#: inc/profile.class.php:380
+msgid "Menu"
+msgstr "メニュー"
+
+#: inc/profile.class.php:386
+msgid "Configuration"
+msgstr "設定"
+
+#: inc/profile.class.php:396 inc/menu.class.php:214
+#: inc/deploytaskjob.class.php:222 front/deploygroup.php:36
+msgid "Groups of computers"
+msgstr "コンピューターのグループ"
+
+#: inc/profile.class.php:401 inc/menu.class.php:254 inc/collect.class.php:56
+msgid "Collect information"
+msgstr "情報収集"
+
+#: inc/taskjoblog.class.php:95
+msgid "Ok"
+msgstr "OK"
+
+#: inc/taskjoblog.class.php:97
+msgid "Info"
+msgstr "情報"
+
+#: inc/taskjoblog.class.php:305
+msgid "unknown"
+msgstr "不明"
+
+#: inc/taskjoblog.class.php:343
+msgid "devices queried"
+msgstr "デバイスを記録"
+
+#: inc/taskjoblog.class.php:344
+msgid "devices found"
+msgstr "デバイスを発見"
+
+#: inc/taskjoblog.class.php:345
+msgid "Add the item"
+msgstr "アイテムを追加"
+
+#: inc/taskjoblog.class.php:346
+msgid "Update the item"
+msgstr "アイテムを更新"
+
+#: inc/taskjoblog.class.php:347
+msgid "Inventory started"
+msgstr "インベントリーを開始しました"
+
+#: inc/taskjoblog.class.php:348
+msgid "Detail"
+msgstr "詳細"
+
+#: inc/taskjoblog.class.php:349
+msgid "Agent communication error, impossible to start agent"
+msgstr "エージェントとの通信エラー。エージェントの開始不能"
+
+#: inc/taskjoblog.class.php:350
+msgid "Agent stopped/crashed"
+msgstr "エージェントが停止・フリーズ"
+
+#: inc/taskjoblog.class.php:351
+msgid "Import denied"
+msgstr "インポートできません"
 
 #: inc/menu.class.php:155
 msgid "Clean unused files"
@@ -623,10 +847,6 @@ msgstr "エージェント管理"
 msgid "General configuration"
 msgstr "全般設定"
 
-#: inc/menu.class.php:227 inc/profile.class.php:170
-msgid "General"
-msgstr "全般"
-
 #: inc/menu.class.php:238 inc/task.class.php:63
 msgid "Task management"
 msgstr "タスク管理"
@@ -639,12 +859,8 @@ msgstr "モニター・ログ"
 msgid "Import agent XML file"
 msgstr "エージェント XML ファイルをインポート"
 
-#: inc/menu.class.php:254 inc/profile.class.php:401 inc/collect.class.php:56
-msgid "Collect information"
-msgstr "情報収集"
-
-#: inc/menu.class.php:260 inc/timeslotentry.class.php:79
-#: inc/timeslot.class.php:67 inc/timeslot.class.php:83
+#: inc/menu.class.php:260 inc/timeslot.class.php:67 inc/timeslot.class.php:83
+#: inc/timeslotentry.class.php:79
 msgid "Time slot"
 msgstr "タイムスロット"
 
@@ -664,21 +880,6 @@ msgstr "コンピューターのエンティティールール"
 msgid "Rules"
 msgstr "ルール"
 
-#: inc/menu.class.php:319 inc/iprange.class.php:83 inc/iprange.class.php:86
-#: inc/staticmisc.class.php:331 inc/staticmisc.class.php:365
-msgid "IP Ranges"
-msgstr "IP 範囲"
-
-#: inc/menu.class.php:327 inc/profile.class.php:327
-msgid "Remote devices to inventory (VMware)"
-msgstr "インベントリー対象のリモートデバイス（VMware）"
-
-#: inc/menu.class.php:343 inc/credential.class.php:77
-#: inc/credential.class.php:186 inc/profile.class.php:322
-#: inc/credentialip.class.php:132 inc/credentialip.class.php:157
-msgid "Authentication for remote devices (VMware)"
-msgstr "リモートデバイス (VMWare) の認証"
-
 #: inc/menu.class.php:351
 msgid "Discovery status"
 msgstr "探索状態"
@@ -690,15 +891,6 @@ msgstr "ネットワーク インベントリー状態"
 #: inc/menu.class.php:365
 msgid "Networking"
 msgstr "ネットワーク"
-
-#: inc/menu.class.php:378 inc/config.class.php:202
-msgid "Package management"
-msgstr "パッケージ管理"
-
-#: inc/menu.class.php:385 inc/deploymirror.class.php:67
-#: inc/profile.class.php:294
-msgid "Mirror servers"
-msgstr "ミラーサーバー"
 
 #: inc/menu.class.php:415
 msgid "SNMP inventory"
@@ -759,29 +951,65 @@ msgid ""
 "previously"
 msgstr "ネットワーク インベントリー モジュールと以前に定義したエージェントでタスクを作成"
 
-#: inc/deploygroup_staticdata.class.php:107
-msgid "CSV import"
-msgstr "CSV インポート"
+#: inc/stateinventory.class.php:120
+msgid "Number per second"
+msgstr "毎秒"
 
-#: inc/deploygroup_staticdata.class.php:154
-#, php-format
-msgid ""
-"Make a search to get desired computer, then use massive actions and use %s"
-msgstr "目的のコンピューターを検索し、一括操作で %s を利用する"
+#: inc/stateinventory.class.php:121
+msgid "Threads / Timeout configuration"
+msgstr "スレッド・タイムアウト設定"
 
-#: inc/deploygroup_staticdata.class.php:336
-msgid ""
-"Import a list of computers from a CSV file (the first column must contain "
-"the computer ID)"
-msgstr "CSV ファイル（最初の列にコンピューター ID を含める）からコンピューターの一覧をインポート"
+#: inc/stateinventory.class.php:122
+msgid "To inventory"
+msgstr "インベントリー対象"
 
-#: inc/deploygroup_staticdata.class.php:381
-msgid "Computers imported successfully from CSV file"
-msgstr "CSV ファイルからコンピューターをインポートしました"
+#: inc/stateinventory.class.php:123
+msgid "Error(s)"
+msgstr "エラー"
 
-#: inc/deploygroup_staticdata.class.php:384
-msgid "Impossible to read the CSV file"
-msgstr "CSV ファイルが読み込めません"
+#: inc/collect_wmi.class.php:48
+msgid "Found WMI"
+msgid_plural "Found WMIs"
+msgstr[0] "見つかった WMI"
+
+#: inc/deploygroup.class.php:90 inc/deploygroup.class.php:827
+msgid "Dynamic group"
+msgstr "動的グループ"
+
+#: inc/deploygroup.class.php:103
+msgid "Inventory group"
+msgid_plural "Inventory groups"
+msgstr[0] "インベントリー グループ"
+
+#: inc/deploygroup.class.php:120
+msgid "Associated task"
+msgid_plural "Associated tasks"
+msgstr[0] "関連タスク"
+
+#: inc/deploygroup.class.php:173 inc/taskjobview.class.php:638
+msgid "Module method"
+msgstr "モジュール メソッド"
+
+#: inc/deploygroup.class.php:389
+msgid "Add group"
+msgstr "グループを追加"
+
+#: inc/collect_file_content.class.php:92
+#: inc/collect_file_content.class.php:147
+msgid "Path/file"
+msgstr "パス・ファイル"
+
+#: inc/staticmisc.class.php:59
+msgid "Computer Inventory"
+msgstr "コンピューター インベントリー"
+
+#: inc/staticmisc.class.php:67
+msgid "VMware host remote inventory"
+msgstr "VMware ホスト リモート インベントリー"
+
+#: inc/staticmisc.class.php:95
+msgid "Collect data"
+msgstr "データ収集"
 
 #: inc/deployuserinteractiontemplate.class.php:99
 msgid "Behavior"
@@ -892,100 +1120,6 @@ msgstr "サーバー アクティブ セッション"
 msgid "Behaviors"
 msgstr "ふるまい"
 
-#: inc/deployaction.class.php:53
-msgid "Return code is equal to"
-msgstr "戻り値が等しい"
-
-#: inc/deployaction.class.php:54
-msgid "Return code is not equal to"
-msgstr "戻り値が等しくない"
-
-#: inc/deployaction.class.php:55
-msgid "Command output contains"
-msgstr "コマンド出力に含む : "
-
-#: inc/deployaction.class.php:56
-msgid "Command output does not contains"
-msgstr "コマンド出力に含まれない : "
-
-#: inc/deployaction.class.php:69
-msgid "Command"
-msgstr "コマンド"
-
-#: inc/deployaction.class.php:70
-msgid "Move"
-msgstr "移動"
-
-#: inc/deployaction.class.php:71
-msgid "Copy"
-msgstr "コピー"
-
-#: inc/deployaction.class.php:72
-msgid "Delete directory"
-msgstr "ディレクトリーの削除"
-
-#: inc/deployaction.class.php:73
-msgid "Create directory"
-msgstr "ディレクトリーを作成"
-
-#: inc/deployaction.class.php:200
-msgid "Command to execute"
-msgstr "実行するコマンド"
-
-#: inc/deployaction.class.php:203 inc/deployaction.class.php:343
-msgid "Action label"
-msgstr "操作ラベル"
-
-#: inc/deployaction.class.php:206 inc/deployaction.class.php:425
-msgid "Number of output lines to retrieve"
-msgstr "取得する出力行数"
-
-#: inc/deployaction.class.php:223
-msgid "return codes saved for this command"
-msgstr "このコマンド用に保存した戻り値"
-
-#: inc/deployaction.class.php:236 inc/deployfile.class.php:257
-#: inc/deploycheck.class.php:264 inc/deployuserinteraction.class.php:250
-msgid "drag"
-msgstr "ドラッグ"
-
-#: inc/deployaction.class.php:250 inc/deployfile.class.php:270
-#: inc/deploycheck.class.php:278 inc/deployuserinteraction.class.php:264
-#: inc/taskjobview.class.php:280
-msgid "Delete"
-msgstr "削除"
-
-#: inc/deployaction.class.php:296
-msgid "From"
-msgstr "元"
-
-#: inc/deployaction.class.php:298
-msgid "To"
-msgstr "先"
-
-#: inc/deployaction.class.php:309
-msgid "exec"
-msgstr "exec"
-
-#: inc/deployaction.class.php:324
-msgid "path"
-msgstr "パス"
-
-#: inc/deployaction.class.php:370
-msgid "Execution checks"
-msgstr "実行チェック"
-
-#: inc/deployaction.class.php:435 inc/deploycheck.class.php:233
-#: inc/deploycheck.class.php:351 inc/deploycheck.class.php:362
-#: inc/deploycheck.class.php:371
-#, php-format
-msgid "GLPI-Agent or Fusioninventory-Agent >= %1s mandatory"
-msgstr "GLPI-Agent または Fusioninventory-Agent の %1s 以上必須"
-
-#: inc/collectcommon.class.php:74
-msgid "Collect configuration"
-msgstr "収集の構成"
-
 #: inc/deployfile.class.php:87
 msgid "Upload from computer"
 msgstr "コンピューターからアップロード"
@@ -1087,154 +1221,163 @@ msgstr "MB"
 msgid "Unused file"
 msgstr "不使用ファイル"
 
-#: inc/statediscovery.class.php:176 inc/stateinventory.class.php:113
-#: inc/taskjoblog.class.php:214
-msgid "Unique id"
-msgstr "ユニーク ID"
+#: inc/agentwakeup.class.php:56
+msgid "Wake agents up"
+msgstr "エージェントを起動する"
 
-#: inc/statediscovery.class.php:180 inc/stateinventory.class.php:117
-msgid "Starting date"
-msgstr "開始日"
+#: inc/collect_file.class.php:48
+msgid "Found file"
+msgid_plural "Found files"
+msgstr[0] "見つかったファイル"
 
-#: inc/statediscovery.class.php:181 inc/stateinventory.class.php:118
-msgid "Ending date"
-msgstr "終了日"
+#: inc/collect_file.class.php:61
+msgid "Recursive"
+msgstr "再帰"
 
-#: inc/statediscovery.class.php:184
-msgid "Total discovery devices"
-msgstr "総探索デバイス数"
+#: inc/collect_file.class.php:66
+msgid "Name"
+msgstr "名前"
 
-#: inc/statediscovery.class.php:185
-msgid "Devices not imported"
-msgstr "未インポートデバイス"
+#: inc/collect_file.class.php:67
+msgid "Iname"
+msgstr "Iname"
 
-#: inc/statediscovery.class.php:186
-msgid "Devices linked"
-msgstr "リンク済みデバイス"
+#: inc/collect_file.class.php:68
+msgid "Type"
+msgstr "型"
 
-#: inc/statediscovery.class.php:187
-msgid "Devices imported"
-msgstr "インポート済みデバイス"
+#: inc/display.class.php:134
+msgid "Progress"
+msgstr "進捗"
 
-#: inc/statediscovery.class.php:266 inc/stateinventory.class.php:197
-#: inc/taskjoblog.class.php:93 inc/taskjoblog.class.php:287
-msgid "Started"
-msgstr "開始しました"
+#: inc/timeslotentry.class.php:63
+msgid "Time slot entry"
+msgstr "タイムスロット エントリー"
 
-#: inc/statediscovery.class.php:270 inc/stateinventory.class.php:201
-msgid "Finished tasks"
-msgstr "完了タスク"
+#: inc/timeslotentry.class.php:214
+msgid "End day must be after start day"
+msgstr "終了日を開始日より後にしてください"
 
-#: inc/taskjobstate.class.php:124
-msgid "Tasks / Groups"
-msgstr "タスク・グループ"
+#: inc/timeslotentry.class.php:224
+msgid "End time must be after start time"
+msgstr "終了日時を開始日時より後にしてください"
 
-#: inc/taskjobstate.class.php:129
-msgid "Job executions"
-msgstr "ジョブ実行"
+#: inc/deploytask.class.php:109
+msgid "Order list"
+msgstr "命令リスト"
 
-#: inc/taskjobstate.class.php:145
-msgid "Server has sent data to the agent"
-msgstr "サーバーからエージェントにデータを送信済"
+#: inc/deploytask.class.php:156
+msgid "Add task"
+msgstr "タスクを追加"
 
-#: inc/taskjobstate.class.php:146
-msgid "Agent replied with data to the server"
-msgstr "サーバーにデータを返答したエージェント"
+#: inc/deploytask.class.php:181
+msgid "Edit impossible, this task is active"
+msgstr "タスクが稼働中のため、編集できません"
 
-#: inc/taskjobstate.class.php:147
-msgid "Finished"
-msgstr "完了"
+#: inc/deploytask.class.php:212
+msgid "This task is active. delete denied"
+msgstr "タスクが稼働中です。削除できません。"
 
-#: inc/taskjobstate.class.php:148
-msgid "Error"
-msgstr "エラー"
+#: inc/collect_registry.class.php:63
+msgid "Found entry"
+msgid_plural "Found entries"
+msgstr[0] "見つかったエントリー"
 
-#: inc/taskjobstate.class.php:150
-msgid "Postponed"
-msgstr "延期済"
+#: inc/collect_registry.class.php:91
+msgid "Default"
+msgstr "標準"
 
-#: inc/taskjobstate.class.php:520
-#, php-format
-msgid "Job available for next execution at %s"
-msgstr "%s に次の実行のためにジョブが有効に "
+#: inc/collect_registry.class.php:92
+msgid "Check path existence"
+msgstr "パスの存在確認"
 
-#: inc/taskjobstate.class.php:535
-#, php-format
-msgid "Retry #%d"
-msgstr "#%dを再試行"
+#: inc/collect_registry.class.php:93
+msgid "Check if a key is defined"
+msgstr "キーが定義済みか確認"
 
-#: inc/taskjobstate.class.php:537
-msgid "Maximum number of retry reached: force deployment"
-msgstr "再試行の最大回数に到達 : 強制配置"
+#: inc/collect_registry.class.php:94
+msgid "All values"
+msgstr "すべての値"
 
-#: inc/taskjobstate.class.php:562
-msgid "Clean taskjob (retention time)"
-msgstr "タスクのクリーンアップ（保持時間）"
+#: inc/iprange_snmpcredential.class.php:101
+msgid "Associated SNMP credentials"
+msgstr "関連 SNMP 認証"
 
-#: inc/collect_registry_content.class.php:74
-msgid "Windows registry content"
-msgstr "Windows レジストリーの内容"
+#: inc/iprange_snmpcredential.class.php:209
+msgid "SNMP credentials"
+msgstr "SNMP 認証"
 
-#: inc/collect_registry_content.class.php:279
-#, php-format
-msgid "%s path found"
-msgstr "%s のパスの存在確認"
+#: inc/iprange_snmpcredential.class.php:212
+msgid "Version"
+msgstr "バージョン"
 
-#: inc/collect_registry_content.class.php:280
-#, php-format
-msgid "%s path not found"
-msgstr "%s パス、なし"
+#: inc/iprange_snmpcredential.class.php:215
+msgid "By order of priority"
+msgstr "優先度準"
 
-#: inc/collect_registry_content.class.php:290
-#, php-format
-msgid "%s value exists"
-msgstr "%s の値が存在"
+#: inc/taskview.class.php:70
+msgid "Include old jobs"
+msgstr "以前のジョブを含む"
 
-#: inc/collect_registry_content.class.php:291
-#, php-format
-msgid "%s value does not exist"
-msgstr "%s の値、なし"
+#: inc/taskview.class.php:88
+msgid "refresh interval"
+msgstr "更新間隔"
 
-#: inc/collect_registry_content.class.php:299
-#, php-format
-msgid "%s: Found a value"
-msgstr "%s : 値を確認"
+#: inc/taskview.class.php:91
+msgid "Off"
+msgstr "オフ"
 
-#: inc/collect_registry_content.class.php:304
-#, php-format
-msgid "%s: Found %d values"
-msgstr "%s : %d 件の値を確認"
+#: inc/taskview.class.php:108
+msgid "Export task result"
+msgstr "エクスポート タスク結果"
 
-#: inc/collect_registry_content.class.php:311
-#, php-format
-msgid "%s: Found a result"
-msgstr "%s : 結果を確認"
+#: inc/taskview.class.php:126
+msgid "Task execution states"
+msgstr "タスク実行状態"
 
-#: inc/collect_registry_content.class.php:359
-msgid "Exist"
-msgstr "存在"
+#: inc/taskview.class.php:212
+msgid "Show/Hide details"
+msgstr "詳細の表示・非表示"
 
-#: inc/collect_registry_content.class.php:360
-msgid "Does not exist"
-msgstr "なし"
+#: inc/taskview.class.php:322 inc/task.class.php:144
+msgid "Permit to re-prepare task after run"
+msgstr "実行後、タスクの再準備を許可"
 
-#: inc/collect_registry_content.class.php:371
-msgid "Defined"
-msgstr "定義済み"
+#: inc/taskview.class.php:327
+msgid "This is an on demand deployment task"
+msgstr "これはオンデマンド配置タスクです"
 
-#: inc/collect_registry_content.class.php:372
-msgid "Not defined"
-msgstr "未定義"
+#: inc/taskview.class.php:338 inc/task.class.php:103
+msgid "Schedule start"
+msgstr "スケジュール開始"
 
-#: inc/collect_registry_content.class.php:406
-#: inc/collect_registry_content.class.php:408
-msgid "State"
-msgstr "状態"
+#: inc/taskview.class.php:344 inc/task.class.php:111
+msgid "Schedule end"
+msgstr "スケジュール終了"
 
-#: inc/collect_registry_content.class.php:411
-#: inc/collect_registry_content.class.php:504
-msgid "Data"
-msgstr "データ"
+#: inc/taskview.class.php:350
+msgid "Preparation timeslot"
+msgstr "準備タイムスロット"
+
+#: inc/taskview.class.php:358
+msgid "Execution timeslot"
+msgstr "実行タイムスロット"
+
+#: inc/taskview.class.php:366
+msgid "Agent wakeup interval (in minutes)"
+msgstr "エージェントの起動指示間隔（分）"
+
+#: inc/taskview.class.php:376
+msgid "Number of agents to wake up"
+msgstr "起動指示するエージェント数"
+
+#: inc/taskview.class.php:422
+msgid "Force start"
+msgstr "強制実行"
+
+#: inc/taskview.class.php:943
+msgid "Device no longer defined in definition of job"
+msgstr "デバイスはすでにジョブの定義に含まれていません"
 
 #: inc/deploycheck.class.php:52 inc/collect.class.php:147
 #: inc/collect.class.php:210
@@ -1388,168 +1531,29 @@ msgstr "情報として報告"
 msgid "report warning"
 msgstr "警告として報告"
 
-#: inc/communicationnetworkdiscovery.class.php:109
+#: inc/deploygroup_staticdata.class.php:107
+msgid "CSV import"
+msgstr "CSV インポート"
+
+#: inc/deploygroup_staticdata.class.php:154
 #, php-format
-msgid "Processed: %1$s Created: %2$s Updated: %3$s"
-msgstr "処理済 : %1$s 作成済 : %2$s 更新済 : %3$s"
+msgid ""
+"Make a search to get desired computer, then use massive actions and use %s"
+msgstr "目的のコンピューターを検索し、一括操作で %s を利用する"
 
-#: inc/timeslotentry.class.php:63
-msgid "Time slot entry"
-msgstr "タイムスロット エントリー"
+#: inc/deploygroup_staticdata.class.php:336
+msgid ""
+"Import a list of computers from a CSV file (the first column must contain "
+"the computer ID)"
+msgstr "CSV ファイル（最初の列にコンピューター ID を含める）からコンピューターの一覧をインポート"
 
-#: inc/timeslotentry.class.php:214
-msgid "End day must be after start day"
-msgstr "終了日を開始日より後にしてください"
+#: inc/deploygroup_staticdata.class.php:381
+msgid "Computers imported successfully from CSV file"
+msgstr "CSV ファイルからコンピューターをインポートしました"
 
-#: inc/timeslotentry.class.php:224
-msgid "End time must be after start time"
-msgstr "終了日時を開始日時より後にしてください"
-
-#: inc/collect_registry.class.php:63
-msgid "Found entry"
-msgid_plural "Found entries"
-msgstr[0] "見つかったエントリー"
-
-#: inc/collect_registry.class.php:91
-msgid "Default"
-msgstr "標準"
-
-#: inc/collect_registry.class.php:92
-msgid "Check path existence"
-msgstr "パスの存在確認"
-
-#: inc/collect_registry.class.php:93
-msgid "Check if a key is defined"
-msgstr "キーが定義済みか確認"
-
-#: inc/collect_registry.class.php:94
-msgid "All values"
-msgstr "すべての値"
-
-#: inc/config.class.php:201
-msgid "Network Inventory"
-msgstr "ネットワーク インベントリー"
-
-#: inc/config.class.php:284
-msgid "Change the status"
-msgstr "状態の変更"
-
-#: inc/config.class.php:287
-msgid "Clean agents"
-msgstr "エージェントの初期化"
-
-#: inc/config.class.php:315
-msgid "with location"
-msgstr "場所"
-
-#: inc/config.class.php:316
-msgid "with entity"
-msgstr "エンティティー"
-
-#: inc/config.class.php:317
-msgid "with both"
-msgstr "両方"
-
-#: inc/commonview.class.php:296
-msgid "Warning:"
-msgstr "警告 : "
-
-#: inc/commonview.class.php:301
-msgid "Error:"
-msgstr "エラー : "
-
-#: inc/iprange.class.php:78
-msgid "Communication mode"
-msgstr "コミュニケーション モード"
-
-#: inc/iprange.class.php:81
-msgid "See all informations of task"
-msgstr "タスクのすべての情報を表示"
-
-#: inc/iprange.class.php:113 inc/profile.class.php:317
-msgid "IP range configuration"
-msgstr "IP 範囲設定"
-
-#: inc/iprange.class.php:228
-msgid "Bad IP"
-msgstr "不正 IP"
-
-#: inc/credential.class.php:303 inc/credential.class.php:321
-#: inc/profile.class.php:332
-msgid "VMware host"
-msgstr "VMware ホスト"
-
-#: inc/stateinventory.class.php:120
-msgid "Number per second"
-msgstr "毎秒"
-
-#: inc/stateinventory.class.php:121
-msgid "Threads / Timeout configuration"
-msgstr "スレッド・タイムアウト設定"
-
-#: inc/stateinventory.class.php:122
-msgid "To inventory"
-msgstr "インベントリー対象"
-
-#: inc/stateinventory.class.php:123
-msgid "Error(s)"
-msgstr "エラー"
-
-#: inc/profile.class.php:176
-msgid "Inventory"
-msgstr "インベントリー"
-
-#: inc/profile.class.php:182 inc/profile.class.php:228
-msgid "Software deployment"
-msgstr "ソフトウェアの配置"
-
-#: inc/profile.class.php:222 inc/profile.class.php:299
-msgid "Deploy packages on demand"
-msgstr "オンデマンドでパッケージを配置"
-
-#: inc/profile.class.php:284
-msgid "Manage packages"
-msgstr "パッケージ管理"
-
-#: inc/profile.class.php:341
-msgid "Network equipment SNMP"
-msgstr "ネットワーク機器 SNMP"
-
-#: inc/profile.class.php:346
-msgid "Printer SNMP"
-msgstr "プリンター SNMP"
-
-#: inc/profile.class.php:380
-msgid "Menu"
-msgstr "メニュー"
-
-#: inc/profile.class.php:386
-msgid "Configuration"
-msgstr "設定"
-
-#: inc/agentmodule.class.php:62
-msgid "Agents modules"
-msgstr "エージェント モジュール"
-
-#: inc/agentmodule.class.php:126
-msgid "Package deployment"
-msgstr "パッケージ配置"
-
-#: inc/staticmisc.class.php:59
-msgid "Computer Inventory"
-msgstr "コンピューター インベントリー"
-
-#: inc/staticmisc.class.php:67
-msgid "VMware host remote inventory"
-msgstr "VMware ホスト リモート インベントリー"
-
-#: inc/staticmisc.class.php:87 inc/deploypackage.class.php:1347
-msgid "Package deploy"
-msgstr "パッケージ配置"
-
-#: inc/staticmisc.class.php:95
-msgid "Collect data"
-msgstr "データ収集"
+#: inc/deploygroup_staticdata.class.php:384
+msgid "Impossible to read the CSV file"
+msgstr "CSV ファイルが読み込めません"
 
 #: inc/collect.class.php:148 inc/collect.class.php:228
 msgid "WMI"
@@ -1572,135 +1576,141 @@ msgstr "このエージェントでは収集モジュールが無効に設定さ
 msgid "Path not found"
 msgstr "パスが見つかりません"
 
-#: inc/display.class.php:134
-msgid "Progress"
-msgstr "進捗"
+#: inc/collect_registry_content.class.php:74
+msgid "Windows registry content"
+msgstr "Windows レジストリーの内容"
 
-#: inc/deploypackage.class.php:109 inc/task.class.php:1581
-msgid "Package"
-msgstr "パッケージ"
+#: inc/collect_registry_content.class.php:279
+#, php-format
+msgid "%s path found"
+msgstr "%s のパスの存在確認"
 
-#: inc/deploypackage.class.php:166
-msgid "Export"
-msgstr "エクスポート"
+#: inc/collect_registry_content.class.php:280
+#, php-format
+msgid "%s path not found"
+msgstr "%s パス、なし"
 
-#: inc/deploypackage.class.php:273
-msgid "Unable to import package archive"
-msgstr "パッケージアーカイブをインポートできません"
+#: inc/collect_registry_content.class.php:290
+#, php-format
+msgid "%s value exists"
+msgstr "%s の値が存在"
 
-#: inc/deploypackage.class.php:314
-msgid "Modification Denied"
-msgstr "変更できません"
+#: inc/collect_registry_content.class.php:291
+#, php-format
+msgid "%s value does not exist"
+msgstr "%s の値、なし"
 
-#: inc/deploypackage.class.php:317
-msgid "The following task is running with this package"
-msgid_plural "The following tasks are running with this package"
-msgstr[0] "以下のタスクが、このパッケージを実行中"
+#: inc/collect_registry_content.class.php:299
+#, php-format
+msgid "%s: Found a value"
+msgstr "%s : 値を確認"
 
-#: inc/deploypackage.class.php:374
-msgid "Package content cannot be modified while a task is running with it"
-msgstr "パッケージの内容は、それを対象にタスクが実行されている間は変更できません"
+#: inc/collect_registry_content.class.php:304
+#, php-format
+msgid "%s: Found %d values"
+msgstr "%s : %d 件の値を確認"
 
-#: inc/deploypackage.class.php:398
-msgid "Invalid package uuid"
-msgstr "無効なパッケージ UUID"
+#: inc/collect_registry_content.class.php:311
+#, php-format
+msgid "%s: Found a result"
+msgstr "%s : 結果を確認"
 
-#: inc/deploypackage.class.php:409
-msgid "Invalid package content"
-msgstr "無効なパッケージ内容"
+#: inc/collect_registry_content.class.php:359
+msgid "Exist"
+msgstr "存在"
 
-#: inc/deploypackage.class.php:484 inc/deploypackage.class.php:608
-msgid "Enable deploy on demand for the following group"
-msgstr "以下のグループでオンデマンド配置を有効にする"
+#: inc/collect_registry_content.class.php:360
+msgid "Does not exist"
+msgstr "なし"
 
-#: inc/deploypackage.class.php:627
-msgid "Audits"
-msgstr "検査"
+#: inc/collect_registry_content.class.php:371
+msgid "Defined"
+msgstr "定義済み"
 
-#: inc/deploypackage.class.php:628
-msgid "Files"
-msgstr "ファイル"
+#: inc/collect_registry_content.class.php:372
+msgid "Not defined"
+msgstr "未定義"
 
-#: inc/deploypackage.class.php:630
-msgid "User interactions"
-msgstr "ユーザー操作"
+#: inc/collect_registry_content.class.php:406
+#: inc/collect_registry_content.class.php:408
+msgid "State"
+msgstr "状態"
 
-#: inc/deploypackage.class.php:782
-msgid "JSON package representation"
-msgstr "JSON パッケージ表現"
+#: inc/collect_registry_content.class.php:411
+#: inc/collect_registry_content.class.php:504
+msgid "Data"
+msgstr "データ"
 
-#: inc/deploypackage.class.php:914
-msgid "Package exported in"
-msgstr "パッケージのエクスポート先 : "
+#: inc/agentmodule.class.php:62
+msgid "Agents modules"
+msgstr "エージェント モジュール"
 
-#: inc/deploypackage.class.php:1162
-msgid "Packages to import"
-msgstr "インポートするパッケージ"
+#: inc/agentmodule.class.php:126
+msgid "Package deployment"
+msgstr "パッケージ配置"
 
-#: inc/deploypackage.class.php:1291 inc/deploypackageitem.class.php:332
-msgid "The modified JSON contained a syntax error :"
-msgstr "修正した JSON に構文エラーが含まれています : "
+#: inc/communicationnetworkdiscovery.class.php:109
+#, php-format
+msgid "Processed: %1$s Created: %2$s Updated: %3$s"
+msgstr "処理済 : %1$s 作成済 : %2$s 更新済 : %3$s"
 
-#: inc/deploypackage.class.php:1319
-msgid "Package actions"
-msgstr "パッケージの操作"
+#: inc/commonview.class.php:296
+msgid "Warning:"
+msgstr "警告 : "
 
-#: inc/deploypackage.class.php:1328
-msgid "Target for deploy on demand"
-msgid_plural "Targets for deploy on demand"
-msgstr[0] "オンデマンドで配置する対象"
+#: inc/commonview.class.php:301
+msgid "Error:"
+msgstr "エラー : "
 
-#: inc/deploypackage.class.php:1420
-msgid "Add a target for self-service"
-msgstr "セルフサービス向けに対象を追加"
+#: inc/credentialip.class.php:76
+msgid "Remote device inventory"
+msgstr "リモートデバイス インベントリー"
 
-#: inc/deploypackage.class.php:1778
-msgid "Restart job"
-msgstr "ジョブの再実行"
+#: inc/taskjobstate.class.php:124
+msgid "Tasks / Groups"
+msgstr "タスク・グループ"
 
-#: inc/deploypackage.class.php:1785
-msgid "refresh job"
-msgstr "ジョブを更新"
+#: inc/taskjobstate.class.php:129
+msgid "Job executions"
+msgstr "ジョブ実行"
 
-#: inc/deploypackage.class.php:1930
-msgid "Select packages you want install"
-msgstr "インストールしたいパッケージを選択"
+#: inc/taskjobstate.class.php:145
+msgid "Server has sent data to the agent"
+msgstr "サーバーからエージェントにデータを送信済"
 
-#: inc/deploypackage.class.php:1939
-msgid "Prepare for install"
-msgstr "インストール準備"
+#: inc/taskjobstate.class.php:146
+msgid "Agent replied with data to the server"
+msgstr "サーバーにデータを返答したエージェント"
 
-#: inc/deploypackage.class.php:1944
-msgid "I'm on this computer: local wakeup"
-msgstr "このコンピューター上で作業 : ローカル 起動指示"
+#: inc/taskjobstate.class.php:147
+msgid "Finished"
+msgstr "完了"
 
-#: inc/deploypackage.class.php:1945
-msgid "I'm not on this computer: wakeup from the server"
-msgstr "このコンピューター上で作業していない : サーバーから起動指示"
+#: inc/taskjobstate.class.php:148
+msgid "Error"
+msgstr "エラー"
 
-#: inc/deploypackage.class.php:1946
-msgid "Don't wakeup"
-msgstr "起動指示しない"
+#: inc/taskjobstate.class.php:150
+msgid "Postponed"
+msgstr "延期済"
 
-#: inc/deploypackage.class.php:1962
-msgid "No packages available to install"
-msgstr "インストールすべきパッケージはありません"
+#: inc/taskjobstate.class.php:520
+#, php-format
+msgid "Job available for next execution at %s"
+msgstr "%s に次の実行のためにジョブが有効に "
 
-#: inc/deploytask.class.php:109
-msgid "Order list"
-msgstr "命令リスト"
+#: inc/taskjobstate.class.php:535
+#, php-format
+msgid "Retry #%d"
+msgstr "#%dを再試行"
 
-#: inc/deploytask.class.php:156
-msgid "Add task"
-msgstr "タスクを追加"
+#: inc/taskjobstate.class.php:537
+msgid "Maximum number of retry reached: force deployment"
+msgstr "再試行の最大回数に到達 : 強制配置"
 
-#: inc/deploytask.class.php:181
-msgid "Edit impossible, this task is active"
-msgstr "タスクが稼働中のため、編集できません"
-
-#: inc/deploytask.class.php:212
-msgid "This task is active. delete denied"
-msgstr "タスクが稼働中です。削除できません。"
+#: inc/taskjobstate.class.php:562
+msgid "Clean taskjob (retention time)"
+msgstr "タスクのクリーンアップ（保持時間）"
 
 #: inc/deployuserinteraction.class.php:79
 msgid "User interaction"
@@ -1778,58 +1788,6 @@ msgstr "ユーザーは接続していません"
 msgid "Multiple users connected"
 msgstr "複数ユーザーが接続"
 
-#: inc/taskjoblog.class.php:95
-msgid "Ok"
-msgstr "OK"
-
-#: inc/taskjoblog.class.php:97
-msgid "Info"
-msgstr "情報"
-
-#: inc/taskjoblog.class.php:305
-msgid "unknown"
-msgstr "不明"
-
-#: inc/taskjoblog.class.php:343
-msgid "devices queried"
-msgstr "デバイスを記録"
-
-#: inc/taskjoblog.class.php:344
-msgid "devices found"
-msgstr "デバイスを発見"
-
-#: inc/taskjoblog.class.php:345
-msgid "Add the item"
-msgstr "アイテムを追加"
-
-#: inc/taskjoblog.class.php:346
-msgid "Update the item"
-msgstr "アイテムを更新"
-
-#: inc/taskjoblog.class.php:347
-msgid "Inventory started"
-msgstr "インベントリーを開始しました"
-
-#: inc/taskjoblog.class.php:348
-msgid "Detail"
-msgstr "詳細"
-
-#: inc/taskjoblog.class.php:349
-msgid "Agent communication error, impossible to start agent"
-msgstr "エージェントとの通信エラー。エージェントの開始不能"
-
-#: inc/taskjoblog.class.php:350
-msgid "Agent stopped/crashed"
-msgstr "エージェントが停止・フリーズ"
-
-#: inc/taskjoblog.class.php:351
-msgid "Import denied"
-msgstr "インポートできません"
-
-#: inc/credentialip.class.php:76
-msgid "Remote device inventory"
-msgstr "リモートデバイス インベントリー"
-
 #: inc/taskjobview.class.php:70
 msgid "Job configuration"
 msgstr "ジョブ設定"
@@ -1906,11 +1864,6 @@ msgstr "抹消"
 msgid "Confirm the final deletion ?"
 msgstr "削除の最終決定を確認する？"
 
-#: inc/collect_file_content.class.php:92
-#: inc/collect_file_content.class.php:147
-msgid "Path/file"
-msgstr "パス・ファイル"
-
 #: inc/task.class.php:154
 msgid "deploy on demand task"
 msgstr "オンデマンド配置タスク"
@@ -1983,6 +1936,54 @@ msgstr "選択したジョブは、別のパッケージの配置ジョブを担
 #: inc/task.class.php:1791
 msgid "Created a deployment job, package: "
 msgstr "配置ジョブを作成しました。パッケージ : "
+
+#: inc/collectcommon.class.php:74
+msgid "Collect configuration"
+msgstr "収集の構成"
+
+#: public/b/deploy/index.php:84
+msgid "Deploy module has been disabled for this agent"
+msgstr "このエージェントでは配置モジュールが無効に設定されています"
+
+#: public/b/deploy/index.php:150
+msgid "Checks"
+msgstr "チェック"
+
+#: public/b/deploy/index.php:151
+msgid "Files download"
+msgstr "ファイル ダウンロード"
+
+#: public/b/deploy/index.php:152
+msgid "Files preparation"
+msgstr "ファイル準備"
+
+#: public/b/deploy/index.php:263
+msgid "User canceled the job"
+msgstr "ユーザーがジョブを取り消しました"
+
+#: public/b/deploy/index.php:265
+msgid "User postponed the job"
+msgstr "ユーザーがジョブを延期しました"
+
+#: front/config.form.php:36
+msgid "Features"
+msgstr "機能"
+
+#: front/collect.form.php:36
+msgid "Collect management"
+msgstr "収集管理"
+
+#: front/deployfile_download.php:90
+msgid "An error occurs"
+msgstr "エラー発生"
+
+#: front/deployfile_download.php:93 front/deployfile_download.php:96
+msgid "File not found"
+msgstr "ファイルがない"
+
+#: front/deployfile.clean.php:59
+msgid "Delete unused files"
+msgstr "不使用ファイルの削除"
 
 #: public/js/taskjobs.js:747
 msgid "The preparation of the task did not return any targets"
