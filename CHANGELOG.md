@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [UNRELEASED]
+
+- Fix `cleantaskjob` automatic action ending in error state on GLPI 12
+
 ## [1.7.0] - 2026-10-06
 
 - Fix on-demand package deployment from central interface on computers assigned to another user

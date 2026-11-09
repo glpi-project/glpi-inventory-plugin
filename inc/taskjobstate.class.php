@@ -566,8 +566,10 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
     /**
      * Cron task: clean taskjob (retention time)
+     *
+     * @return int 0 if nothing to clean, 1 otherwise
      */
-    public static function cronCleantaskjob(): void
+    public static function cronCleantaskjob(?CronTask $task = null): int
     {
         /** @var DBmysql $DB */
         global $DB;
@@ -584,23 +586,28 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
             'GROUPBY' => 'plugin_glpiinventory_taskjobstates_id',
         ]);
 
-        if (count($iterator)) {
-            $delete = $DB->buildDelete(
-                'glpi_plugin_glpiinventory_taskjoblogs',
-                [
-                    'plugin_glpiinventory_taskjobstates_id' => new QueryParam(),
-                ]
-            );
-            $stmt = $DB->prepare($delete);
-            foreach ($iterator as $data) {
-                $pfTaskjobstate->getFromDB($data['plugin_glpiinventory_taskjobstates_id']);
-                $pfTaskjobstate->delete($pfTaskjobstate->fields, true);
-
-                $stmt->bind_param('s', $data['plugin_glpiinventory_taskjobstates_id']);
-                $DB->executeStatement($stmt);
-            }
-            mysqli_stmt_close($stmt);
+        if (!count($iterator)) {
+            return 0;
         }
+
+        $delete = $DB->buildDelete(
+            'glpi_plugin_glpiinventory_taskjoblogs',
+            [
+                'plugin_glpiinventory_taskjobstates_id' => new QueryParam(),
+            ]
+        );
+        $stmt = $DB->prepare($delete);
+        foreach ($iterator as $data) {
+            $pfTaskjobstate->getFromDB($data['plugin_glpiinventory_taskjobstates_id']);
+            $pfTaskjobstate->delete($pfTaskjobstate->fields, true);
+
+            $stmt->bind_param('s', $data['plugin_glpiinventory_taskjobstates_id']);
+            $DB->executeStatement($stmt);
+        }
+        mysqli_stmt_close($stmt);
+        $task?->addVolume(count($iterator));
+
+        return 1;
     }
 
 
