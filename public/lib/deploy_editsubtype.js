@@ -47,3 +47,16 @@ function edit_subtype(subtype, packages_id, _rand,el) {
 function new_subtype(subtype, packages_id, _rand) {
    edit_subtype(subtype, packages_id, _rand, null);
 }
+
+$(document).on('click', '[data-glpiinventory-edit-subtype]', function () {
+   edit_subtype($(this).attr('data-glpiinventory-edit-subtype'),
+                $(this).attr('data-glpiinventory-packages-id'),
+                $(this).attr('data-glpiinventory-rand'),
+                this);
+});
+
+$(document).on('click', '[data-glpiinventory-new-subtype]', function () {
+   new_subtype($(this).attr('data-glpiinventory-new-subtype'),
+               $(this).attr('data-glpiinventory-packages-id'),
+               $(this).attr('data-glpiinventory-rand'));
+});

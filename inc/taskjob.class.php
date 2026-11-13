@@ -849,22 +849,22 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         }
 
         //TODO: Clean add form
-        echo "<script type='text/javascript'>
+        echo Html::scriptBlock("
       //document.getElementById('show_" . ucfirst($type) . "List').innerHTML='&nbsp';
 
       Ext.get('" . $type . $taskjobs_id . "').setDisplayed('none');
-      </script>";
+      ");
         // reload item list
         $params = [];
         $params['taskjobs_id'] = $taskjobs_id;
         $params['typename'] = $type;
-        echo "<script type='text/javascript'>";
-        Ajax::updateItemJsCode(
+        echo Html::scriptBlock(Ajax::updateItemJsCode(
             "show" . $type . "list" . $taskjobs_id . "_",
             $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownlist.php",
-            $params
-        );
-        echo "</script>";
+            $params,
+            "",
+            false
+        ));
     }
 
 
@@ -896,13 +896,13 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $params = [];
         $params['taskjobs_id'] = $taskjobs_id;
         $params['typename'] = $type;
-        echo "<script type='text/javascript'>";
-        Ajax::updateItemJsCode(
+        echo Html::scriptBlock(Ajax::updateItemJsCode(
             "show" . $type . "list" . $taskjobs_id . "_",
             $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownlist.php",
-            $params
-        );
-        echo "</script>";
+            $params,
+            "",
+            false
+        ));
     }
 
 
@@ -917,7 +917,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
 
         if ($this->canUpdate()) {
             echo "&nbsp;";
-            echo "<img onClick=\"Ext.get('" . $name . "').setDisplayed('block')\"
+            echo "<img data-glpiinventory-show-block=\"" . htmlescape($name) . "\"
                     title=\"" . __('Add') . "\" alt=\"" . __('Add') . "\"
                     class='pointer'  src='" . $CFG_GLPI["root_doc"] . "/pics/add_dropdown.png'>";
         }

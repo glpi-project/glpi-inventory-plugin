@@ -185,7 +185,9 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
             echo "&nbsp;";
             if ($canedit) {
                 echo "<a class='edit'
-                     onclick=\"edit_subtype('file', $package_id, $rand ,this)\">";
+                     data-glpiinventory-edit-subtype='file'
+                     data-glpiinventory-packages-id='$package_id'
+                     data-glpiinventory-rand='$rand'>";
             }
             echo $file_name;
             if ($canedit) {
@@ -326,8 +328,9 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 case "Server":
                     echo "<input type='text' name='filename' id='server_filename$rand'"
                     . " style='width:500px;float:left' />";
-                    echo "<input type='button' class='submit' value='" . __("Choose", 'glpiinventory')
-                    . "' onclick='fileModal$rand.show();' />";
+                    echo "<input type='button' class='submit' id='choose_server_file$rand' value='" . __("Choose", 'glpiinventory')
+                    . "' />";
+                    echo Html::scriptBlock("$('#choose_server_file$rand').on('click', function () { fileModal$rand.show(); });");
                     Ajax::createModalWindow(
                         "fileModal$rand",
                         $fi_path . "/ajax/deployfilemodal.php",
@@ -386,13 +389,12 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     {
         global $CFG_GLPI;
 
-        echo "<script type='text/javascript'>";
-        echo "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
-        echo "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
+        $script = "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
+        $script .= "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
          dataUrl:'" . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/serverfilestreesons.php'
       });";
 
-        echo "var Tree_Category$rand = new Ext.tree.TreePanel({
+        $script .= "var Tree_Category$rand = new Ext.tree.TreePanel({
          collapsible      : false,
          animCollapse     : false,
          border           : false,
@@ -418,7 +420,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
       });";
 
         // SET the root node.
-        echo "var Tree_Category_Root$rand = new Ext.tree.AsyncTreeNode({
+        $script .= "var Tree_Category_Root$rand = new Ext.tree.AsyncTreeNode({
          text     : '',
          draggable   : false,
          id    : '-1'                  // this IS the id of the startnode
@@ -426,10 +428,10 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
       Tree_Category$rand.setRootNode(Tree_Category_Root$rand);";
 
         // Render the tree.
-        echo "Tree_Category$rand.render();
+        $script .= "Tree_Category$rand.render();
             Tree_Category_Root$rand.expand();";
 
-        echo "</script>";
+        echo Html::scriptBlock($script);
 
         echo '<div class="alert alert-info d-flex" role="alert">';
         echo '<i class="fas fa-exclamation-circle fa-2x me-2"></i>';

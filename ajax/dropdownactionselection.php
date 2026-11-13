@@ -41,7 +41,7 @@ global $CFG_GLPI;
 
 Session::checkCentralAccess();
 
-echo "<script type='text/javascript'>
+echo Html::scriptBlock("
 var select = document.getElementById('actionlist');
 var obj = document.getElementById(" . json_encode(filter_input(INPUT_POST, "actionselectadd")) . ");
 var actiontype = document.getElementById(" . json_encode(filter_input(INPUT_POST, "actiontypeid")) . ");
@@ -54,7 +54,7 @@ if ((select.value.match(pattern1)) || (select.value.match(pattern2))) {
 
 } else {
    document.getElementById('actionselection').innerHTML = list + '<br>' + actiontype.options[actiontype.selectedIndex].text + ' -> ' + obj.options[obj.selectedIndex].text +
-   ' <img src=\"" . $CFG_GLPI['root_doc'] . "/pics/delete.png\" onclick=\'delaction(\"' + actiontype.options[actiontype.selectedIndex].text + '->' + obj.options[obj.selectedIndex].text + '->' + actiontype.options[actiontype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value + '\")\'>';
+   ' <img src=\"" . $CFG_GLPI['root_doc'] . "/pics/delete.png\" class=\"glpiinventory-delaction\" data-glpiinventory-args=\"' + actiontype.options[actiontype.selectedIndex].text + '->' + obj.options[obj.selectedIndex].text + '->' + actiontype.options[actiontype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value + '\">';
    if (actiontype.value !== '0') {
       document.getElementById('actionlist').value = document.getElementById('actionlist').value + ',' + actiontype.options[actiontype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value;
    } else {
@@ -62,4 +62,4 @@ if ((select.value.match(pattern1)) || (select.value.match(pattern2))) {
    }
 }
 
- </script>";
+");

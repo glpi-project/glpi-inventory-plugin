@@ -221,7 +221,9 @@ class PluginGlpiinventoryDeployCheck extends PluginGlpiinventoryDeployPackageIte
             echo "<td>";
             if ($canedit) {
                 echo "<a class='edit'
-                     onclick=\"edit_subtype('check', $package_id, $rand ,this)\">";
+                     data-glpiinventory-edit-subtype='check'
+                     data-glpiinventory-packages-id='$package_id'
+                     data-glpiinventory-rand='$rand'>";
             }
             echo $check_label;
             if ($canedit) {

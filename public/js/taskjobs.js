@@ -355,7 +355,7 @@ function agents_chart(chart_id) {
             .attr('class', 'fa-solid fa-thumbtack');
             spans.append('a')
             .attr('class', 'name')
-            .attr('href', 'javascript:void(0)');
+            .attr('href', '#');
 
             names.exit().remove();
 
@@ -366,6 +366,7 @@ function agents_chart(chart_id) {
                 return taskjobs.data.agents[d[0]];
             })
             .on('click', function(d) {
+                d3.event.preventDefault();
                 var args = {
                     chart_id: chart_id,
                     data: d
@@ -417,12 +418,12 @@ function agents_chart(chart_id) {
                     .attr('class', 'fa fa-bolt');
                 restarts.exit().remove();
                 d3.select(this).selectAll('a.name')
-                    .attr('href', 'javascript:void(0)');
+                    .attr('href', '#');
             } else { //check if restart button exists and remove it
                 var restarts = d3.select(this).selectAll('a.restart.btn').data([]);
                 restarts.exit().remove();
                 d3.select(this).selectAll('a.name')
-                    .attr('href', 'javascript:void(0)');
+                    .attr('href', '#');
             }
 
             // add executions logs for pinned agents
@@ -1308,6 +1309,7 @@ $(document).ready(function() {
    });
 
    $(document).on("click", ".taskjobs_create", function(event) {
+      $("#taskjobs_list").hide();
       taskjobs.create($(this).attr('data-ajaxurl'),
                       $(this).attr('data-task_id'));
    });
@@ -1315,6 +1317,18 @@ $(document).ready(function() {
    $(document).on("click", ".taskjobs_edit", function(event) {
       taskjobs.edit($(this).attr('data-ajaxurl'),
                     $(this).attr('data-taskjob_id'));
+   });
+
+   $(document).on("click", "[data-glpiinventory-show-block]", function(event) {
+      Ext.get($(this).attr('data-glpiinventory-show-block')).setDisplayed('block');
+   });
+
+   $(document).on("click", ".glpiinventory-delaction", function(event) {
+      delaction($(this).attr('data-glpiinventory-args'));
+   });
+
+   $(document).on("click", ".glpiinventory-deldef", function(event) {
+      deldef($(this).attr('data-glpiinventory-args'));
    });
 
    $(document).on("click", ".openExportDialog", function(event) {
