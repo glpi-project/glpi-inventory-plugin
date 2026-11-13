@@ -718,9 +718,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             /**
              * Initialize drag and drop on subtype lists
              **/
-            echo "<script type='text/javascript'>";
-            echo "redipsInit('deploypackage', '$subtype', '" . $this->getID() . "');";
-            echo "</script>";
+            echo Html::scriptBlock("redipsInit('deploypackage', '$subtype', '" . $this->getID() . "');");
             echo "</td>";
             echo "</tr>";
         }
@@ -743,7 +741,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         if ($this->can($id, UPDATE)) {
             echo "&nbsp;";
             echo "<i id='plus_{$subtype}s_block{$rand}'";
-            echo " onclick=\"new_subtype('{$subtype}', {$id}, {$rand})\" ";
+            echo " data-glpiinventory-new-subtype='{$subtype}'"
+                . " data-glpiinventory-packages-id='{$id}'"
+                . " data-glpiinventory-rand='{$rand}'";
             echo  " title='" . __('Add') . "' alt='" . __('Add') . "' ";
             echo  " class='pointer ti ti-circle-plus' style='font-size: 11px;' ";
         }
@@ -763,9 +763,10 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         echo  "&nbsp;";
         echo  "<img id='plus_$dom_id' ";
         if ($clone !== false) {
-            echo " onClick=\"plusbutton('$dom_id', '$clone')\" ";
+            echo " data-glpiinventory-plusbutton='" . htmlescape($dom_id) . "'"
+                . " data-glpiinventory-clone='" . htmlescape($clone) . "' ";
         } else {
-            echo " onClick=\"plusbutton('$dom_id')\" ";
+            echo " data-glpiinventory-plusbutton='" . htmlescape($dom_id) . "' ";
         }
         echo " title='" . __('Add') . "' alt='" . __('Add') . "' ";
         echo " class='pointer' src='" . $CFG_GLPI["root_doc"]
