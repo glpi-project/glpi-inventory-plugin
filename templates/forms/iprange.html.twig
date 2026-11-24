@@ -47,7 +47,7 @@
       __('End of IP range', 'glpiinventory'),
    ) }}
 
-   {{ call('Html::script', ['/plugins/glpiinventory/js/iprange.js', {}, false])|raw }}
+   {{ call('Html::script', ['/plugins/glpiinventory/js/iprange.js', {'version': constant('PLUGIN_GLPIINVENTORY_VERSION')}, false])|raw }}
 
    {% if is_multi_entities_mode() %}
       {{ fields.nullField() }}

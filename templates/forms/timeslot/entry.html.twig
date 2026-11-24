@@ -146,4 +146,4 @@
    </form>
 {% endif %}
 
-{{ call('Html::script', ['/plugins/glpiinventory/js/timeslot_entry.js', {}, false])|raw }}
+{{ call('Html::script', ['/plugins/glpiinventory/js/timeslot_entry.js', {'version': constant('PLUGIN_GLPIINVENTORY_VERSION')}, false])|raw }}

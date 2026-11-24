@@ -720,7 +720,7 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
              **/
             echo "<span hidden data-glpiinventory-redips='" . htmlescape($subtype) . "'"
                 . " data-glpiinventory-packages-id='" . htmlescape($this->getID()) . "'></span>";
-            echo Html::script('/plugins/glpiinventory/js/deploy_init.js', [], false);
+            echo Html::script('/plugins/glpiinventory/js/deploy_init.js', ['version' => PLUGIN_GLPIINVENTORY_VERSION], false);
             echo "</td>";
             echo "</tr>";
         }

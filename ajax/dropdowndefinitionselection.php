@@ -43,4 +43,4 @@ echo "<span hidden data-glpiinventory-selection='definition'"
     . " data-glpiinventory-obj='" . htmlescape((string) filter_input(INPUT_POST, "defselectadd")) . "'"
     . " data-glpiinventory-type='" . htmlescape((string) filter_input(INPUT_POST, "definitiontypeid")) . "'"
     . " data-glpiinventory-root-doc='" . htmlescape($CFG_GLPI['root_doc']) . "'></span>";
-echo Html::script('/plugins/glpiinventory/js/dropdown_selection.js', [], false);
+echo Html::script('/plugins/glpiinventory/js/dropdown_selection.js', ['version' => PLUGIN_GLPIINVENTORY_VERSION], false);

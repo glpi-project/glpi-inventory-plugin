@@ -82,4 +82,4 @@
 </div>
 
 <span hidden data-glpiinventory-registry="{{ rand }}"></span>
-{{ call('Html::script', ['/plugins/glpiinventory/js/collect_registry.js', {}, false])|raw }}
+{{ call('Html::script', ['/plugins/glpiinventory/js/collect_registry.js', {'version': constant('PLUGIN_GLPIINVENTORY_VERSION')}, false])|raw }}

@@ -850,7 +850,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         echo "<span hidden data-glpiinventory-hide='" . htmlescape($type . $taskjobs_id) . "'></span>";
         // reload item list
         echo $this->getReloadItemListMarker($type, $taskjobs_id);
-        echo Html::script('/plugins/glpiinventory/js/taskjob_init.js', [], false);
+        echo Html::script('/plugins/glpiinventory/js/taskjob_init.js', ['version' => PLUGIN_GLPIINVENTORY_VERSION], false);
     }
 
 
@@ -896,7 +896,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
 
         // reload item list
         echo $this->getReloadItemListMarker($type, $taskjobs_id);
-        echo Html::script('/plugins/glpiinventory/js/taskjob_init.js', [], false);
+        echo Html::script('/plugins/glpiinventory/js/taskjob_init.js', ['version' => PLUGIN_GLPIINVENTORY_VERSION], false);
     }
 
 

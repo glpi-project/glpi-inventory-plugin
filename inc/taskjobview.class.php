@@ -656,7 +656,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
 
         if (!$new_item) {
             echo "<span hidden data-glpiinventory-register-method='" . htmlescape('dropdown_method' . $modules_methods_rand) . "'></span>";
-            echo Html::script('/plugins/glpiinventory/js/taskjob_init.js', [], false);
+            echo Html::script('/plugins/glpiinventory/js/taskjob_init.js', ['version' => PLUGIN_GLPIINVENTORY_VERSION], false);
 
             echo "<div style='display:none' id='method_selected'>" . $this->fields['method'] . "</div>";
         }

@@ -403,7 +403,7 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         echo "<span hidden data-glpiinventory-server-tree='" . htmlescape($rand) . "'"
             . " data-glpiinventory-data-url='"
             . htmlescape($CFG_GLPI['root_doc'] . '/plugins/glpiinventory/ajax/serverfilestreesons.php') . "'></span>";
-        echo Html::script('/plugins/glpiinventory/js/deploy_init.js', [], false);
+        echo Html::script('/plugins/glpiinventory/js/deploy_init.js', ['version' => PLUGIN_GLPIINVENTORY_VERSION], false);
         echo "</div>";
     }
 
