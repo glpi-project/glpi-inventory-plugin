@@ -1,0 +1,84 @@
+{#
+ # ---------------------------------------------------------------------
+ # GLPI Inventory Plugin
+ # @copyright 2021-2026 Teclib' and contributors.
+ #
+ # http://glpi-project.org
+ #
+ # ---------------------------------------------------------------------
+ #
+ # LICENSE
+ #
+ # This file is part of GLPI Inventory Plugin.
+ #
+ # GLPI Inventory Plugin is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU Affero General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ # (at your option) any later version.
+ #
+ # GLPI Inventory Plugin is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ # GNU Affero General Public License for more details.
+ #
+ # You should have received a copy of the GNU Affero General Public License
+ # along with GLPI Inventory Plugin. If not, see <https://www.gnu.org/licenses/>.
+ # ---------------------------------------------------------------------
+ #}
+
+{# Results of osquery queries: one accordion item per query, or a single card #}
+{% import _self as m %}
+{# aligned: fixed name width, so queries start at the same position in every header #}
+{% macro title(item, aligned=false) %}
+    <span class="fw-bold{{ aligned ? ' w-25 flex-shrink-0 text-truncate' : '' }}" title="{{ item.name }}">{{ item.name }}</span>
+    <code class="text-truncate" title="{{ item.query }}">{{ item.query_html|raw }}</code>
+{% endmacro %}
+
+{% macro table(item) %}
+    {% if item.entries is empty %}
+        <p class="text-muted mb-0">{{ __('No row returned', 'glpiinventory') }}</p>
+    {% else %}
+        {{ include('components/datatable.html.twig', {
+            'is_tab': true,
+            'nofilter': true,
+            'columns': item.columns,
+            'formatters': item.formatters,
+            'entries': item.entries,
+            'total_number': item.entries|length,
+            'filtered_number': item.entries|length,
+        }, with_context=false) }}
+    {% endif %}
+{% endmacro %}
+
+{% if accordion %}
+    {% set rand = random() %}
+    <div class="accordion mb-3">
+        {% for item in items %}
+            {% set id = 'osquery-results-' ~ rand ~ '-' ~ loop.index %}
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed d-flex gap-2 fs-4 py-2" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#{{ id }}"
+                            aria-expanded="false" aria-controls="{{ id }}">
+                        {{ m.title(item, true) }}
+                        <span class="badge bg-secondary-lt ms-auto me-2">{{ item.entries|length }}</span>
+                    </button>
+                </h2>
+                <div id="{{ id }}" class="accordion-collapse collapse">
+                    <div class="accordion-body">
+                        {{ m.table(item) }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    {% for item in items %}
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title d-flex align-items-center">{{ m.title(item) }}</h3>
+                {{ m.table(item) }}
+            </div>
+        </div>
+    {% endfor %}
+{% endif %}

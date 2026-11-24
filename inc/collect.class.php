@@ -105,6 +105,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     PluginGlpiinventoryCollect_File_Content::class,
                     PluginGlpiinventoryCollect_Wmi_Content::class,
                     PluginGlpiinventoryCollect_Registry_Content::class,
+                    PluginGlpiinventoryCollect_Osquery_Content::class,
                 ] as $itemtype
             ) {
                 $collect_item = new $itemtype();
@@ -127,6 +128,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
         $tables = ['glpi_plugin_glpiinventory_collects_registries_contents',
             'glpi_plugin_glpiinventory_collects_wmis_contents',
             'glpi_plugin_glpiinventory_collects_files_contents',
+            'glpi_plugin_glpiinventory_collects_osqueries_contents',
         ];
         $total = 0;
         foreach ($tables as $table) {
@@ -147,6 +149,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             'registry' => __('Registry', 'glpiinventory'),
             'wmi'      => __('WMI', 'glpiinventory'),
             'file'     => __('Find file', 'glpiinventory'),
+            'osquery'  => __('Osquery', 'glpiinventory'),
         ];
     }
 
@@ -411,6 +414,18 @@ class PluginGlpiinventoryCollect extends CommonDBTM
 
                 break;
 
+            case 'osquery':
+                $pfCollect_Osquery = new PluginGlpiinventoryCollect_Osquery();
+                foreach ($pfCollect_Osquery->find($sql_where) as $osquery) {
+                    $output[] = [
+                        'function' => 'runOsquery',
+                        'query'    => $osquery['query'],
+                        'uuid'     => $taskjobstate->fields['uniqid'],
+                        '_sid'     => $osquery['id'],
+                    ];
+                }
+                break;
+
             case 'file':
                 $pfCollect_File = new PluginGlpiinventoryCollect_File();
                 $files_db = $pfCollect_File->find($sql_where);
@@ -586,6 +601,15 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                             (int) $computers_id
                         );
                     }
+                    if (
+                        $this->fields['type'] == 'osquery'
+                        && $jobstate['state'] == PluginGlpiinventoryTaskjobstate::SERVER_HAS_SENT_DATA
+                    ) {
+                        PluginGlpiinventoryCollect_Osquery_Content::resetContent(
+                            (int) $this->fields['id'],
+                            (int) $computers_id
+                        );
+                    }
 
                     switch ($this->fields['type']) {
                         case 'registry':
@@ -596,6 +620,29 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                         case 'wmi':
                             // update wmi content
                             $pfCollect_subO = new PluginGlpiinventoryCollect_Wmi_Content();
+                            break;
+
+                        case 'osquery':
+                            // The agent sends one answer per result row, with _cpt counting down
+                            // to 1, or a single empty answer with _cpt = 0 when no row is returned.
+                            $osquery = new PluginGlpiinventoryCollect_Osquery();
+                            if ($sid && $osquery->getFromDB($sid)) {
+                                $name = $osquery->fields['name'];
+                            }
+                            $pfCollect_subO = new PluginGlpiinventoryCollect_Osquery_Content();
+                            if (count($a_values) === 0) {
+                                // An empty result is a valid answer, not an error: keep track that
+                                // the query ran on this computer
+                                $add_value = false;
+                                $pfCollect_subO->markNoRow((int) $computers_id, (int) $sid);
+                                $pfTaskjoblog->addTaskjoblog(
+                                    $jobstate['id'],
+                                    $jobstate['items_id'],
+                                    $jobstate['itemtype'],
+                                    (string) PluginGlpiinventoryTaskjoblog::TASK_INFO,
+                                    (isset($name) ? "$name: " : '') . __('no row returned', 'glpiinventory')
+                                );
+                            }
                             break;
 
                         case 'file':
@@ -642,7 +689,30 @@ class PluginGlpiinventoryCollect extends CommonDBTM
                     }
 
                     // add logs to job
-                    if ($add_value && count($a_values)) {
+                    if ($this->fields['type'] == 'osquery') {
+                        // Only log once per query, on the last row, instead of once per row
+                        if ($add_value && (int) $cpt <= 1) {
+                            $nb_rows = countElementsInTable(
+                                PluginGlpiinventoryCollect_Osquery_Content::getTable(),
+                                [
+                                    'plugin_glpiinventory_collects_osqueries_id' => $sid,
+                                    'computers_id'                               => $computers_id,
+                                    'NOT'                                        => ['data' => null],
+                                ]
+                            );
+                            $message = sprintf(
+                                _n('%d row collected', '%d rows collected', $nb_rows, 'glpiinventory'),
+                                $nb_rows
+                            );
+                            $pfTaskjoblog->addTaskjoblog(
+                                $jobstate['id'],
+                                $jobstate['items_id'],
+                                $jobstate['itemtype'],
+                                (string) PluginGlpiinventoryTaskjoblog::TASK_INFO,
+                                isset($name) ? "$name: $message" : $message
+                            );
+                        }
+                    } elseif ($add_value && count($a_values)) {
                         $flag    = PluginGlpiinventoryTaskjoblog::TASK_INFO;
                         $message = null;
                         // For registry collects, log a readable message (tested path + verdict)
@@ -730,6 +800,13 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             foreach ($subitems as $subitem) {
                 $pfCollect_Wmi_Content->delete(['id' => $subitem['id']], true);
             }
+        }
+
+        // Delete all osquery queries, their content is purged with them
+        $pfCollect_Osquery = new PluginGlpiinventoryCollect_Osquery();
+        $items = $pfCollect_Osquery->find(['plugin_glpiinventory_collects_id' => $this->fields['id']]);
+        foreach ($items as $item) {
+            $pfCollect_Osquery->delete(['id' => $item['id']], true);
         }
 
         // Delete all File

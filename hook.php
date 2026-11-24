@@ -753,6 +753,7 @@ function plugin_pre_item_purge_glpiinventory(CommonDBTM $parm): CommonDBTM
         PluginGlpiinventoryCollect_File_Content::cleanComputer($items_id);
         PluginGlpiinventoryCollect_Registry_Content::cleanComputer($items_id);
         PluginGlpiinventoryCollect_Wmi_Content::cleanComputer($items_id);
+        PluginGlpiinventoryCollect_Osquery_Content::cleanComputer($items_id);
     }
 
     $rule = new RuleMatchedLog();

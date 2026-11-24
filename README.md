@@ -4,7 +4,7 @@ This plugin handles various types of tasks for GLPI agents:
 * Network discovery and inventory (SNMP)
 * Software deployment
 * VMWare ESX host remote inventory
-* Collect data (files, Windows registry, WMI)
+* Collect data (files, Windows registry, WMI, osquery)
 
 Computer and Network inventories themselves are done on GLPI side; the plugin only handle network related *tasks*.
 

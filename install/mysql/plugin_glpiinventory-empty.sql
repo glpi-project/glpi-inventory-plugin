@@ -523,6 +523,33 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_wmis_contents` (
 
 
 
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_osqueries`;
+
+CREATE TABLE `glpi_plugin_glpiinventory_collects_osqueries` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `plugin_glpiinventory_collects_id` int unsigned NOT NULL DEFAULT '0',
+  `query` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `plugin_glpiinventory_collects_id` (`plugin_glpiinventory_collects_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
+DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_osqueries_contents`;
+
+CREATE TABLE `glpi_plugin_glpiinventory_collects_osqueries_contents` (
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `computers_id` int unsigned NOT NULL DEFAULT '0',
+  `plugin_glpiinventory_collects_osqueries_id` int unsigned NOT NULL DEFAULT '0',
+  `data` longtext DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `computers_id` (`computers_id`),
+  KEY `plugin_glpiinventory_collects_osqueries_id` (`plugin_glpiinventory_collects_osqueries_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+
+
+
 DROP TABLE IF EXISTS `glpi_plugin_glpiinventory_collects_files`;
 
 CREATE TABLE `glpi_plugin_glpiinventory_collects_files` (

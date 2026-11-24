@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [UNRELEASED]
 
+- Add osquery collect type: run a SELECT query with `osqueryi` on agents and store the returned rows
 - Fix `cleantaskjob` automatic action ending in error state on GLPI 12
 - Fix collect jobs stopping after the first answer with GLPI Agent (empty answer sent as `[]` instead of `{}`)
 
