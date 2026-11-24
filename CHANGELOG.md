@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [UNRELEASED]
 
 - Fix `cleantaskjob` automatic action ending in error state on GLPI 12
+- Fix collect jobs stopping after the first answer with GLPI Agent (empty answer sent as `[]` instead of `{}`)
 
 ## [1.7.0] - 2026-10-06
 
