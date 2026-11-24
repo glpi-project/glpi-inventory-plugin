@@ -718,7 +718,9 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
             /**
              * Initialize drag and drop on subtype lists
              **/
-            echo Html::scriptBlock("redipsInit('deploypackage', '$subtype', '" . $this->getID() . "');");
+            echo "<span hidden data-glpiinventory-redips='" . htmlescape($subtype) . "'"
+                . " data-glpiinventory-packages-id='" . htmlescape($this->getID()) . "'></span>";
+            echo Html::script('/plugins/glpiinventory/js/deploy_init.js', [], false);
             echo "</td>";
             echo "</tr>";
         }

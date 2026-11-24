@@ -146,19 +146,4 @@
    </form>
 {% endif %}
 
-<script>
-   (function () {
-      document.querySelectorAll('.timeslot-grid .timeslot-cell').forEach(function (cell) {
-         cell.addEventListener('click', function () {
-            var day_select = document.querySelector('select[name="beginday"]');
-            if (day_select) {
-               $(day_select).val(this.dataset.day).trigger('change');
-            }
-            var hour_select = document.querySelector('select[name="beginhours"]');
-            if (hour_select) {
-               $(hour_select).val(this.dataset.hour).trigger('change');
-            }
-         });
-      });
-   })();
-</script>
+{{ call('Html::script', ['/plugins/glpiinventory/js/timeslot_entry.js', {}, false])|raw }}

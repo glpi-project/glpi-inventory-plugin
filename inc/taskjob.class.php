@@ -828,8 +828,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      */
     public function additemtodefatc($type, $itemtype, $items_id, $taskjobs_id): void
     {
-        global $CFG_GLPI;
-
         $this->getFromDB($taskjobs_id);
         $a_type = importArrayFromDB($this->fields[$type]);
         $add = 1;
@@ -849,22 +847,28 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         }
 
         //TODO: Clean add form
-        echo Html::scriptBlock("
-      //document.getElementById('show_" . ucfirst($type) . "List').innerHTML='&nbsp';
-
-      Ext.get('" . $type . $taskjobs_id . "').setDisplayed('none');
-      ");
+        echo "<span hidden data-glpiinventory-hide='" . htmlescape($type . $taskjobs_id) . "'></span>";
         // reload item list
-        $params = [];
-        $params['taskjobs_id'] = $taskjobs_id;
-        $params['typename'] = $type;
-        echo Html::scriptBlock(Ajax::updateItemJsCode(
-            "show" . $type . "list" . $taskjobs_id . "_",
-            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownlist.php",
-            $params,
-            "",
-            false
-        ));
+        echo $this->getReloadItemListMarker($type, $taskjobs_id);
+        echo Html::script('/plugins/glpiinventory/js/taskjob_init.js', [], false);
+    }
+
+
+    /**
+     * Markup read by taskjob_init.js to reload the item list of a taskjob type
+     *
+     * @param string $type
+     * @param int $taskjobs_id
+     * @return string
+     */
+    private function getReloadItemListMarker($type, $taskjobs_id): string
+    {
+        global $CFG_GLPI;
+
+        return "<span hidden data-glpiinventory-reload='" . htmlescape("show" . $type . "list" . $taskjobs_id . "_") . "'"
+            . " data-glpiinventory-url='" . htmlescape($CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownlist.php") . "'"
+            . " data-glpiinventory-taskjobs-id='" . htmlescape($taskjobs_id) . "'"
+            . " data-glpiinventory-typename='" . htmlescape($type) . "'></span>";
     }
 
 
@@ -879,8 +883,6 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      */
     public function deleteitemtodefatc($type, $a_items_id, $taskjobs_id): void
     {
-        global $CFG_GLPI;
-
         $this->getFromDB($taskjobs_id);
         $a_type = importArrayFromDB($this->fields[$type]);
         $split = explode("-", $a_items_id);
@@ -893,16 +895,8 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
         $this->update($input);
 
         // reload item list
-        $params = [];
-        $params['taskjobs_id'] = $taskjobs_id;
-        $params['typename'] = $type;
-        echo Html::scriptBlock(Ajax::updateItemJsCode(
-            "show" . $type . "list" . $taskjobs_id . "_",
-            $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/dropdownlist.php",
-            $params,
-            "",
-            false
-        ));
+        echo $this->getReloadItemListMarker($type, $taskjobs_id);
+        echo Html::script('/plugins/glpiinventory/js/taskjob_init.js', [], false);
     }
 
 

@@ -646,7 +646,6 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
             $options
         );
         echo "</div>";
-        echo Html::scriptBlock("$('#dropdown_method$modules_methods_rand').on('change', function () { task_method_change(this.value); });");
 
         echo Html::scriptBlock("
         function task_method_change(val) {
@@ -656,7 +655,8 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
      ");
 
         if (!$new_item) {
-            echo Html::scriptBlock("taskjobs.register_update_method( 'dropdown_method" . $modules_methods_rand . "');");
+            echo "<span hidden data-glpiinventory-register-method='" . htmlescape('dropdown_method' . $modules_methods_rand) . "'></span>";
+            echo Html::script('/plugins/glpiinventory/js/taskjob_init.js', [], false);
 
             echo "<div style='display:none' id='method_selected'>" . $this->fields['method'] . "</div>";
         }
@@ -779,7 +779,7 @@ class PluginGlpiinventoryTaskjobView extends PluginGlpiinventoryCommonView
                       name='delete'
                       value=\"" . __('Purge', 'glpiinventory') . "\"
                       class='btn btn-outline-danger me-2'
-                      data-glpi-confirm='" . htmlescape(__('Confirm the final deletion ?', 'glpiinventory')) . "'>&nbsp;";
+                      data-glpiinventory-confirm='" . htmlescape(__('Confirm the final deletion ?', 'glpiinventory')) . "'>&nbsp;";
 
             echo Html::submit(__('Update'), ['name' => 'update', 'class' => 'btn btn-primary me-2']);
             echo "</td>";

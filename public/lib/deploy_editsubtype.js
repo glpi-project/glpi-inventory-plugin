@@ -60,3 +60,7 @@ $(document).on('click', '[data-glpiinventory-new-subtype]', function () {
                $(this).attr('data-glpiinventory-packages-id'),
                $(this).attr('data-glpiinventory-rand'));
 });
+
+$(document).on('click', '[data-glpiinventory-show-modal]', function () {
+   window[$(this).attr('data-glpiinventory-show-modal')].show();
+});

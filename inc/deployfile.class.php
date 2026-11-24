@@ -328,9 +328,8 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
                 case "Server":
                     echo "<input type='text' name='filename' id='server_filename$rand'"
                     . " style='width:500px;float:left' />";
-                    echo "<input type='button' class='submit' id='choose_server_file$rand' value='" . __("Choose", 'glpiinventory')
+                    echo "<input type='button' class='submit' data-glpiinventory-show-modal='fileModal$rand' value='" . __("Choose", 'glpiinventory')
                     . "' />";
-                    echo Html::scriptBlock("$('#choose_server_file$rand').on('click', function () { fileModal$rand.show(); });");
                     Ajax::createModalWindow(
                         "fileModal$rand",
                         $fi_path . "/ajax/deployfilemodal.php",
@@ -389,50 +388,6 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
     {
         global $CFG_GLPI;
 
-        $script = "Ext.Ajax.defaultHeaders = {'X-Glpi-Csrf-Token' : getAjaxCsrfToken()};";
-        $script .= "var Tree_Category_Loader$rand = new Ext.tree.TreeLoader({
-         dataUrl:'" . $CFG_GLPI['root_doc'] . "/plugins/glpiinventory/ajax/serverfilestreesons.php'
-      });";
-
-        $script .= "var Tree_Category$rand = new Ext.tree.TreePanel({
-         collapsible      : false,
-         animCollapse     : false,
-         border           : false,
-         id               : 'tree_projectcategory$rand',
-         el               : 'tree_projectcategory$rand',
-         autoScroll       : true,
-         animate          : false,
-         enableDD         : true,
-         containerScroll  : true,
-         height           : 320,
-         width            : 670,
-         loader           : Tree_Category_Loader$rand,
-         rootVisible      : false,
-         listeners: {
-            click: function(node, event) {
-               if (node.leaf == true) {
-                  console.log('server_filename$rand');
-                  Ext.get('server_filename$rand').dom.value = node.id;
-                     fileModal$rand.hide();
-               }
-            }
-         }
-      });";
-
-        // SET the root node.
-        $script .= "var Tree_Category_Root$rand = new Ext.tree.AsyncTreeNode({
-         text     : '',
-         draggable   : false,
-         id    : '-1'                  // this IS the id of the startnode
-      });
-      Tree_Category$rand.setRootNode(Tree_Category_Root$rand);";
-
-        // Render the tree.
-        $script .= "Tree_Category$rand.render();
-            Tree_Category_Root$rand.expand();";
-
-        echo Html::scriptBlock($script);
-
         echo '<div class="alert alert-info d-flex" role="alert">';
         echo '<i class="fas fa-exclamation-circle fa-2x me-2"></i>';
         echo sprintf(
@@ -445,6 +400,10 @@ class PluginGlpiinventoryDeployFile extends PluginGlpiinventoryDeployPackageItem
         echo '</div>';
 
         echo "<div id='tree_projectcategory$rand' ></div>";
+        echo "<span hidden data-glpiinventory-server-tree='" . htmlescape($rand) . "'"
+            . " data-glpiinventory-data-url='"
+            . htmlescape($CFG_GLPI['root_doc'] . '/plugins/glpiinventory/ajax/serverfilestreesons.php') . "'></span>";
+        echo Html::script('/plugins/glpiinventory/js/deploy_init.js', [], false);
         echo "</div>";
     }
 

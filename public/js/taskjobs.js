@@ -1319,6 +1319,14 @@ $(document).ready(function() {
                     $(this).attr('data-taskjob_id'));
    });
 
+   document.addEventListener('click', function (e) {
+      const confirmButton = e.target.closest('[data-glpiinventory-confirm]');
+      if (confirmButton !== null && !window.confirm(confirmButton.dataset.glpiinventoryConfirm)) {
+         e.preventDefault();
+         e.stopImmediatePropagation();
+      }
+   }, true);
+
    $(document).on("click", "[data-glpiinventory-show-block]", function(event) {
       Ext.get($(this).attr('data-glpiinventory-show-block')).setDisplayed('block');
    });
@@ -1329,6 +1337,10 @@ $(document).ready(function() {
 
    $(document).on("click", ".glpiinventory-deldef", function(event) {
       deldef($(this).attr('data-glpiinventory-args'));
+   });
+
+   $(document).on("change", 'select[id^="dropdown_method"]', function(event) {
+      task_method_change(this.value);
    });
 
    $(document).on("click", ".openExportDialog", function(event) {
