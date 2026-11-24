@@ -741,6 +741,16 @@ class CollectsTest extends DbTestCase
         $this->assertSame('<img src=x onerror=alert(1)>', $table['entries'][0]['col_computer']);
     }
 
+    public function testWmiShowForComputerWithoutData(): void
+    {
+        $computers_id = $this->createComputer('pcnowmi');
+        $content = new PluginGlpiinventoryCollect_Wmi_Content();
+
+        ob_start();
+        $content->showForComputer($computers_id);
+        $this->assertSame('', ob_get_clean());
+    }
+
     public function testOsqueryHighlightQuery(): void
     {
         $this->assertSame(

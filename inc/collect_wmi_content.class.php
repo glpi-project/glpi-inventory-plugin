@@ -109,6 +109,13 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
      */
     public function showForComputer(int $computers_id): void
     {
+        $a_data = $this->find(
+            ['computers_id' => $computers_id],
+            ['plugin_glpiinventory_collects_wmis_id', 'property']
+        );
+        if (count($a_data) === 0) {
+            return;
+        }
 
         $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
         echo "<table class='tab_cadre_fixe'>";
@@ -120,10 +127,6 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
         echo "<th>" . __('Value', 'glpiinventory') . "</th>";
         echo "</tr>";
 
-        $a_data = $this->find(
-            ['computers_id' => $computers_id],
-            ['plugin_glpiinventory_collects_wmis_id', 'property']
-        );
         foreach ($a_data as $data) {
             echo "<tr class='tab_bg_1'>";
             echo '<td>';
