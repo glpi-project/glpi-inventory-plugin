@@ -258,7 +258,8 @@ CREATE TABLE `glpi_plugin_glpiinventory_statediscoveries` (
   `nb_error` int NOT NULL DEFAULT '0',
   `nb_exists` int NOT NULL DEFAULT '0',
   `nb_import` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `agents_id` (`agents_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
@@ -491,7 +492,8 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_registries_contents` (
   `key` varchar(255) DEFAULT NULL,
   `value` text DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `computers_id` (`computers_id`)
+  KEY `computers_id` (`computers_id`),
+  KEY `plugin_glpiinventory_collects_registries_id` (`plugin_glpiinventory_collects_registries_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
@@ -518,7 +520,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_wmis_contents` (
   `plugin_glpiinventory_collects_wmis_id` int unsigned NOT NULL DEFAULT '0',
   `property` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `computers_id` (`computers_id`),
+  KEY `plugin_glpiinventory_collects_wmis_id` (`plugin_glpiinventory_collects_wmis_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 
@@ -555,7 +559,9 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_files_contents` (
   `plugin_glpiinventory_collects_files_id` int unsigned NOT NULL DEFAULT '0',
   `pathfile` text DEFAULT NULL,
   `size` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `computers_id` (`computers_id`),
+  KEY `plugin_glpiinventory_collects_files_id` (`plugin_glpiinventory_collects_files_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 

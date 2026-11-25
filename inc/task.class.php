@@ -837,13 +837,19 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             'agents_error',
         ];
 
+        // print_r() arguments are evaluated even when extra debug is off
+        $extradebug      = (bool) PluginGlpiinventoryConfig::isExtradebugActive();
+        $unnamed_targets = [];
+
         foreach ($iterator as $result) {
             // ***** Begin loop for each taskjob ***** //
 
-            PluginGlpiinventoryToolbox::logIfExtradebug(
-                "pluginGlpiinventory-tasks",
-                "Job: " . print_r($result, true)
-            );
+            if ($extradebug) {
+                PluginGlpiinventoryToolbox::logIfExtradebug(
+                    "pluginGlpiinventory-tasks",
+                    "Job: " . print_r($result, true)
+                );
+            }
 
             $task_id = (int) $result['task_id'];
             if (!array_key_exists($task_id, $logs)) {
@@ -892,10 +898,12 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             // ***** loop on each target of the job ***** //
 
             foreach ($targets as $target) {
-                PluginGlpiinventoryToolbox::logIfExtradebug(
-                    "pluginGlpiinventory-tasks",
-                    "- target: " . print_r($target, true)
-                );
+                if ($extradebug) {
+                    PluginGlpiinventoryToolbox::logIfExtradebug(
+                        "pluginGlpiinventory-tasks",
+                        "- target: " . print_r($target, true)
+                    );
+                }
 
                 $item_type = key($target);
                 $item_id   = current($target);
@@ -906,10 +914,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
 
                 $target_id = $item_type . "_" . $item_id;
                 if ($item_name == "") {
-                    $item = getItemForItemtype($item_type);
-                    if ($item->getFromDB($item_id)) {
-                        $item_name = $item->fields['name'];
-                    }
+                    $unnamed_targets[$item_type][(int) $item_id][] = [$task_id, $job_id, $target_id];
                 }
                 $targets_handle[$target_id] = [
                     'id'        => $item_id,
@@ -923,6 +928,19 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 foreach ($agent_state_types as $type) {
                     $targets_handle[$target_id]['counters'][$type] = [];
                 }
+            }
+        }
+        unset($jobs_handle, $targets_handle);
+
+        foreach ($unnamed_targets as $item_type => $targets_by_id) {
+            $names = self::getItemNames($item_type, array_keys($targets_by_id));
+            foreach ($targets_by_id as $item_id => $locations) {
+                foreach ($locations as [$location_task_id, $location_job_id, $location_target_id]) {
+                    /** @var array<int,mixed> $named_jobs */
+                    $named_jobs = &$logs[$location_task_id]['jobs'];
+                    $named_jobs[$location_job_id]['targets'][$location_target_id]['name'] = $names[$item_id] ?? '';
+                }
+                unset($named_jobs);
             }
         }
 
@@ -947,77 +965,26 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
             }
         }
 
-        /*
-         * The query is a template to get the log of a specific job execution. This query is run for each job
-         * state to get the execution log.
-         */
-
-        // Get all jobs id of this tasks_id
         $pftaskjob = new PluginGlpiinventoryTaskjob();
 
-        // Parse the query result to update the data to return
         $tasks_list1 = [];
         if (count($task_ids) > 0) {
             $tasks_list1 += ['plugin_glpiinventory_tasks_id' => $task_ids];
         }
-        $taskjobs = $pftaskjob->find($tasks_list1);
-        $counter_agents = [];
-        $count_results = 0;
+        $taskjobs           = $pftaskjob->find($tasks_list1);
+        $job_states_by_job  = self::getLastJobStatesByTaskjob(array_keys($taskjobs), (int) $max_runs);
+        $runs_by_job        = [];
+        $count_results      = 0;
         foreach ($taskjobs as $taskjob) {
-            // get taskjobstates
-            $job_state_iterator = $DB->request([
-                'SELECT' => [
-                    'glpi_plugin_glpiinventory_taskjobstates.id',
-                    'state',
-                    'glpi_plugin_glpiinventory_taskjobstates.itemtype',
-                    'glpi_plugin_glpiinventory_taskjobstates.items_id',
-                    'agents_id AS agent_id',
-                    'agent.name AS agent_name',
-                    'agent.items_id AS agent_computers_id',
-                ],
-                'FROM'   => 'glpi_plugin_glpiinventory_taskjobstates',
-                'LEFT JOIN' => [
-                    'glpi_agents AS agent' => [
-                        'FKEY' => [
-                            'agent' => 'id',
-                            'glpi_plugin_glpiinventory_taskjobstates' => 'agents_id',
-                        ],
-                    ],
-                ],
-                'WHERE'  => [
-                    'glpi_plugin_glpiinventory_taskjobstates.plugin_glpiinventory_taskjobs_id' => $taskjob['id'],
-                    'agent.itemtype' => Computer::class,
-                ],
-                'ORDER'  => 'glpi_plugin_glpiinventory_taskjobstates.id DESC',
-            ]);
+            $job_state_iterator = $job_states_by_job[(int) $taskjob['id']] ?? [];
+            unset($job_states_by_job[(int) $taskjob['id']]);
 
-            // Execute query to get all jobs states - log the query result
-            $q_task_job_state['start'] = microtime(true);
-            $q_task_job_state['result'] = $job_state_iterator;
-            $q_task_job_state['end'] = microtime(true);
-            $q_task_job_state['duration'] = self::formatChrono($q_task_job_state);
-
-            PluginGlpiinventoryToolbox::logIfExtradebug(
-                "pluginGlpiinventory-tasks",
-                $q_task_job_state
-            );
-
-            $runs_id = [];
-
-            // Parse the query result to update the data to return
             foreach ($job_state_iterator as $result) {
-                PluginGlpiinventoryToolbox::logIfExtradebug(
-                    "pluginGlpiinventory-tasks",
-                    "Result: " . print_r($result, true)
-                );
-
-                // ***** create a unique key ***** //
-
-                $key_runs = $result['agent_id'] . "+" . $result['items_id'] . "+" . $result['itemtype'];
-                $counter_agents[$key_runs] ??= 0;
-                $counter_agents[$key_runs]++;
-                if ($counter_agents[$key_runs] > $max_runs) {
-                    continue;
+                if ($extradebug) {
+                    PluginGlpiinventoryToolbox::logIfExtradebug(
+                        "pluginGlpiinventory-tasks",
+                        "Result: " . print_r($result, true)
+                    );
                 }
 
                 // We need to check if the results are consistent with the view's structure gathered
@@ -1148,7 +1115,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     unset($counters['agents_cancelled'][$agent_id]);
                 }
                 if ($with_logs) {
-                    $runs_id[$run_id] = [
+                    $runs_by_job[$job_id][$run_id] = [
                         'agent_id' => $agent_id,
                         'link'     => Computer::getFormURLWithID($result['agent_computers_id']),
                         'numstate' => $result['state'],
@@ -1159,67 +1126,61 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                     ];
                 }
             }
-            if ($with_logs && count($runs_id) > 0) {
-                $q_job_iterator = $DB->request([
-                    'SELECT' => [
-                        'log.id AS log_last_id',
-                        'log.date AS log_last_date',
-                        'log.state AS log_last_state',
-                        'log.comment AS log_last_comment',
-                        'log.plugin_glpiinventory_taskjobstates_id AS run_id',
-                        new QueryExpression('UNIX_TIMESTAMP(' . $DB->quoteName('log.date') . ') AS ' . $DB->quoteName('log_last_timestamp')),
-                    ],
-                    'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs AS log',
-                    'WHERE' => [
-                        'log.plugin_glpiinventory_taskjobstates_id' => array_keys($runs_id),
-                    ],
-                    'ORDER' => 'log.id DESC',
-                ]);
+        }
+        // Logs are read by batches of whole jobs to bound the buffered result size
+        foreach (array_chunk($runs_by_job, 50, true) as $runs_chunk) {
+            $runs_id = array_replace(...array_values($runs_chunk));
+            $q_job_iterator = $DB->request([
+                'SELECT' => [
+                    'log.id AS log_last_id',
+                    'log.date AS log_last_date',
+                    'log.state AS log_last_state',
+                    'log.comment AS log_last_comment',
+                    'log.plugin_glpiinventory_taskjobstates_id AS run_id',
+                    new QueryExpression('UNIX_TIMESTAMP(' . $DB->quoteName('log.date') . ') AS ' . $DB->quoteName('log_last_timestamp')),
+                ],
+                'FROM' => 'glpi_plugin_glpiinventory_taskjoblogs AS log',
+                'WHERE' => [
+                    'log.plugin_glpiinventory_taskjobstates_id' => array_keys($runs_id),
+                ],
+                'ORDER' => 'log.id DESC',
+            ]);
 
-                $q_job_state_last_log = [
-                    'query' => $q_job_iterator->getSql(),
-                    'result' => null,
-                    "start" => microtime(true),
-                    "end"   => 0,
-                ];
-
-                $q_job_state_last_log['real_query'] = $q_job_iterator->getSql();
-                $q_job_state_last_log['result'] = $q_job_iterator;
-                $q_job_state_last_log['end'] = microtime(true);
-                $q_job_state_last_log['duration'] = self::formatChrono($q_job_state_last_log);
-
+            if ($extradebug) {
                 PluginGlpiinventoryToolbox::logIfExtradebug(
                     "pluginGlpiinventory-tasks",
-                    "Log query: " . print_r($q_job_state_last_log, true)
+                    "Log query: " . $q_job_iterator->getSql()
                 );
+            }
 
-                foreach ($q_job_iterator as $log_result) {
+            foreach ($q_job_iterator as $log_result) {
+                if ($extradebug) {
                     PluginGlpiinventoryToolbox::logIfExtradebug(
                         "pluginGlpiinventory-tasks",
                         "Log: " . print_r($log_result, true)
                     );
-
-                    $run_id = $log_result['run_id'];
-                    $run_data = $runs_id[$run_id];
-
-                    /** @var array<int,mixed> $jobs */
-                    $jobs    = &$logs[$run_data['task_id']]['jobs'];
-                    /** @var array<int,mixed> $targets */
-                    $targets = &$jobs[$run_data['jobs_id']]['targets'];
-
-                    $targets[$run_data['target_id']]['agents'][$run_data['agent_id']][] = [
-                        'agent_id'       => $run_data['agent_id'],
-                        'link'           => $run_data['link'],
-                        'numstate'       => $run_data['numstate'],
-                        'state'          => $run_data['state'],
-                        'jobstate_id'    => $run_id,
-                        'last_log_id'    => $log_result['log_last_id'],
-                        'last_log_date'  => $log_result['log_last_date'],
-                        'last_log_state' => (int) $log_result['log_last_state'],
-                        'timestamp'      => $log_result['log_last_timestamp'],
-                        'last_log'       => PluginGlpiinventoryTaskjoblog::convertComment($log_result['log_last_comment']),
-                    ];
                 }
+
+                $run_id = $log_result['run_id'];
+                $run_data = $runs_id[$run_id];
+
+                /** @var array<int,mixed> $jobs */
+                $jobs    = &$logs[$run_data['task_id']]['jobs'];
+                /** @var array<int,mixed> $targets */
+                $targets = &$jobs[$run_data['jobs_id']]['targets'];
+
+                $targets[$run_data['target_id']]['agents'][$run_data['agent_id']][] = [
+                    'agent_id'       => $run_data['agent_id'],
+                    'link'           => $run_data['link'],
+                    'numstate'       => $run_data['numstate'],
+                    'state'          => $run_data['state'],
+                    'jobstate_id'    => $run_id,
+                    'last_log_id'    => $log_result['log_last_id'],
+                    'last_log_date'  => $log_result['log_last_date'],
+                    'last_log_state' => (int) $log_result['log_last_state'],
+                    'timestamp'      => $log_result['log_last_timestamp'],
+                    'last_log'       => PluginGlpiinventoryTaskjoblog::convertComment($log_result['log_last_comment']),
+                ];
             }
         }
 
@@ -1234,6 +1195,91 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
         );
 
         return ['tasks' => $logs, 'agents' => $agents];
+    }
+
+    /**
+     * Keep the last $max_runs states of each agent and target, taskjobs in id order, newest state first
+     *
+     * @param array<int> $taskjobs_ids
+     * @return array<int, array<int, array<string, mixed>>>
+     */
+    private static function getLastJobStatesByTaskjob(array $taskjobs_ids, int $max_runs): array
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+
+        if ($taskjobs_ids === []) {
+            return [];
+        }
+
+        $ranked_states = new QuerySubQuery([
+            'SELECT' => [
+                'state.id',
+                'state.state',
+                'state.itemtype',
+                'state.items_id',
+                'state.plugin_glpiinventory_taskjobs_id',
+                'state.agents_id AS agent_id',
+                'agent.name AS agent_name',
+                'agent.items_id AS agent_computers_id',
+                new QueryExpression(
+                    'ROW_NUMBER() OVER (PARTITION BY ' . $DB->quoteName('state.agents_id')
+                    . ', ' . $DB->quoteName('state.items_id') . ', ' . $DB->quoteName('state.itemtype')
+                    . ' ORDER BY ' . $DB->quoteName('state.plugin_glpiinventory_taskjobs_id')
+                    . ', ' . $DB->quoteName('state.id') . ' DESC) AS ' . $DB->quoteName('run_rank')
+                ),
+            ],
+            'FROM'       => 'glpi_plugin_glpiinventory_taskjobstates AS state',
+            'INNER JOIN' => [
+                'glpi_agents AS agent' => [
+                    'ON' => [
+                        'agent' => 'id',
+                        'state' => 'agents_id',
+                    ],
+                ],
+            ],
+            'WHERE'      => [
+                'state.plugin_glpiinventory_taskjobs_id' => $taskjobs_ids,
+                'agent.itemtype'                         => Computer::class,
+            ],
+        ], 'ranked_state');
+
+        $iterator = $DB->request([
+            'FROM'  => $ranked_states,
+            'WHERE' => ['run_rank' => ['<=', $max_runs]],
+            'ORDER' => ['plugin_glpiinventory_taskjobs_id', 'id DESC'],
+        ]);
+
+        $states_by_job = [];
+        foreach ($iterator as $state) {
+            $states_by_job[(int) $state['plugin_glpiinventory_taskjobs_id']][] = $state;
+        }
+
+        return $states_by_job;
+    }
+
+    /**
+     * @param class-string<CommonDBTM> $itemtype
+     * @param array<int> $ids
+     * @return array<int, string>
+     */
+    private static function getItemNames(string $itemtype, array $ids): array
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+
+        $iterator = $DB->request([
+            'SELECT' => ['id', 'name'],
+            'FROM'   => $itemtype::getTable(),
+            'WHERE'  => ['id' => $ids],
+        ]);
+
+        $names = [];
+        foreach ($iterator as $row) {
+            $names[(int) $row['id']] = (string) $row['name'];
+        }
+
+        return $names;
     }
 
     /**

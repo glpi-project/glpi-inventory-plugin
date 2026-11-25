@@ -124,10 +124,14 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             ['computers_id' => $computers_id],
             ['plugin_glpiinventory_collects_wmis_id', 'property']
         );
+        $previous_wmi_id = 0;
         foreach ($a_data as $data) {
+            if ($previous_wmi_id != $data['plugin_glpiinventory_collects_wmis_id']) {
+                $pfCollect_Wmi->getFromDB($data['plugin_glpiinventory_collects_wmis_id']);
+                $previous_wmi_id = $data['plugin_glpiinventory_collects_wmis_id'];
+            }
             echo "<tr class='tab_bg_1'>";
             echo '<td>';
-            $pfCollect_Wmi->getFromDB($data['plugin_glpiinventory_collects_wmis_id']);
             echo htmlescape($pfCollect_Wmi->fields['moniker'] ?? '');
             echo '</td>';
             echo '<td>';
@@ -155,18 +159,16 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
     public function showContent(int $id): void
     {
         $collect_wmi = new PluginGlpiinventoryCollect_Wmi();
-        $computer = new Computer();
         $collect_wmi->getFromDB($id);
 
-        $data = $this->find(
-            ['plugin_glpiinventory_collects_wmis_id' => $id],
-            ['property']
-        );
+        $start   = self::getRequestedStart();
+        $limit   = (int) $_SESSION['glpilist_limit'];
+        $total   = $this->countContentForDefinition($id);
+        $data    = $this->getContentPageForDefinition($id, ['property'], $start, $limit);
         $entries = [];
         foreach ($data as $row) {
-            $computer->getFromDB($row['computers_id']);
             $entry = [
-                'computer' => $computer->getLink(),
+                'computer' => self::getComputerLinkFromRow($row),
                 'property' => $row['property'],
                 'value'     => $row['value'],
             ];
@@ -188,8 +190,10 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
                 'computer' => 'raw_html',
             ],
             'entries' => $entries,
-            'total_number' => count($entries),
-            'filtered_number' => count($entries),
+            'total_number' => $total,
+            'filtered_number' => $total,
+            'start' => $start,
+            'limit' => $limit,
         ]);
         echo '</div></div>';
     }

@@ -118,7 +118,8 @@ function plugin_init_glpiinventory(): void
         $debug_mode = ($_SESSION['glpi_use_mode'] == Session::DEBUG_MODE);
     }
 
-    if ($Plugin->isActivated('glpiinventory')) { // check if plugin is active
+    // Core also runs plugin_init while installing or activating; the in-memory list avoids the DB lookup of isActivated()
+    if (in_array('glpiinventory', Plugin::getPlugins(), true)) {
         // Disable firewall checks for machine to machine endpoints
         Firewall::addPluginStrategyForLegacyScripts('glpiinventory', '#^/index\.php#', Firewall::STRATEGY_NO_CHECK);
         Firewall::addPluginStrategyForLegacyScripts('glpiinventory', '#^/b/#', Firewall::STRATEGY_NO_CHECK);
@@ -221,10 +222,6 @@ function plugin_init_glpiinventory(): void
             PluginGlpiinventoryDeployPackage::class,
             ['addtabon' => [Computer::class]]
         );
-
-        // ##### 3. get informations of the plugin #####
-
-        $Plugin->getFromDBbyDir('glpiinventory');
 
         // Load config
         PluginGlpiinventoryConfig::loadCache();

@@ -80,8 +80,8 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
         );
         $previous_key = 0;
         foreach ($a_data as $data) {
-            $pfCollect_File->getFromDB($data['plugin_glpiinventory_collects_files_id']);
             if ($previous_key != $data['plugin_glpiinventory_collects_files_id']) {
+                $pfCollect_File->getFromDB($data['plugin_glpiinventory_collects_files_id']);
                 echo "<tr class='tab_bg_1'>";
                 echo '<th colspan="3">';
                 echo htmlescape(($pfCollect_File->fields['name'] ?? '') . ": " . ($pfCollect_File->fields['dir'] ?? ''));
@@ -118,18 +118,16 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
     public function showContent(int $id): void
     {
         $collect_file = new PluginGlpiinventoryCollect_File();
-        $computer = new Computer();
         $collect_file->getFromDB($id);
 
-        $data = $this->find(
-            ['plugin_glpiinventory_collects_files_id' => $id],
-            ['pathfile']
-        );
+        $start   = self::getRequestedStart();
+        $limit   = (int) $_SESSION['glpilist_limit'];
+        $total   = $this->countContentForDefinition($id);
+        $data    = $this->getContentPageForDefinition($id, ['pathfile'], $start, $limit);
         $entries = [];
         foreach ($data as $row) {
-            $computer->getFromDB($row['computers_id']);
             $entry = [
-                'computer' => $computer->getLink(),
+                'computer' => self::getComputerLinkFromRow($row),
                 'pathfile' => htmlspecialchars($row['pathfile'] ?? ''),
                 'size'     => $row['size'],
             ];
@@ -152,8 +150,10 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
                 'size' => 'bytesize',
             ],
             'entries' => $entries,
-            'total_number' => count($entries),
-            'filtered_number' => count($entries),
+            'total_number' => $total,
+            'filtered_number' => $total,
+            'start' => $start,
+            'limit' => $limit,
         ]);
         echo '</div></div>';
     }

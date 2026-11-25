@@ -169,4 +169,64 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
     }
 
     public function showContent(int $id): void {}
+
+    protected function countContentForDefinition(int $definitions_id): int
+    {
+        return countElementsInTable(
+            $this->getTable(),
+            [getForeignKeyFieldForItemType($this->getCollectClass()) => $definitions_id]
+        );
+    }
+
+    /**
+     * @param array<int, string> $order
+     * @return array<int, array<string, mixed>>
+     */
+    protected function getContentPageForDefinition(int $definitions_id, array $order, int $start, int $limit): array
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+
+        $table    = $this->getTable();
+        $iterator = $DB->request([
+            'SELECT'    => [$table . '.*', 'glpi_computers.name AS computer_name'],
+            'FROM'      => $table,
+            'LEFT JOIN' => [
+                'glpi_computers' => [
+                    'ON' => [
+                        $table           => 'computers_id',
+                        'glpi_computers' => 'id',
+                    ],
+                ],
+            ],
+            'WHERE'     => [
+                $table . '.' . getForeignKeyFieldForItemType($this->getCollectClass()) => $definitions_id,
+            ],
+            'ORDER'     => array_map(fn(string $field): string => $table . '.' . $field, $order),
+            'START'     => $start,
+            'LIMIT'     => $limit,
+        ]);
+
+        return iterator_to_array($iterator, false);
+    }
+
+    /**
+     * @param array<string, mixed> $row
+     */
+    protected static function getComputerLinkFromRow(array $row): string
+    {
+        $computers_id = (int) $row['computers_id'];
+        $name         = (string) ($row['computer_name'] ?? '');
+
+        return sprintf(
+            '<a href="%s">%s</a>',
+            htmlescape(Computer::getFormURLWithID($computers_id)),
+            htmlescape($name !== '' ? $name : sprintf('(%d)', $computers_id))
+        );
+    }
+
+    protected static function getRequestedStart(): int
+    {
+        return max(0, (int) ($_GET['start'] ?? 0));
+    }
 }

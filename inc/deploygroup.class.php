@@ -662,6 +662,43 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
 
 
     /**
+     * Same result as getTargetsForGroup() limited to $computers_ids, without resolving the whole group
+     *
+     * @param array<int> $computers_ids
+     * @return array<int, int>
+     */
+    public static function getTargetsForGroupAmong(int $groups_id, array $computers_ids): array
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+
+        if ($computers_ids === []) {
+            return [];
+        }
+
+        $group = new self();
+        if ($group->getFromDB($groups_id) && $group->isStaticGroup()) {
+            $iterator = $DB->request([
+                'SELECT' => ['items_id'],
+                'FROM'   => PluginGlpiinventoryDeployGroup_Staticdata::getTable(),
+                'WHERE'  => [
+                    'plugin_glpiinventory_deploygroups_id' => $groups_id,
+                    'itemtype'                             => Computer::class,
+                    'items_id'                             => $computers_ids,
+                ],
+            ]);
+            $results = [];
+            foreach ($iterator as $data) {
+                $results[(int) $data['items_id']] = (int) $data['items_id'];
+            }
+            return $results;
+        }
+
+        return PluginGlpiinventoryDeployGroup_Dynamicdata::getTargetsByGroupAmong($group, $computers_ids);
+    }
+
+
+    /**
      * Get search parameters as an array
      *
      * @param PluginGlpiinventoryDeployGroup $group PluginGlpiinventoryDeployGroup instance
@@ -785,14 +822,26 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         $link = Toolbox::getItemTypeFormURL("PluginGlpiinventoryDeployGroup");
 
         $iterator = $DB->request([
-            'FROM'   => PluginGlpiinventoryDeployGroup_Staticdata::getTable(),
-            'WHERE'  => [
-                'items_id' => $computers_id,
-                'itemtype' => Computer::class,
+            'SELECT'     => [
+                'data.id',
+                'grp.id AS group_id',
+                'grp.name AS group_name',
+            ],
+            'FROM'       => PluginGlpiinventoryDeployGroup_Staticdata::getTable() . ' AS data',
+            'INNER JOIN' => [
+                self::getTable() . ' AS grp' => [
+                    'ON' => [
+                        'grp'  => 'id',
+                        'data' => 'plugin_glpiinventory_deploygroups_id',
+                    ],
+                ],
+            ],
+            'WHERE'      => [
+                'data.items_id' => $computers_id,
+                'data.itemtype' => Computer::class,
             ],
         ]);
         foreach ($iterator as $data) {
-            $this->getFromDB($data['plugin_glpiinventory_deploygroups_id']);
             echo "<tr>";
             if ($canedit) {
                 echo "<td width='10'>";
@@ -800,7 +849,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                 echo "</td>";
             }
             echo "<td>";
-            echo "<a href='" . $link . "?id=" . $this->fields['id'] . "'>" . $this->fields['name'] . "</a>";
+            echo "<a href='" . $link . "?id=" . $data['group_id'] . "'>" . $data['group_name'] . "</a>";
             echo "</td>";
             echo "<td>";
             echo __('Static group', 'glpiinventory');
@@ -809,19 +858,30 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
         }
 
         $iterator = $DB->request([
-            'FROM'   => PluginGlpiinventoryDeployGroup_Dynamicdata::getTable(),
-            'WHERE'  => [
-                'computers_id_cache' => ["LIKE", '%"' . $computers_id . '"%'],
+            'SELECT'     => [
+                'grp.id AS group_id',
+                'grp.name AS group_name',
+            ],
+            'FROM'       => PluginGlpiinventoryDeployGroup_Dynamicdata::getTable() . ' AS data',
+            'INNER JOIN' => [
+                self::getTable() . ' AS grp' => [
+                    'ON' => [
+                        'grp'  => 'id',
+                        'data' => 'plugin_glpiinventory_deploygroups_id',
+                    ],
+                ],
+            ],
+            'WHERE'      => [
+                'data.computers_id_cache' => ["LIKE", '%"' . $computers_id . '"%'],
             ],
         ]);
         foreach ($iterator as $data) {
-            $this->getFromDB($data['plugin_glpiinventory_deploygroups_id']);
             echo "<tr>";
             if ($canedit) {
                 echo "<td></td>";
             }
             echo "<td>";
-            echo "<a href='" . $link . "?id=" . $this->fields['id'] . "'>" . $this->fields['name'] . "</a>";
+            echo "<a href='" . $link . "?id=" . $data['group_id'] . "'>" . $data['group_name'] . "</a>";
             echo "</td>";
             echo "<td>";
             echo __('Dynamic group', 'glpiinventory');

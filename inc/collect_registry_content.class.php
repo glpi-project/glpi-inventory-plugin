@@ -453,14 +453,13 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
     {
         $collect_registry = new PluginGlpiinventoryCollect_Registry();
         $collect_registry->getFromDB($id);
-        $computer = new Computer();
 
         $mode = (int) ($collect_registry->fields['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
 
-        $data = $this->find(
-            ['plugin_glpiinventory_collects_registries_id' => $id],
-            ['computers_id', 'key']
-        );
+        $start = self::getRequestedStart();
+        $limit = (int) $_SESSION['glpilist_limit'];
+        $total = $this->countContentForDefinition($id);
+        $data  = $this->getContentPageForDefinition($id, ['computers_id', 'key'], $start, $limit);
 
         $columns    = [];
         $formatters = ['computer' => 'raw_html'];
@@ -473,9 +472,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                     'value'    => __('Value', 'glpiinventory'),
                 ];
                 foreach ($data as $row) {
-                    $computer->getFromDB($row['computers_id']);
                     $entries[] = [
-                        'computer' => $computer->getLink(),
+                        'computer' => self::getComputerLinkFromRow($row),
                         'value'    => self::getExistenceLabel($row['value']),
                     ];
                 }
@@ -488,9 +486,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                     'value'    => __('Value', 'glpiinventory'),
                 ];
                 foreach ($data as $row) {
-                    $computer->getFromDB($row['computers_id']);
                     $entries[] = [
-                        'computer' => $computer->getLink(),
+                        'computer' => self::getComputerLinkFromRow($row),
                         'key'      => $row['key'],
                         'value'    => self::getDefinedLabel($row['value']),
                     ];
@@ -504,9 +501,8 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
                     'data'     => __('Data', 'glpiinventory'),
                 ];
                 foreach ($data as $row) {
-                    $computer->getFromDB($row['computers_id']);
                     $entries[] = [
-                        'computer' => $computer->getLink(),
+                        'computer' => self::getComputerLinkFromRow($row),
                         'value'    => $row['key'],
                         'data'     => $row['value'],
                     ];
@@ -524,8 +520,10 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             'columns' => $columns,
             'formatters' => $formatters,
             'entries' => $entries,
-            'total_number' => count($entries),
-            'filtered_number' => count($entries),
+            'total_number' => $total,
+            'filtered_number' => $total,
+            'start' => $start,
+            'limit' => $limit,
         ]);
         echo '</div></div>';
     }

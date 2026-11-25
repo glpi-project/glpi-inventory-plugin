@@ -2083,23 +2083,26 @@ class PluginGlpiinventoryDeployPackage extends CommonDBTM
         $packages = $this->canUserDeploySelf();
 
         if ($packages) {
+            //Computers of the user whose agent has the deploy feature enabled
+            $deployable_computers = [];
+            foreach (array_keys($mycomputers) as $comp_id) {
+                if ((!$computers_id || $comp_id == $computers_id) && self::isDeployEnabled($comp_id)) {
+                    $deployable_computers[$comp_id] = $comp_id;
+                }
+            }
+
+            $group_targets = [];
             //Browse all packages that the user can install
             foreach ($packages as $package) {
                 //Get computers that can be targeted for this package installation
-                $computers = $pfDeployGroup->getTargetsForGroup($package['plugin_glpiinventory_deploygroups_id']);
+                $groups_id = (int) $package['plugin_glpiinventory_deploygroups_id'];
+                $group_targets[$groups_id] ??= $pfDeployGroup::getTargetsForGroupAmong($groups_id, array_values($deployable_computers));
+                $computers = $group_targets[$groups_id];
 
                 //Browse all computers that are target by a package installation
 
                 foreach ($mycomputers as $comp_id => $data) {
-                    //If we only want packages for one computer
-                    //check if it's the computer we look for
-                    if ($computers_id && $comp_id != $computers_id) {
-                        continue;
-                    }
-
-                    //If the agent associated with the computer has not the
-                    //deploy feature enabled, do not propose to deploy packages on it
-                    if (!self::isDeployEnabled($comp_id)) {
+                    if (!isset($deployable_computers[$comp_id])) {
                         continue;
                     }
 
