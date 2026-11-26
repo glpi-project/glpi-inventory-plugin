@@ -94,6 +94,7 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
     final public function getModulesList(?int $agents_id = null): array
     {
         $modules = $this->find();
+        $methods = PluginGlpiinventoryStaticmisc::getmethods();
         foreach ($modules as &$module) {
             $module['id'] = strtolower($module['modulename']);
             $module['exceptions'] = importArrayFromDB($module['exceptions']);
@@ -102,7 +103,6 @@ class PluginGlpiinventoryAgentmodule extends CommonDBTM
                 $module ['is_active'] = !$module ['is_active'];
             }
 
-            $methods = PluginGlpiinventoryStaticmisc::getmethods();
             $module["displayname"] = $module["modulename"];
 
             foreach ($methods as $method) {

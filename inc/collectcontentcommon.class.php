@@ -159,14 +159,110 @@ class PluginGlpiinventoryCollectContentCommon extends CommonDBTM
                 'plugin_glpiinventory_collects_id' => $collects_id,
             ],
         ];
-        $iterator = $DB->request($params);
+        $definitions_ids = array_map(
+            fn(array $data): int => (int) $data['id'],
+            iterator_to_array($DB->request($params), false)
+        );
+        $starts = self::getRequestedStarts($_GET, $definitions_ids);
 
         echo '<div class="d-flex gap-3 flex-column">';
-        foreach ($iterator as $data) {
-            $this->showContent((int) $data['id']);
+        foreach ($definitions_ids as $definitions_id) {
+            $this->showContent(
+                $definitions_id,
+                $starts[$definitions_id],
+                self::getPagerParams($definitions_id, $starts)
+            );
         }
         echo "</div>";
     }
 
-    public function showContent(int $id): void {}
+    public function showContent(int $id, int $start, string $pager_params): void {}
+
+    /**
+     * @param array<string, mixed> $request
+     * @param array<int> $definitions_ids
+     * @return array<int, int>
+     */
+    public static function getRequestedStarts(array $request, array $definitions_ids): array
+    {
+        // The core pager always sends "start", so it only belongs to the table that was paged
+        $paged_id     = (int) ($request['definitions_id'] ?? 0);
+        $other_starts = is_array($request['starts'] ?? null) ? $request['starts'] : [];
+
+        $starts = [];
+        foreach ($definitions_ids as $definitions_id) {
+            $requested_start         = $definitions_id === $paged_id ? ($request['start'] ?? 0) : ($other_starts[$definitions_id] ?? 0);
+            $starts[$definitions_id] = max(0, (int) $requested_start);
+        }
+
+        return $starts;
+    }
+
+    /**
+     * @param array<int, int> $starts
+     */
+    public static function getPagerParams(int $definitions_id, array $starts): string
+    {
+        unset($starts[$definitions_id]);
+
+        return '&' . http_build_query([
+            'definitions_id' => $definitions_id,
+            'starts'         => $starts,
+        ]);
+    }
+
+    protected function countContentForDefinition(int $definitions_id): int
+    {
+        return countElementsInTable(
+            $this->getTable(),
+            [getForeignKeyFieldForItemType($this->getCollectClass()) => $definitions_id]
+        );
+    }
+
+    /**
+     * @param array<int, string> $order
+     * @return array<int, array<string, mixed>>
+     */
+    protected function getContentPageForDefinition(int $definitions_id, array $order, int $start, int $limit): array
+    {
+        /** @var DBmysql $DB */
+        global $DB;
+
+        $table    = $this->getTable();
+        $iterator = $DB->request([
+            'SELECT'    => [$table . '.*', 'glpi_computers.name AS computer_name'],
+            'FROM'      => $table,
+            'LEFT JOIN' => [
+                'glpi_computers' => [
+                    'ON' => [
+                        $table           => 'computers_id',
+                        'glpi_computers' => 'id',
+                    ],
+                ],
+            ],
+            'WHERE'     => [
+                $table . '.' . getForeignKeyFieldForItemType($this->getCollectClass()) => $definitions_id,
+            ],
+            'ORDER'     => array_map(fn(string $field): string => $table . '.' . $field, $order),
+            'START'     => $start,
+            'LIMIT'     => $limit,
+        ]);
+
+        return iterator_to_array($iterator, false);
+    }
+
+    /**
+     * @param array<string, mixed> $row
+     */
+    protected static function getComputerLinkFromRow(array $row): string
+    {
+        $computers_id = (int) $row['computers_id'];
+        $name         = (string) ($row['computer_name'] ?? '');
+
+        return sprintf(
+            '<a href="%s">%s</a>',
+            htmlescape(Computer::getFormURLWithID($computers_id)),
+            htmlescape($name !== '' ? $name : sprintf('(%d)', $computers_id))
+        );
+    }
 }

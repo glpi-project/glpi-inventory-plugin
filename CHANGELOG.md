@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+- Fix slow display of collected registry, WMI and file content on large inventories, now paginated
+- Fix slow display of task job logs and of the "Tasks / Groups", "Collect information" and "Package deploy" computer tabs on large inventories
+- Fix database write on each display of the "Package deploy" computer tab
+- Fix task job logs hiding the runs of a job when another job targets the same item with the same agent
+- Add missing indexes on collected content and network discovery tables
+- Reduce database queries done by the plugin on every page
+
 ## [1.6.12] - 2026-10-06
 
 

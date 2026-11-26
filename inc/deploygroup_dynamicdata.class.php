@@ -294,6 +294,59 @@ class PluginGlpiinventoryDeployGroup_Dynamicdata extends CommonDBChild
 
 
     /**
+     * Run the group search restricted to $computers_ids; the cache is neither read nor written
+     *
+     * @param array<int> $computers_ids
+     * @return array<int, int>
+     */
+    public static function getTargetsByGroupAmong(PluginGlpiinventoryDeployGroup $group, array $computers_ids): array
+    {
+        $search_params = PluginGlpiinventoryDeployGroup::getSearchParamsAsAnArray($group, false, true);
+        if (isset($search_params['metacriteria']) && empty($search_params['metacriteria'])) {
+            unset($search_params['metacriteria']);
+        }
+        $search_params['sort']     = '';
+        $search_params['criteria'] = self::restrictCriteriaToComputers($search_params['criteria'] ?? [], $computers_ids);
+
+        $results = self::getDatas(Computer::class, $search_params, ['2']);
+
+        $ids = [];
+        foreach ($results['data']['rows'] as $row) {
+            $ids[(int) $row['id']] = (int) $row['id'];
+        }
+        return $ids;
+    }
+
+    /**
+     * @param array<int, array<string, mixed>> $criteria
+     * @param array<int> $computers_ids
+     * @return array<int, array<string, mixed>>
+     */
+    private static function restrictCriteriaToComputers(array $criteria, array $computers_ids): array
+    {
+        $id_criteria = [];
+        foreach (array_values($computers_ids) as $position => $computers_id) {
+            $id_criteria[] = [
+                'link'       => $position === 0 ? 'AND' : 'OR',
+                'field'      => 2,
+                'searchtype' => 'contains',
+                'value'      => (int) $computers_id,
+            ];
+        }
+        $restriction = ['link' => 'AND', 'criteria' => $id_criteria];
+
+        // Group criteria are nested so that their OR links cannot escape the ID restriction
+        if ($criteria === []) {
+            return [$restriction];
+        }
+        return [
+            ['link' => 'AND', 'criteria' => $criteria],
+            $restriction,
+        ];
+    }
+
+
+    /**
      * Store a set of computers id in db
      * @param  PluginGlpiinventoryDeployGroup $group the instance of fi group
      * @param  array<int>                     $ids   the list of id to store

@@ -31,9 +31,82 @@
  */
 
 use Glpi\Tests\DbTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class TaskTest extends DbTestCase
 {
+    public function tearDown(): void
+    {
+        unset($_SESSION['glpi_plugin_glpiinventory']['includeoldjobs']);
+        parent::tearDown();
+    }
+
+    /**
+     * @return iterable<string, array{int, int}>
+     */
+    public static function includeOldJobsProvider(): iterable
+    {
+        yield 'last run only' => [1, 1];
+        yield 'two last runs' => [2, 2];
+        yield 'more runs requested than available' => [5, 3];
+    }
+
+    #[DataProvider('includeOldJobsProvider')]
+    public function testJoblogsKeepLastRunsOfEachJobSharingAgentAndTarget(int $includeoldjobs, int $expected_runs_per_job): void
+    {
+        $computer  = $this->createItem(Computer::class, ['name' => 'joblogs_computer', 'entities_id' => 0]);
+        $agenttype = $this->createItem(AgentType::class, ['name' => 'joblogs_agenttype']);
+        $agent     = $this->createItem(Agent::class, [
+            'name'          => 'joblogs_agent',
+            'entities_id'   => 0,
+            'itemtype'      => Computer::class,
+            'items_id'      => $computer->getID(),
+            'deviceid'      => 'joblogs_agent',
+            'agenttypes_id' => $agenttype->getID(),
+        ]);
+        $task = $this->createItem(PluginGlpiinventoryTask::class, ['name' => 'joblogs_task', 'entities_id' => 0]);
+
+        $expected_states_ids_by_job = [];
+        foreach (['first_job', 'second_job'] as $job_name) {
+            $taskjob = $this->createItem(PluginGlpiinventoryTaskjob::class, [
+                'plugin_glpiinventory_tasks_id' => $task->getID(),
+                'name'                          => $job_name,
+                'method'                        => 'inventory',
+                'targets'                       => '[{"Computer":"' . $computer->getID() . '"}]',
+            ]);
+            $states_ids = [];
+            foreach (['2026-01-01 10:00:00', '2026-01-02 10:00:00', '2026-01-03 10:00:00'] as $run_date) {
+                $state = $this->createItem(PluginGlpiinventoryTaskjobstate::class, [
+                    'plugin_glpiinventory_taskjobs_id' => $taskjob->getID(),
+                    'itemtype'                         => Computer::class,
+                    'items_id'                         => $computer->getID(),
+                    'agents_id'                        => $agent->getID(),
+                    'state'                            => PluginGlpiinventoryTaskjobstate::FINISHED,
+                    'uniqid'                           => $job_name . $run_date,
+                ]);
+                $this->createItem(PluginGlpiinventoryTaskjoblog::class, [
+                    'plugin_glpiinventory_taskjobstates_id' => $state->getID(),
+                    'date'                                  => $run_date,
+                    'itemtype'                              => Computer::class,
+                    'items_id'                              => $computer->getID(),
+                    'state'                                 => PluginGlpiinventoryTaskjoblog::TASK_OK,
+                    'comment'                               => $job_name,
+                ]);
+                $states_ids[] = $state->getID();
+            }
+            $expected_states_ids_by_job[$taskjob->getID()] = array_slice(array_reverse($states_ids), 0, $expected_runs_per_job);
+        }
+
+        $_SESSION['glpi_plugin_glpiinventory']['includeoldjobs'] = $includeoldjobs;
+        $joblogs = (new PluginGlpiinventoryTask())->getJoblogs([$task->getID()]);
+
+        $target_key = Computer::class . '_' . $computer->getID();
+        foreach ($expected_states_ids_by_job as $taskjobs_id => $expected_states_ids) {
+            $runs = $joblogs['tasks'][$task->getID()]['jobs'][$taskjobs_id]['targets'][$target_key]['agents'][$agent->getID()] ?? [];
+            $this->assertSame($expected_states_ids, array_map('intval', array_column($runs, 'jobstate_id')));
+        }
+    }
+
     public function testAddTask()
     {
         $pfTask    = new PluginGlpiinventoryTask();

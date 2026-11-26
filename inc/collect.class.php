@@ -199,10 +199,13 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             ),
             ['id ASC']
         );
+        $collects_ids          = array_keys($collectors);
+        $registries_by_collect = self::getDefinitionsByCollect(PluginGlpiinventoryCollect_Registry::class, $collects_ids);
+        $wmis_by_collect       = self::getDefinitionsByCollect(PluginGlpiinventoryCollect_Wmi::class, $collects_ids);
+        $files_by_collect      = self::getDefinitionsByCollect(PluginGlpiinventoryCollect_File::class, $collects_ids);
         foreach ($collectors as $collect) {
             //registries
-            $pfCollect_Registry = new PluginGlpiinventoryCollect_Registry();
-            $registries = $pfCollect_Registry->find(['plugin_glpiinventory_collects_id' => $collect['id']], ['id ASC']);
+            $registries = $registries_by_collect[$collect['id']] ?? [];
             foreach ($registries as $registry) {
                 $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_registries_contents';
                 $tab[$i]['field']         = 'value';
@@ -219,8 +222,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             }
 
             //WMIs
-            $pfCollect_Wmi = new PluginGlpiinventoryCollect_Wmi();
-            $wmis = $pfCollect_Wmi->find(['plugin_glpiinventory_collects_id'  => $collect['id']], ['id ASC']);
+            $wmis = $wmis_by_collect[$collect['id']] ?? [];
             foreach ($wmis as $wmi) {
                 $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_wmis_contents';
                 $tab[$i]['field']         = 'value';
@@ -237,8 +239,7 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             }
 
             //Files
-            $pfCollect_File = new PluginGlpiinventoryCollect_File();
-            $files = $pfCollect_File->find(['plugin_glpiinventory_collects_id' => $collect['id']], ['id ASC']);
+            $files = $files_by_collect[$collect['id']] ?? [];
             foreach ($files as $file) {
                 $tab[$i]['table']         = 'glpi_plugin_glpiinventory_collects_files_contents';
                 $tab[$i]['field']         = 'pathfile';
@@ -272,6 +273,26 @@ class PluginGlpiinventoryCollect extends CommonDBTM
             }
         }
         return $tab;
+    }
+
+    /**
+     * @param class-string<CommonDBTM> $itemtype
+     * @param array<int> $collects_ids
+     * @return array<int, array<int, array<string, mixed>>>
+     */
+    private static function getDefinitionsByCollect(string $itemtype, array $collects_ids): array
+    {
+        if ($collects_ids === []) {
+            return [];
+        }
+
+        $definitions_by_collect = [];
+        $definitions = getItemForItemtype($itemtype)->find(['plugin_glpiinventory_collects_id' => $collects_ids], ['id ASC']);
+        foreach ($definitions as $definition) {
+            $definitions_by_collect[(int) $definition['plugin_glpiinventory_collects_id']][] = $definition;
+        }
+
+        return $definitions_by_collect;
     }
 
 

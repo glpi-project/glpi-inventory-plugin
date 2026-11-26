@@ -1090,6 +1090,7 @@ function pluginGlpiinventoryUpdate(string $current_version): void
 
     // Add missing index on `glpi_plugin_glpiinventory_taskjoblogs`
     $migration = addTaskJobLogIndex($migration);
+    $migration = addCollectContentAndDiscoveryIndexes($migration);
 
     $credential_migration_was_already_executed = Config::getConfigurationValue(
         'glpiinventory',
@@ -1118,6 +1119,22 @@ function addTaskJobLogIndex(Migration $migration): Migration
         ['itemtype', 'items_id'],
         'item'
     );
+
+    return $migration;
+}
+
+function addCollectContentAndDiscoveryIndexes(Migration $migration): Migration
+{
+    $migration->addKey(
+        'glpi_plugin_glpiinventory_collects_registries_contents',
+        ['plugin_glpiinventory_collects_registries_id', 'computers_id', 'key'],
+        'plugin_glpiinventory_collects_registries_id'
+    );
+    $migration->addKey('glpi_plugin_glpiinventory_collects_wmis_contents', 'computers_id');
+    $migration->addKey('glpi_plugin_glpiinventory_collects_wmis_contents', 'plugin_glpiinventory_collects_wmis_id');
+    $migration->addKey('glpi_plugin_glpiinventory_collects_files_contents', 'computers_id');
+    $migration->addKey('glpi_plugin_glpiinventory_collects_files_contents', 'plugin_glpiinventory_collects_files_id');
+    $migration->addKey('glpi_plugin_glpiinventory_statediscoveries', 'agents_id');
 
     return $migration;
 }

@@ -639,24 +639,43 @@ class PluginGlpiinventoryTaskjobstate extends CommonDBTM
 
         // Get tasks ids
         $iterator = $DB->request([
-            'FROM'   => $this->getTable(),
-            'WHERE'  => [
-                'agents_id' => $agents_id,
+            'SELECT'     => [
+                $this->getTable() . '.id',
+                'job.method AS job_method',
+                'task.id AS task_id',
+                'task.name AS task_name',
+                'task.is_active AS task_is_active',
             ],
-            'ORDER' => 'id DESC',
+            'FROM'       => $this->getTable(),
+            'INNER JOIN' => [
+                $pfTaskjob->getTable() . ' AS job' => [
+                    'ON' => [
+                        'job'             => 'id',
+                        $this->getTable() => 'plugin_glpiinventory_taskjobs_id',
+                    ],
+                ],
+                $pfTask->getTable() . ' AS task' => [
+                    'ON' => [
+                        'task' => 'id',
+                        'job'  => 'plugin_glpiinventory_tasks_id',
+                    ],
+                ],
+            ],
+            'WHERE'      => [
+                $this->getTable() . '.agents_id' => $agents_id,
+            ],
+            'ORDER'      => $this->getTable() . '.id DESC',
         ]);
         foreach ($iterator as $data) {
-            $pfTaskjob->getFromDB($data['plugin_glpiinventory_taskjobs_id']);
-            $pfTask->getFromDB($pfTaskjob->fields['plugin_glpiinventory_tasks_id']);
-            $tasks_id[$pfTask->fields['id']] ??= [
-                'is_active' => $pfTask->fields['is_active'],
+            $tasks_id[$data['task_id']] ??= [
+                'is_active' => $data['task_is_active'],
                 'jobstates' => [],
-                'method'    => $pfTaskjob->fields['method'],
-                'name'      => $pfTask->fields['name'],
+                'method'    => $data['job_method'],
+                'name'      => $data['task_name'],
             ];
             // Limit to 5 last runs
-            if (count($tasks_id[$pfTask->fields['id']]['jobstates']) < 5) {
-                $tasks_id[$pfTask->fields['id']]['jobstates'][] = $data['id'];
+            if (count($tasks_id[$data['task_id']]['jobstates']) < 5) {
+                $tasks_id[$data['task_id']]['jobstates'][] = $data['id'];
             }
         }
         echo "<table width='950' class='tab_cadre_fixe'>";
