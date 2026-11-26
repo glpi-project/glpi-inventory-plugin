@@ -156,12 +156,11 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
      *
      * @return void
      */
-    public function showContent(int $id): void
+    public function showContent(int $id, int $start, string $pager_params): void
     {
         $collect_wmi = new PluginGlpiinventoryCollect_Wmi();
         $collect_wmi->getFromDB($id);
 
-        $start   = self::getRequestedStart();
         $limit   = (int) $_SESSION['glpilist_limit'];
         $total   = $this->countContentForDefinition($id);
         $data    = $this->getContentPageForDefinition($id, ['property'], $start, $limit);
@@ -194,6 +193,7 @@ class PluginGlpiinventoryCollect_Wmi_Content extends PluginGlpiinventoryCollectC
             'filtered_number' => $total,
             'start' => $start,
             'limit' => $limit,
+            'additional_params' => $pager_params,
         ]);
         echo '</div></div>';
     }

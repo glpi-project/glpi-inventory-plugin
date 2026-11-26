@@ -115,12 +115,11 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
      *
      * @return void
      */
-    public function showContent(int $id): void
+    public function showContent(int $id, int $start, string $pager_params): void
     {
         $collect_file = new PluginGlpiinventoryCollect_File();
         $collect_file->getFromDB($id);
 
-        $start   = self::getRequestedStart();
         $limit   = (int) $_SESSION['glpilist_limit'];
         $total   = $this->countContentForDefinition($id);
         $data    = $this->getContentPageForDefinition($id, ['pathfile'], $start, $limit);
@@ -154,6 +153,7 @@ class PluginGlpiinventoryCollect_File_Content extends PluginGlpiinventoryCollect
             'filtered_number' => $total,
             'start' => $start,
             'limit' => $limit,
+            'additional_params' => $pager_params,
         ]);
         echo '</div></div>';
     }

@@ -493,7 +493,7 @@ CREATE TABLE `glpi_plugin_glpiinventory_collects_registries_contents` (
   `value` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `computers_id` (`computers_id`),
-  KEY `plugin_glpiinventory_collects_registries_id` (`plugin_glpiinventory_collects_registries_id`)
+  KEY `plugin_glpiinventory_collects_registries_id` (`plugin_glpiinventory_collects_registries_id`, `computers_id`, `key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 
 

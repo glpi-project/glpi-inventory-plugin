@@ -849,7 +849,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                 echo "</td>";
             }
             echo "<td>";
-            echo "<a href='" . $link . "?id=" . $data['group_id'] . "'>" . $data['group_name'] . "</a>";
+            echo "<a href='" . $link . "?id=" . $data['group_id'] . "'>" . htmlescape($data['group_name']) . "</a>";
             echo "</td>";
             echo "<td>";
             echo __('Static group', 'glpiinventory');
@@ -881,7 +881,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
                 echo "<td></td>";
             }
             echo "<td>";
-            echo "<a href='" . $link . "?id=" . $data['group_id'] . "'>" . $data['group_name'] . "</a>";
+            echo "<a href='" . $link . "?id=" . $data['group_id'] . "'>" . htmlescape($data['group_name']) . "</a>";
             echo "</td>";
             echo "<td>";
             echo __('Dynamic group', 'glpiinventory');

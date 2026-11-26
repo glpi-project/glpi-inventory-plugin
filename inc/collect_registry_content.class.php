@@ -449,14 +449,13 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
      *
      * @return void
      */
-    public function showContent(int $id): void
+    public function showContent(int $id, int $start, string $pager_params): void
     {
         $collect_registry = new PluginGlpiinventoryCollect_Registry();
         $collect_registry->getFromDB($id);
 
         $mode = (int) ($collect_registry->fields['mode'] ?? PluginGlpiinventoryCollect_Registry::MODE_DEFAULT);
 
-        $start = self::getRequestedStart();
         $limit = (int) $_SESSION['glpilist_limit'];
         $total = $this->countContentForDefinition($id);
         $data  = $this->getContentPageForDefinition($id, ['computers_id', 'key'], $start, $limit);
@@ -524,6 +523,7 @@ class PluginGlpiinventoryCollect_Registry_Content extends PluginGlpiinventoryCol
             'filtered_number' => $total,
             'start' => $start,
             'limit' => $limit,
+            'additional_params' => $pager_params,
         ]);
         echo '</div></div>';
     }

@@ -298,4 +298,114 @@ class DeploygroupTest extends DbTestCase
         }
         $this->assertEquals([$computers_id_1, $computers_id_2], $computer_list_db);
     }
+
+    /**
+     * @return array<string, int>
+     */
+    private function createAmongComputers(): array
+    {
+        $computers_ids = [];
+        foreach (['among_pc1', 'among_pc2', 'among_pc3', 'among_srv1', 'among_srv2', 'among_other'] as $name) {
+            $computers_ids[$name] = $this->createItem(Computer::class, ['name' => $name, 'entities_id' => $this->getTestRootEntity(true)])->getID();
+        }
+        return $computers_ids;
+    }
+
+    private function createDynamicGroup(string $criteria_json): int
+    {
+        $group = $this->createItem(PluginGlpiinventoryDeployGroup::class, [
+            'name' => 'among_dynamic_group',
+            'type' => PluginGlpiinventoryDeployGroup::DYNAMIC_GROUP,
+        ]);
+        $this->createItem(PluginGlpiinventoryDeployGroup_Dynamicdata::class, [
+            'plugin_glpiinventory_deploygroups_id' => $group->getID(),
+            'fields_array'                         => '{"criteria":' . $criteria_json . ',"metacriteria":null}',
+        ]);
+        return $group->getID();
+    }
+
+    /**
+     * @param array<int> $computers_ids
+     */
+    private function assertAmongMatchesFullGroup(int $groups_id, array $computers_ids): void
+    {
+        $expected = array_intersect_key(
+            PluginGlpiinventoryDeployGroup::getTargetsForGroup($groups_id),
+            array_flip($computers_ids)
+        );
+        $actual = PluginGlpiinventoryDeployGroup::getTargetsForGroupAmong($groups_id, $computers_ids);
+
+        ksort($expected);
+        ksort($actual);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testTargetsAmongStaticGroup(): void
+    {
+        $this->login();
+        $computers_ids = $this->createAmongComputers();
+        $group = $this->createItem(PluginGlpiinventoryDeployGroup::class, [
+            'name' => 'among_static_group',
+            'type' => PluginGlpiinventoryDeployGroup::STATIC_GROUP,
+        ]);
+        foreach (['among_pc1', 'among_pc2', 'among_srv1'] as $member) {
+            $this->createItem(PluginGlpiinventoryDeployGroup_Staticdata::class, [
+                'plugin_glpiinventory_deploygroups_id' => $group->getID(),
+                'itemtype'                             => Computer::class,
+                'items_id'                             => $computers_ids[$member],
+            ]);
+        }
+
+        $among = [$computers_ids['among_pc2'], $computers_ids['among_srv1'], $computers_ids['among_other']];
+
+        $this->assertEquals(
+            [$computers_ids['among_pc2'] => $computers_ids['among_pc2'], $computers_ids['among_srv1'] => $computers_ids['among_srv1']],
+            PluginGlpiinventoryDeployGroup::getTargetsForGroupAmong($group->getID(), $among)
+        );
+        $this->assertAmongMatchesFullGroup($group->getID(), $among);
+    }
+
+    public function testTargetsAmongDynamicGroupWithAndCriteria(): void
+    {
+        $this->login();
+        $computers_ids = $this->createAmongComputers();
+        $groups_id = $this->createDynamicGroup(
+            '[{"link":"AND","field":"1","searchtype":"contains","value":"^among_pc"},'
+            . '{"link":"AND","field":"1","searchtype":"notcontains","value":"among_pc3"}]'
+        );
+
+        $among = [$computers_ids['among_pc1'], $computers_ids['among_pc3'], $computers_ids['among_srv1']];
+
+        $this->assertEquals(
+            [$computers_ids['among_pc1'] => $computers_ids['among_pc1']],
+            PluginGlpiinventoryDeployGroup::getTargetsForGroupAmong($groups_id, $among)
+        );
+        $this->assertAmongMatchesFullGroup($groups_id, $among);
+    }
+
+    public function testTargetsAmongDynamicGroupWithOrCriteriaStayWithinGivenComputers(): void
+    {
+        $this->login();
+        $computers_ids = $this->createAmongComputers();
+        $groups_id = $this->createDynamicGroup(
+            '[{"link":"AND","field":"1","searchtype":"contains","value":"^among_pc"},'
+            . '{"link":"OR","field":"1","searchtype":"contains","value":"^among_srv"}]'
+        );
+
+        $among = [$computers_ids['among_pc1'], $computers_ids['among_srv2'], $computers_ids['among_other']];
+
+        $this->assertEquals(
+            [$computers_ids['among_pc1'] => $computers_ids['among_pc1'], $computers_ids['among_srv2'] => $computers_ids['among_srv2']],
+            PluginGlpiinventoryDeployGroup::getTargetsForGroupAmong($groups_id, $among)
+        );
+        $this->assertAmongMatchesFullGroup($groups_id, $among);
+    }
+
+    public function testTargetsAmongEmptyComputerList(): void
+    {
+        $this->login();
+        $groups_id = $this->createDynamicGroup('[{"link":"AND","field":"1","searchtype":"contains","value":"^among_pc"}]');
+
+        $this->assertSame([], PluginGlpiinventoryDeployGroup::getTargetsForGroupAmong($groups_id, []));
+    }
 }

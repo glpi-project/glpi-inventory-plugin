@@ -1125,7 +1125,11 @@ function addTaskJobLogIndex(Migration $migration): Migration
 
 function addCollectContentAndDiscoveryIndexes(Migration $migration): Migration
 {
-    $migration->addKey('glpi_plugin_glpiinventory_collects_registries_contents', 'plugin_glpiinventory_collects_registries_id');
+    $migration->addKey(
+        'glpi_plugin_glpiinventory_collects_registries_contents',
+        ['plugin_glpiinventory_collects_registries_id', 'computers_id', 'key'],
+        'plugin_glpiinventory_collects_registries_id'
+    );
     $migration->addKey('glpi_plugin_glpiinventory_collects_wmis_contents', 'computers_id');
     $migration->addKey('glpi_plugin_glpiinventory_collects_wmis_contents', 'plugin_glpiinventory_collects_wmis_id');
     $migration->addKey('glpi_plugin_glpiinventory_collects_files_contents', 'computers_id');

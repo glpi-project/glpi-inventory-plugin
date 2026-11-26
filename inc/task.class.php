@@ -1198,7 +1198,7 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
     }
 
     /**
-     * Keep the last $max_runs states of each agent and target, taskjobs in id order, newest state first
+     * Keep the last $max_runs states of each taskjob, agent and target, taskjobs in id order, newest state first
      *
      * @param array<int> $taskjobs_ids
      * @return array<int, array<int, array<string, mixed>>>
@@ -1223,10 +1223,10 @@ class PluginGlpiinventoryTask extends PluginGlpiinventoryTaskView
                 'agent.name AS agent_name',
                 'agent.items_id AS agent_computers_id',
                 new QueryExpression(
-                    'ROW_NUMBER() OVER (PARTITION BY ' . $DB->quoteName('state.agents_id')
-                    . ', ' . $DB->quoteName('state.items_id') . ', ' . $DB->quoteName('state.itemtype')
-                    . ' ORDER BY ' . $DB->quoteName('state.plugin_glpiinventory_taskjobs_id')
-                    . ', ' . $DB->quoteName('state.id') . ' DESC) AS ' . $DB->quoteName('run_rank')
+                    'ROW_NUMBER() OVER (PARTITION BY ' . $DB->quoteName('state.plugin_glpiinventory_taskjobs_id')
+                    . ', ' . $DB->quoteName('state.agents_id')
+                    . ', ' . $DB->quoteName('state.itemtype') . ', ' . $DB->quoteName('state.items_id')
+                    . ' ORDER BY ' . $DB->quoteName('state.id') . ' DESC) AS ' . $DB->quoteName('run_rank')
                 ),
             ],
             'FROM'       => 'glpi_plugin_glpiinventory_taskjobstates AS state',
