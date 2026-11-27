@@ -46,3 +46,12 @@ function plusbutton(dom_id, template) {
    }
 }
 
+$(document).on('click', '[data-glpiinventory-plusbutton]', function () {
+   plusbutton($(this).attr('data-glpiinventory-plusbutton'), $(this).attr('data-glpiinventory-clone'));
+});
+
+$(document).on('click', '[data-glpiinventory-remove-line]', function () {
+   var tag_table = this.parentNode.parentNode.parentNode.parentNode;
+   tag_table.parentNode.removeChild(tag_table);
+});
+

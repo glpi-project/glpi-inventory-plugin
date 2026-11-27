@@ -238,7 +238,9 @@ class PluginGlpiinventoryDeployUserinteraction extends PluginGlpiinventoryDeploy
             echo "<td>";
             if ($canedit) {
                 echo "<a class='edit'
-                     onclick=\"edit_subtype('userinteraction', $package_id, $rand ,this)\">";
+                     data-glpiinventory-edit-subtype='userinteraction'
+                     data-glpiinventory-packages-id='$package_id'
+                     data-glpiinventory-rand='$rand'>";
             }
             echo $text;
             if ($canedit) {

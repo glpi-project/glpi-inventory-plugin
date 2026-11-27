@@ -30,8 +30,6 @@
  * ---------------------------------------------------------------------
  */
 
-use function Safe\json_encode;
-
 if (plugin_glpiinventory_script_endswith("dropdownactionselection.php")) {
     header("Content-Type: text/html; charset=UTF-8");
     Html::header_nocache();
@@ -41,25 +39,8 @@ global $CFG_GLPI;
 
 Session::checkCentralAccess();
 
-echo "<script type='text/javascript'>
-var select = document.getElementById('actionlist');
-var obj = document.getElementById(" . json_encode(filter_input(INPUT_POST, "actionselectadd")) . ");
-var actiontype = document.getElementById(" . json_encode(filter_input(INPUT_POST, "actiontypeid")) . ");
-
-var list = document.getElementById('actionselection').innerHTML;
-
-var pattern1 = new RegExp(actiontype.options[actiontype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value + ',');
-var pattern2 = new RegExp(actiontype.options[actiontype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value + '$');
-if ((select.value.match(pattern1)) || (select.value.match(pattern2))) {
-
-} else {
-   document.getElementById('actionselection').innerHTML = list + '<br>' + actiontype.options[actiontype.selectedIndex].text + ' -> ' + obj.options[obj.selectedIndex].text +
-   ' <img src=\"" . $CFG_GLPI['root_doc'] . "/pics/delete.png\" onclick=\'delaction(\"' + actiontype.options[actiontype.selectedIndex].text + '->' + obj.options[obj.selectedIndex].text + '->' + actiontype.options[actiontype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value + '\")\'>';
-   if (actiontype.value !== '0') {
-      document.getElementById('actionlist').value = document.getElementById('actionlist').value + ',' + actiontype.options[actiontype.selectedIndex].value + '->' + obj.options[obj.selectedIndex].value;
-   } else {
-      document.getElementById('actionlist').value = document.getElementById('actionlist').value + ',' + obj.options[obj.selectedIndex].value;
-   }
-}
-
- </script>";
+echo "<span hidden data-glpiinventory-selection='action'"
+    . " data-glpiinventory-obj='" . htmlescape((string) filter_input(INPUT_POST, "actionselectadd")) . "'"
+    . " data-glpiinventory-type='" . htmlescape((string) filter_input(INPUT_POST, "actiontypeid")) . "'"
+    . " data-glpiinventory-root-doc='" . htmlescape($CFG_GLPI['root_doc']) . "'></span>";
+echo Html::script('/plugins/glpiinventory/js/dropdown_selection.js', ['version' => PLUGIN_GLPIINVENTORY_VERSION], false);

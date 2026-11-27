@@ -81,24 +81,5 @@
     ) }}
 </div>
 
-<script>
-    $(function () {
-        // Registry collect mode values (see PluginGlpiinventoryCollect_Registry):
-        //   0 = MODE_DEFAULT, 1 = MODE_PATH_EXISTS, 2 = MODE_KEY_DEFINED, 3 = MODE_DEPTH
-        var rand        = '{{ rand }}';
-        var keyField    = $('#collect_registry_key_' + rand);
-        var depthField  = $('#collect_registry_depth_' + rand);
-        var modeSelect  = keyField.closest('form').find('select[name="mode"]');
-
-        var toggleRegistryFields = function () {
-            var mode = parseInt(modeSelect.val(), 10) || 0;
-            // The key is useless when checking the path existence or reading recursively
-            keyField.toggle(mode !== 1 && mode !== 3);
-            // The recursion depth field only applies to the "All values" mode
-            depthField.toggle(mode === 3);
-        };
-
-        modeSelect.on('change', toggleRegistryFields);
-        toggleRegistryFields();
-    });
-</script>
+<span hidden data-glpiinventory-registry="{{ rand }}"></span>
+{{ call('Html::script', ['/plugins/glpiinventory/js/collect_registry.js', {'version': constant('PLUGIN_GLPIINVENTORY_VERSION')}, false])|raw }}
