@@ -177,7 +177,9 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             echo "<td>";
             if ($canedit) {
                 echo "<a class='edit'
-                     onclick=\"edit_subtype('action', $package_id, $rand ,this)\">";
+                     data-glpiinventory-edit-subtype='action'
+                     data-glpiinventory-packages-id='$package_id'
+                     data-glpiinventory-rand='$rand'>";
             }
             echo $this->getLabelForAType($action_type);
             if ($canedit) {
@@ -393,7 +395,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
                     echo "<input type='text' name='retchecks_value[]' value='"
                      . $retcheck['values'][0] . "' />";
                     echo "</td>";
-                    echo "<td><a class='edit' onclick='removeLine(this)'><img src='"
+                    echo "<td><a class='edit' data-glpiinventory-remove-line><img src='"
                      . $CFG_GLPI["root_doc"] . "/pics/delete.png' /></a></td>";
                     echo "</tr>";
 
@@ -410,7 +412,7 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
             );
             echo "</td>";
             echo "<td><input type='text' name='retchecks_value[]' /></td>";
-            echo "<td><a class='edit' onclick='removeLine(this)'><img src='"
+            echo "<td><a class='edit' data-glpiinventory-remove-line><img src='"
                . $CFG_GLPI["root_doc"] . "/pics/delete.png' /></a></td>";
             echo "</tr>";
 
@@ -438,14 +440,6 @@ class PluginGlpiinventoryDeployAction extends PluginGlpiinventoryDeployPackageIt
         }
 
         $this->addOrSaveButton($pfDeployPackage, $mode);
-
-        echo "<script type='text/javascript'>
-         function removeLine(item) {
-            var tag_table = item.parentNode.parentNode.parentNode.parentNode;
-            var parent = tag_table.parentNode;
-               parent.removeChild(tag_table);
-         }
-      </script>";
     }
 
 
