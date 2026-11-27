@@ -190,7 +190,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      * @param int $value
      * @param int $taskjobs_id
      * @param string $entity_restrict
-     * @return string unique id of html element
+     * @return int unique id of html element
      */
     public function dropdownType($myname, $method, $value = 0, $taskjobs_id = 0, $entity_restrict = '')
     {
@@ -325,7 +325,7 @@ class PluginGlpiinventoryTaskjob extends PluginGlpiinventoryTaskjobView
      * @param string $method name of the method selected
      * @param int $value name of the definition type (used for edit taskjob)
      * @param string $entity_restrict restriction of entity if required
-     * @return string unique id of html element
+     * @return int unique id of html element
      */
     public function dropdownActionType($myname, $method, $value = 0, $entity_restrict = '')
     {

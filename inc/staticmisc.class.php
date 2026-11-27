@@ -178,7 +178,7 @@ class PluginGlpiinventoryStaticmisc
      * Get all devices of definition type 'PluginGlpiinventoryCredentialIp'
      * defined in task_definitiontype_InventoryComputerESX
      *
-     * @return string unique html element id
+     * @return int|string unique html element id, or empty string when there is nothing to select
      * @used-by PluginGlpiinventoryTaskjob::dropdownAction()
      */
     public static function task_definitionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX()
@@ -238,7 +238,7 @@ class PluginGlpiinventoryStaticmisc
      * Get all devices of action type 'PluginGlpiinventoryCredentialIp'
      * defined in task_actiontype_InventoryComputerESX
      *
-     * @return string unique html element id
+     * @return int unique html element id
      * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actionselection_PluginGlpiinventoryCredentialIp_InventoryComputerESX()
@@ -277,7 +277,7 @@ class PluginGlpiinventoryStaticmisc
      * Get all devices of action type 'Agent'
      * defined in task_actiontype_InventoryComputerESX
      *
-     * @return string unique html element id
+     * @return int unique html element id
      * @used-by PluginGlpiinventoryTaskjob::dropdownActionType()
      */
     public static function task_actionselection_Agent_InventoryComputerESX()

@@ -522,7 +522,7 @@ class PluginGlpiinventoryDeployGroup extends CommonDBTM
      *
      * @param string $name
      * @param string $value
-     * @return string
+     * @return int|string
      */
     public static function dropdownGroupType($name = 'type', $value = 'STATIC')
     {
