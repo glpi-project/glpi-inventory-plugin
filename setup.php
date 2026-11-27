@@ -198,6 +198,14 @@ function plugin_init_glpiinventory(): void
             ['addtabon' => [PluginGlpiinventoryCollect::class]]
         );
         $Plugin->registerClass(
+            PluginGlpiinventoryCollect_Osquery::class,
+            ['addtabon' => [PluginGlpiinventoryCollect::class]]
+        );
+        $Plugin->registerClass(
+            PluginGlpiinventoryCollect_Osquery_Content::class,
+            ['addtabon' => [PluginGlpiinventoryCollect::class]]
+        );
+        $Plugin->registerClass(
             PluginGlpiinventoryCollect_File::class,
             ['addtabon' => [PluginGlpiinventoryCollect::class]]
         );

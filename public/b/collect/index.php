@@ -59,4 +59,6 @@ foreach ($headers as $key => $value) {
     header(sprintf('%s: %s', $key, $value));
 }
 
-echo $inventory_request->getResponse();
+// The agent expects a JSON object: an empty answer (e.g. to setAnswer) must be "{}", not "[]"
+$body = $inventory_request->getResponse();
+echo $body === '[]' ? '{}' : $body;

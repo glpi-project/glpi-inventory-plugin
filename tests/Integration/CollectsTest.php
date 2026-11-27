@@ -558,6 +558,214 @@ class CollectsTest extends DbTestCase
         $this->assertEquals($reference, $items);
     }
 
+    public function testOsqueryQueryValidation(): void
+    {
+        $pfCollect = new PluginGlpiinventoryCollect();
+        $collects_id = $pfCollect->add([
+            'name'        => 'osquery validation',
+            'entities_id' => 0,
+            'type'        => 'osquery',
+            'is_active'   => 1,
+        ]);
+        $this->assertNotFalse($collects_id);
+
+        $pfCollect_Osquery = new PluginGlpiinventoryCollect_Osquery();
+        foreach (['', 'DELETE FROM processes', 'select 1; select 2', 'PRAGMA table_info(processes)'] as $query) {
+            $this->assertFalse(
+                $pfCollect_Osquery->add([
+                    'name'  => 'invalid',
+                    'plugin_glpiinventory_collects_id' => $collects_id,
+                    'query' => $query,
+                ]),
+                $query
+            );
+        }
+        $_SESSION['MESSAGE_AFTER_REDIRECT'] = [];
+
+        $id = $pfCollect_Osquery->add([
+            'name'  => 'valid',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'query' => "  SELECT name FROM processes;\n",
+        ]);
+        $this->assertNotFalse($id);
+        $this->assertEquals('SELECT name FROM processes', $pfCollect_Osquery->fields['query']);
+    }
+
+    public function testOsqueryProcessWithAgent(): void
+    {
+        $pfTask = new PluginGlpiinventoryTask();
+        foreach ($pfTask->find() as $item) {
+            $pfTask->delete(['id' => $item['id']], true);
+        }
+
+        $_SESSION["plugin_glpiinventory_entity"] = 0;
+        $_SESSION["glpiname"] = 'Plugin_GLPI_Inventory';
+
+        $pfCollect = new PluginGlpiinventoryCollect();
+        $pfCollect_Osquery = new PluginGlpiinventoryCollect_Osquery();
+        $pfCollect_Osquery_Content = new PluginGlpiinventoryCollect_Osquery_Content();
+        $pfTaskjob = new PluginGlpiinventoryTaskjob();
+        $pfTaskjobstate = new PluginGlpiinventoryTaskjobstate();
+        $pfTaskjoblog = new PluginGlpiinventoryTaskjoblog();
+
+        $collects_id = $pfCollect->add([
+            'name'        => 'my osquery collect',
+            'entities_id' => 0,
+            'type'        => 'osquery',
+            'is_active'   => 1,
+        ]);
+        $this->assertNotFalse($collects_id);
+
+        $osquery_processes = $pfCollect_Osquery->add([
+            'name'  => 'processes',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'query' => 'select pid, name from processes limit 2',
+        ]);
+        $this->assertNotFalse($osquery_processes);
+        $osquery_empty = $pfCollect_Osquery->add([
+            'name'  => 'nothing',
+            'plugin_glpiinventory_collects_id' => $collects_id,
+            'query' => "select name from processes where name = 'none'",
+        ]);
+        $this->assertNotFalse($osquery_empty);
+
+        $computers_id = $this->createComputer();
+
+        // Stale row from a previous run, must be replaced
+        $this->assertNotFalse($pfCollect_Osquery_Content->add([
+            'computers_id' => $computers_id,
+            'plugin_glpiinventory_collects_osqueries_id' => $osquery_processes,
+            'data' => '{"pid":"1","name":"old"}',
+        ]));
+
+        $tasks_id = $pfTask->add([
+            'name'        => 'myosquerycollect',
+            'entities_id' => 0,
+            'is_active'   => 1,
+        ]);
+        $this->assertNotFalse($tasks_id);
+        $this->assertNotFalse($pfTaskjob->add([
+            'plugin_glpiinventory_tasks_id' => $tasks_id,
+            'entities_id' => 0,
+            'name'    => 'collectjob',
+            'method'  => 'collect',
+            'targets' => exportArrayToDB([[PluginGlpiinventoryCollect::class => $collects_id]]),
+            'actors'  => exportArrayToDB([[Computer::class => $computers_id]]),
+        ]));
+
+        $methods = [];
+        foreach (PluginGlpiinventoryStaticmisc::getmethods() as $method) {
+            $methods[] = $method['method'];
+        }
+        $pfTask->prepareTaskjobs($methods);
+        $jobstates = $pfTaskjobstate->find();
+        $this->assertCount(1, $jobstates);
+        $jobstate = current($jobstates);
+        $uuid = $jobstate['uniqid'];
+
+        $_GET = [];
+        $result = json_encode($pfCollect->communication('getJobs', 'pc01', null));
+        $this->assertEquals(
+            '{"jobs":[{"function":"runOsquery","query":"select pid, name from processes limit 2","uuid":"' . $uuid . '","_sid":' . $osquery_processes . '},'
+            . '{"function":"runOsquery","query":"select name from processes where name = \'none\'","uuid":"' . $uuid . '","_sid":' . $osquery_empty . '}],"postmethod":"POST"}',
+            $result
+        );
+
+        // The agent sends one answer per row, _cpt counting down, or one empty answer with _cpt = 0
+        $answers = [
+            ['_sid' => $osquery_processes, '_cpt' => '2', 'pid' => '1', 'name' => 'systemd'],
+            ['_sid' => $osquery_processes, '_cpt' => '1', 'pid' => '2', 'name' => 'kthreadd'],
+            ['_sid' => $osquery_empty, '_cpt' => '0'],
+        ];
+        foreach ($answers as $answer) {
+            $_GET = ['action' => 'setAnswer', 'uuid' => $uuid] + $answer;
+            $this->assertEquals('{}', json_encode($pfCollect->communication('setAnswer', null, $uuid)));
+            $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::AGENT_HAS_SENT_DATA);
+        }
+
+        $_GET = ['action' => 'jobsDone', 'uuid' => $uuid];
+        $pfCollect->communication('jobsDone', null, $uuid);
+        $this->assertJobstateState($jobstate['id'], PluginGlpiinventoryTaskjobstate::FINISHED);
+
+        $rows = [];
+        foreach ($pfCollect_Osquery_Content->find([], ['id']) as $row) {
+            $rows[] = [$row['computers_id'], $row['plugin_glpiinventory_collects_osqueries_id'], $row['data']];
+        }
+        $this->assertEquals(
+            [
+                [$computers_id, $osquery_processes, '{"pid":"1","name":"systemd"}'],
+                [$computers_id, $osquery_processes, '{"pid":"2","name":"kthreadd"}'],
+                // marker: the query ran but returned no row
+                [$computers_id, $osquery_empty, null],
+            ],
+            $rows
+        );
+
+        // One log per query, not one per row
+        $logs = array_column(
+            $pfTaskjoblog->find(['plugin_glpiinventory_taskjobstates_id' => $jobstate['id'], 'state' => PluginGlpiinventoryTaskjoblog::TASK_INFO], ['id']),
+            'comment'
+        );
+        $this->assertEquals(['processes: 2 rows collected', 'nothing: no row returned'], $logs);
+
+        // Both queries are listed on the computer, the empty one with no entry
+        $table = PluginGlpiinventoryCollect_Osquery_Content::buildDatatable(
+            $pfCollect_Osquery_Content->find(['plugin_glpiinventory_collects_osqueries_id' => $osquery_empty]),
+            [],
+            static fn() => []
+        );
+        $this->assertSame([], $table['entries']);
+
+        // Purging a query removes its rows
+        $this->assertTrue($pfCollect_Osquery->delete(['id' => $osquery_processes], true));
+        $this->assertTrue($pfCollect_Osquery->delete(['id' => $osquery_empty], true));
+        $this->assertSame(0, countElementsInTable($pfCollect_Osquery_Content->getTable()));
+    }
+
+    public function testOsqueryColumnsAreNamespaced(): void
+    {
+        $rows = [['computers_id' => 1, 'data' => '{"computer":"<img src=x onerror=alert(1)>","pid":"1"}']];
+
+        // Computer tab: no leading column, so no raw_html column at all
+        $table = PluginGlpiinventoryCollect_Osquery_Content::buildDatatable($rows, [], static fn() => []);
+        $this->assertSame(['col_computer' => 'computer', 'col_pid' => 'pid'], $table['columns']);
+        $this->assertSame([['col_computer' => '<img src=x onerror=alert(1)>', 'col_pid' => '1']], $table['entries']);
+
+        // Collect tab: the server-built link keeps the "computer" key
+        $table = PluginGlpiinventoryCollect_Osquery_Content::buildDatatable(
+            $rows,
+            ['computer' => 'Computer'],
+            static fn() => ['computer' => '<a href="#">pc</a>']
+        );
+        $this->assertSame('<a href="#">pc</a>', $table['entries'][0]['computer']);
+        $this->assertSame('<img src=x onerror=alert(1)>', $table['entries'][0]['col_computer']);
+    }
+
+    public function testWmiShowForComputerWithoutData(): void
+    {
+        $computers_id = $this->createComputer('pcnowmi');
+        $content = new PluginGlpiinventoryCollect_Wmi_Content();
+
+        ob_start();
+        $content->showForComputer($computers_id);
+        $this->assertSame('', ob_get_clean());
+    }
+
+    public function testOsqueryHighlightQuery(): void
+    {
+        $this->assertSame(
+            '<span class="text-indigo fw-bold">SELECT</span> uid <span class="text-indigo fw-bold">FROM</span> users'
+            . ' <span class="text-indigo fw-bold">WHERE</span> encrypted = <span class="text-orange">0</span>'
+            . ' <span class="text-indigo fw-bold">AND</span> path <span class="text-indigo fw-bold">like</span>'
+            . ' <span class="text-success">&#039;%&lt;b&gt;%&#039;</span>',
+            PluginGlpiinventoryCollect_Osquery::highlightQuery("SELECT uid FROM users WHERE encrypted = 0 AND path like '%<b>%'")
+        );
+        $this->assertSame(
+            'name&lt;img src=x onerror=&quot;1&quot;&gt;',
+            str_replace(['<span class="text-indigo fw-bold">', '<span class="text-orange">', '<span class="text-success">', '</span>'], '', PluginGlpiinventoryCollect_Osquery::highlightQuery('name<img src=x onerror="1">'))
+        );
+    }
+
     public function testFilesProcessWithAgent(): void
     {
 

@@ -1095,6 +1095,29 @@ function pluginGlpiinventoryUpdate(string $current_version): void
     );
     $migration->migrationOneTable('glpi_plugin_glpiinventory_collects_registries');
 
+    // Collect osquery: run SELECT queries with osqueryi on the agent
+    if (!$DB->tableExists('glpi_plugin_glpiinventory_collects_osqueries')) {
+        $DB->doQuery("CREATE TABLE `glpi_plugin_glpiinventory_collects_osqueries` (
+            `id` int unsigned NOT NULL AUTO_INCREMENT,
+            `name` varchar(255) DEFAULT NULL,
+            `plugin_glpiinventory_collects_id` int unsigned NOT NULL DEFAULT '0',
+            `query` text DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `plugin_glpiinventory_collects_id` (`plugin_glpiinventory_collects_id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC");
+    }
+    if (!$DB->tableExists('glpi_plugin_glpiinventory_collects_osqueries_contents')) {
+        $DB->doQuery("CREATE TABLE `glpi_plugin_glpiinventory_collects_osqueries_contents` (
+            `id` int unsigned NOT NULL AUTO_INCREMENT,
+            `computers_id` int unsigned NOT NULL DEFAULT '0',
+            `plugin_glpiinventory_collects_osqueries_id` int unsigned NOT NULL DEFAULT '0',
+            `data` longtext DEFAULT NULL,
+            PRIMARY KEY (`id`),
+            KEY `computers_id` (`computers_id`),
+            KEY `plugin_glpiinventory_collects_osqueries_id` (`plugin_glpiinventory_collects_osqueries_id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC");
+    }
+
     installDashboard();
 
     // Add missing index on `glpi_plugin_glpiinventory_taskjoblogs`
